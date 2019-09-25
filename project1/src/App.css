@@ -14,6 +14,7 @@
   box-shadow: none !important;
   position: relative;
   display: block;
+  width: 1000px;
   margin-bottom: 0.75rem;
   background-color: #fff;
   border-radius: 0.25rem;
@@ -38,6 +39,126 @@
   font-size: 0.8rem;
   font-weight: 300;
 }
+
+/* ********************************* */
+
+.article-page .comment-form .card-block {
+  padding: 0;
+}
+.article-page .comment-form .card-block textarea {
+  border: 0px;
+  padding: 1.25rem;
+}
+
+.article-page .comment-form .card-footer .btn {
+  font-weight: 700;
+  float: right;
+}
+
+.article-page .comment-form .card-footer .comment-author-img {
+  height: 30px;
+  width: 30px;
+}
+
+.btn-sm,
+.btn-group-sm > .btn {
+  color: white;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+  background-color: #5cb85c;
+  float: right;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #419641;
+}
+.btn-primary:focus,
+.btn-primary.focus {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #419641;
+}
+.btn-primary:active,
+.btn-primary.active,
+.open > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #419641;
+  background-image: none;
+}
+.btn-primary:active:hover,
+.btn-primary:active:focus,
+.btn-primary:active.focus,
+.btn-primary.active:hover,
+.btn-primary.active:focus,
+.btn-primary.active.focus,
+.open > .btn-primary.dropdown-toggle:hover,
+.open > .btn-primary.dropdown-toggle:focus,
+.open > .btn-primary.dropdown-toggle.focus {
+  color: #fff;
+  background-color: #398439;
+  border-color: #2d672d;
+}
+.btn-primary.disabled:focus,
+.btn-primary.disabled.focus,
+.btn-primary:disabled:focus,
+.btn-primary:disabled.focus {
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+}
+.btn-primary.disabled:hover,
+.btn-primary:disabled:hover {
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #55595c;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+
+.comment {
+  display: block;
+  padding-top: 0.5rem;
+  width: 100%;
+  min-width: 1000px;
+  min-height: 150px;
+  line-height: 1.25;
+  color: #55595c;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.25rem;
+  resize: vertical;
+}
+
+.comment-user-img {
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+}
+
+.date {
+  color: #bbb;
+  font-size: 0.8rem;
+  display: block;
+}
+/* ********************************* */
 
 .card-footer:last-child {
   border-radius: 0 0 0.25rem 0.25rem;

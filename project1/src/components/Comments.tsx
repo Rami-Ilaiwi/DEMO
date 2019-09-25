@@ -36,7 +36,7 @@ const Comments: React.FC<commentsProps> = props => {
           >
             {item.author.username}
           </a>
-          <span className="date-posted ng-binding">
+          <span className="date">
             {" "}
             {moment(new Date(Date.parse(item.createdAt))).format(
               "MMMM D, YYYY"

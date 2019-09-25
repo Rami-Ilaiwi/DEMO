@@ -2,43 +2,10 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import AXIOS from "../utils/AXIOS";
 import { RouteComponentProps } from "react-router-dom";
-import moment from "moment";
 import TagList from "./TagList";
 import Comments from "./Comments";
-// interface MYProps extends RouteComponentProps<{ slug: string }> {}
-
-// interface PROPS {
-//   article: {
-//     title: string;
-//     slug: string;
-//     body: string;
-//     createdAt: string;
-//     updatedAt: string;
-//     tagList: [];
-//     description: string;
-//     author: {
-//       username: string;
-//       bio: string;
-//       image: string;
-//       following: boolean;
-//     };
-//     favorited: boolean;
-//     favoritesCount: number;
-//   };
-// }
-
-// interface comments {
-//   id: number;
-//   createdAt: string;
-//   updatedAt: string;
-//   body: string;
-//   author: {
-//     username: string;
-//     bio: string;
-//     image: string;
-//     following: boolean;
-//   };
-// }
+import ArticleMeta from "./ArticleMeta";
+import UserComment from "./UserComment";
 
 class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
   public state = {
@@ -65,7 +32,8 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
       image: "",
       username: ""
     },
-    comments: []
+    comments: [],
+    comment: ""
   };
 
   public componentDidMount() {
@@ -86,14 +54,14 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
           }
         )
       );
-    AXIOS.get(
-      "articles/the-sole-reason-people-are-writing-posts-here-because-they-need-to-be-convinced-the-code-actually-works-282xh9/comments"
-    ).then(res => this.setState({ comments: res.data.comments }));
+    AXIOS.get(`articles/${this.props.match.params.slug}/comments`).then(res =>
+      this.setState({ comments: res.data.comments })
+    );
   }
 
-  public handleFavClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  /* ***** handlers ***** */
+
+  handleFavClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (this.state.article.favorited) {
       AXIOS.DELETE({
         endpoint: `articles/${this.props.match.params.slug}/favorite`
@@ -103,10 +71,9 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
         endpoint: `articles/${this.props.match.params.slug}/favorite`
       }).then(resp => this.setState({ article: resp.article }));
     }
-    console.log(this.state.comments);
   };
 
-  public handleFollowClick = (
+  handleFollowClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (this.state.profile.following) {
@@ -120,88 +87,97 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
     }
   };
 
+  handleComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    this.setState({ comment: event.target.value });
+  };
+
+  handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    AXIOS.post({
+      endpoint: `articles/${this.props.match.params.slug}/comments`,
+      body: {
+        comment: {
+          body: `${this.state.comment}`
+        }
+      }
+    });
+  };
+
+  /* ****************** */
+
   public render() {
     const article = this.state.article;
     const profile = this.state.profile;
 
     return (
-      <Grid container direction="column" justify="center">
-        <br />
-        <Grid
-          item
-          style={{
-            backgroundColor: "#333",
-            width: "100%",
-            color: "white"
-          }}
-        >
-          <Grid item style={{ marginLeft: "15%" }}>
-            <Grid>
-              <h1>{article.title}</h1>
-            </Grid>
-            <Grid
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="center"
-            >
-              <Grid
-                item
-                container
-                direction="row"
-                justify="flex-start"
-                alignItems="center"
-                xs={2}
-              >
-                <Grid item xs={3}>
-                  <img
-                    src={article.author.image}
-                    className="articleImage"
-                    alt={article.author.username}
-                  ></img>
-                </Grid>
-                <Grid item>
-                  <Grid>{article.author.username}</Grid>
-                  <Grid>
-                    {moment(new Date(Date.parse(article.createdAt))).format(
-                      "MMMM D, YYYY"
-                    )}
-                  </Grid>
-                </Grid>
+      <>
+        <Grid container direction="column" justify="center">
+          <br />
+          <Grid
+            item
+            style={{
+              backgroundColor: "#333",
+              width: "100%",
+              color: "white"
+            }}
+          >
+            <Grid item style={{ marginLeft: "15%", width: "70%" }}>
+              <Grid>
+                <h1>{article.title}</h1>
               </Grid>
-              <Grid item xs={3}>
-                <button
-                  onClick={this.handleFollowClick}
-                  className={`btn ${profile.following ? "unFollow" : "follow"}`}
-                >
-                  <i className="ion-plus-round"></i>
-                  <span>
-                    {profile.following ? " Unfollow" : " Follow"}{" "}
-                    {profile.username}
-                  </span>
-                </button>
-                <button
-                  onClick={this.handleFavClick}
-                  className={`btn ${article.favorited ? "unFav" : "fav"}`}
-                >
-                  <i className="ion-heart"></i>
-                  <span>
-                    {article.favorited ? " Unfavorite" : " Favorite"} Article (
-                    {article.favoritesCount})
-                  </span>
-                </button>
-              </Grid>
+              <ArticleMeta
+                image={article.author.image}
+                username={article.author.username}
+                createdAt={article.createdAt}
+                following={profile.following}
+                profileName={profile.username}
+                favorited={article.favorited}
+                favoritesCount={article.favoritesCount}
+                handleFollow={this.handleFollowClick}
+                handleFav={this.handleFavClick}
+              ></ArticleMeta>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item style={{ marginLeft: "15%", marginTop: "2%" }}>
-          {article.body}
-          <TagList tagList={article.tagList}></TagList>
+
+        <Grid container direction="column"></Grid>
+
+        <Grid item style={{ marginTop: "2%", marginLeft: "15%" }}>
+          <Grid item>{article.body}</Grid>
+          <Grid item>
+            <TagList tagList={article.tagList}></TagList>
+          </Grid>
         </Grid>
-        <Grid item xs={6} style={{ marginLeft: "25%", marginTop: "2%" }}>
-          <Comments comments={this.state.comments}></Comments>
+
+        <Grid item style={{ marginLeft: "30%" }}>
+          <ArticleMeta
+            image={article.author.image}
+            username={article.author.username}
+            createdAt={article.createdAt}
+            following={profile.following}
+            profileName={profile.username}
+            favorited={article.favorited}
+            favoritesCount={article.favoritesCount}
+            handleFollow={this.handleFollowClick}
+            handleFav={this.handleFavClick}
+          ></ArticleMeta>
         </Grid>
-      </Grid>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid item></Grid>
+          {/* style={{ marginLeft: "25%", marginTop: "2%" }} */}
+          <Grid item>
+            <hr />
+
+            <UserComment
+              comment={this.state.comment}
+              handleComment={this.handleComment}
+              handleSubmit={this.handleFormSubmit}
+            ></UserComment>
+            <Comments comments={this.state.comments}></Comments>
+          </Grid>
+        </Grid>
+      </>
     );
   }
 }
