@@ -10,8 +10,8 @@ interface ArticleMetaProps {
   profileName: string;
   favorited: boolean;
   favoritesCount: number;
-  handleFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
-  handleFav: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
+  handleFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  handleFav: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 class ArticleMeta extends React.Component<ArticleMetaProps> {
