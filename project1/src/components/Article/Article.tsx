@@ -1,9 +1,10 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import FavoriteButton from "./FavoriteButton";
-import TagList from "./TagList";
+import FavoriteButton from "../Buttons/FavoriteButton";
+import TagList from "../Tags/TagList";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import ArticleInfo from "./ArticleInfo";
 interface ArticleProps {
   image: string;
   username: string;
@@ -33,25 +34,11 @@ const Article: React.FC<ArticleProps> = props => {
           xs={6}
           spacing={2}
         >
-          <Grid item>
-            <a>
-              <img
-                src={props.image}
-                className="articleImage"
-                alt={props.username}
-              ></img>
-            </a>
-          </Grid>
-          <Grid item>
-            <div>
-              <a>{props.username}</a>
-            </div>
-            <span>
-              {moment(new Date(Date.parse(props.createdAt))).format(
-                "MMMM D, YYYY"
-              )}
-            </span>
-          </Grid>
+          <ArticleInfo
+            image={props.image}
+            createdAt={props.createdAt}
+            username={props.username}
+          ></ArticleInfo>
         </Grid>
         <Grid item xs={1}>
           <FavoriteButton

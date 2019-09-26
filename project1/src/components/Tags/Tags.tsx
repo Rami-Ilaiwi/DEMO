@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import AXIOS from "../utils/AXIOS";
+import AXIOS from "../../utils/AXIOS";
 const TagBar = styled("div")`
   padding: 5px 10px 10px 10px;
   background: #f3f3f3;

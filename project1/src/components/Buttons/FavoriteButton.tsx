@@ -1,5 +1,5 @@
 import React from "react";
-import { Article } from "../dtos/ArticleResponseDto";
+import { Article } from "../../dtos/ArticleResponseDto";
 interface FavoriteButtonProps extends Pick<Article, "favoritesCount"> {}
 const FavoriteButton: React.FC<FavoriteButtonProps> = props => {
   return (

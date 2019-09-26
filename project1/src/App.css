@@ -14,7 +14,6 @@
   position: relative;
   display: block;
   margin-bottom: 0.75rem;
-  background-color: #fff;
   border-radius: 0.25rem;
   margin-left: 19%;
 }
@@ -69,19 +68,22 @@
   float: right;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.submit:hover {
   color: #fff;
   background-color: #449d44;
   border-color: #419641;
 }
 .btn-primary:focus,
-.btn-primary.focus {
+.btn-primary.focus,
+.submit:hover {
   color: #fff;
   background-color: #449d44;
   border-color: #419641;
 }
 .btn-primary:active,
 .btn-primary.active,
+.submit.active,
 .open > .btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #449d44;
@@ -94,6 +96,9 @@
 .btn-primary.active:hover,
 .btn-primary.active:focus,
 .btn-primary.active.focus,
+.submit.active:hover,
+.submit.active:focus,
+.submit.active.focus,
 .open > .btn-primary.dropdown-toggle:hover,
 .open > .btn-primary.dropdown-toggle:focus,
 .open > .btn-primary.dropdown-toggle.focus {
@@ -104,10 +109,14 @@
 .btn-primary.disabled:focus,
 .btn-primary.disabled.focus,
 .btn-primary:disabled:focus,
+.submit.disabled:focus,
+.submit.disabled.focus,
 .btn-primary:disabled.focus {
   background-color: #5cb85c;
   border-color: #5cb85c;
 }
+
+.submit.disabled:hover,
 .btn-primary.disabled:hover,
 .btn-primary:disabled:hover {
   background-color: #5cb85c;
@@ -326,7 +335,6 @@ h6,
 
 .logout {
   color: #b85c5c;
-  background-image: none;
   background-color: transparent;
   border-color: #b85c5c;
   padding: 0.75rem 1.5rem;
@@ -341,6 +349,9 @@ h6,
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
+
+  border: 1px solid;
+  opacity: 0.8;
 }
 
 .row {
@@ -470,8 +481,6 @@ a {
   font-size: 1.25rem;
   border-radius: 0.3rem;
   margin-top: 1%;
-  color: #fff;
-  background-color: #5cb85c;
   border-color: #5cb85c;
   display: inline-block;
   font-weight: normal;
@@ -481,6 +490,11 @@ a {
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
+
+  border: 1px solid transparent;
+  opacity: 0.8;
+  color: white;
+  background-color: #5cb85c;
 }
 
 p {
