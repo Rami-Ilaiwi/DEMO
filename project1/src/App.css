@@ -10,14 +10,13 @@
 }
 
 .card {
-  border: 1px solid #e5e5e5;
   box-shadow: none !important;
   position: relative;
   display: block;
-  width: 1000px;
   margin-bottom: 0.75rem;
   background-color: #fff;
   border-radius: 0.25rem;
+  margin-left: 19%;
 }
 
 .card-block {
@@ -129,11 +128,21 @@
   border-radius: 0.25rem;
 }
 
+.comment-card {
+  box-shadow: none !important;
+  position: relative;
+  display: block;
+  margin-bottom: 0.75rem;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  margin-left: 22.2%;
+}
+
 .comment {
   display: block;
   padding-top: 0.5rem;
   width: 100%;
-  min-width: 1000px;
+  min-width: 60px;
   min-height: 150px;
   line-height: 1.25;
   color: #55595c;

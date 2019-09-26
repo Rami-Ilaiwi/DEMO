@@ -6,6 +6,7 @@ import TagList from "./TagList";
 import Comments from "./Comments";
 import ArticleMeta from "./ArticleMeta";
 import UserComment from "./UserComment";
+import utl from "../utils/utils";
 
 class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
   public state = {
@@ -37,7 +38,7 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
   };
 
   public componentDidMount() {
-    AXIOS.get(`articles/${this.props.match.params.slug}`)
+    AXIOS.noauthGet(`articles/${this.props.match.params.slug}`)
       .then(res => {
         const article = res.data.article;
         this.setState({
@@ -45,7 +46,7 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
         });
       })
       .then(() =>
-        AXIOS.get(`profiles/${this.state.article.author.username}`).then(
+        AXIOS.noauthGet(`profiles/${this.state.article.author.username}`).then(
           res => {
             const profile = res.data.profile;
             this.setState({
@@ -54,8 +55,8 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
           }
         )
       );
-    AXIOS.get(`articles/${this.props.match.params.slug}/comments`).then(res =>
-      this.setState({ comments: res.data.comments })
+    AXIOS.noauthGet(`articles/${this.props.match.params.slug}/comments`).then(
+      res => this.setState({ comments: res.data.comments })
     );
   }
 
@@ -141,8 +142,6 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
           </Grid>
         </Grid>
 
-        <Grid container direction="column"></Grid>
-
         <Grid item style={{ marginTop: "2%", marginLeft: "15%" }}>
           <Grid item>{article.body}</Grid>
           <Grid item>
@@ -167,13 +166,17 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
           <Grid item></Grid>
           {/* style={{ marginLeft: "25%", marginTop: "2%" }} */}
           <Grid item>
-            <hr />
+            <hr style={{ width: "1000px" }} />
 
-            <UserComment
-              comment={this.state.comment}
-              handleComment={this.handleComment}
-              handleSubmit={this.handleFormSubmit}
-            ></UserComment>
+            {localStorage.getItem("userToken") ? (
+              <UserComment
+                comment={this.state.comment}
+                image={utl.getUserDetails().image}
+                handleComment={this.handleComment}
+                handleSubmit={this.handleFormSubmit}
+              ></UserComment>
+            ) : null}
+
             <Comments comments={this.state.comments}></Comments>
           </Grid>
         </Grid>
