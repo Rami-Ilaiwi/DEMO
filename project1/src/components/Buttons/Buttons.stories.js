@@ -6,6 +6,7 @@ import { storiesOf } from "@storybook/react";
 import FavButtonArticle from "./FavoriteButtonSlug";
 import FavoriteButton from "./FavoriteButton";
 import FollowButton from "./FollowButton";
+import DeleteButton from "./DeleteButton";
 import { State } from "react-powerplug";
 
 storiesOf("Buttons", module)
@@ -37,4 +38,7 @@ storiesOf("Buttons", module)
       handleFollow={action("button-click")}
       profileName={"Name"}
     ></FollowButton>
+  ))
+  .add("Delete Button", () => (
+    <DeleteButton handleDelete={action("button-click")}></DeleteButton>
   ));

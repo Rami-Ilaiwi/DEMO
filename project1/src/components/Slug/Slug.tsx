@@ -10,7 +10,7 @@ import utl from "../../utils/utils";
 import SlugBanner from "./SlugBanner";
 
 class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
-  public state = {
+  state = {
     article: {
       title: "",
       slug: "",
@@ -34,12 +34,26 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
       image: "",
       username: ""
     },
-    comments: [],
+    comments: [
+      {
+        id: 0,
+        createdAt: "",
+        updatedAt: "",
+        body: "",
+        author: {
+          username: "",
+          bio: "",
+          image: "",
+          following: false
+        }
+      }
+    ],
     comment: ""
   };
+  slug = this.props.match.params.slug;
 
-  public componentDidMount() {
-    AXIOS.noauthGet(`articles/${this.props.match.params.slug}`)
+  componentDidMount() {
+    AXIOS.noauthGet(`articles/${this.slug}`)
       .then(res => {
         const article = res.data.article;
         this.setState({
@@ -56,8 +70,8 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
           }
         )
       );
-    AXIOS.noauthGet(`articles/${this.props.match.params.slug}/comments`).then(
-      res => this.setState({ comments: res.data.comments })
+    AXIOS.noauthGet(`articles/${this.slug}/comments`).then(res =>
+      this.setState({ comments: res.data.comments })
     );
   }
 
@@ -68,11 +82,11 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
   ) => {
     if (this.state.article.favorited) {
       AXIOS.DELETE({
-        endpoint: `articles/${this.props.match.params.slug}/favorite`
+        endpoint: `articles/${this.slug}/favorite`
       }).then(resp => this.setState({ article: resp.article }));
     } else {
       AXIOS.post({
-        endpoint: `articles/${this.props.match.params.slug}/favorite`
+        endpoint: `articles/${this.slug}/favorite`
       }).then(resp => this.setState({ article: resp.article }));
     }
   };
@@ -91,6 +105,14 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
     }
   };
 
+  handleDeleteArticle = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    AXIOS.DELETE({ endpoint: `articles/${this.slug}` }).then(
+      () => (window.location.href = "/")
+    );
+  };
+
   handleComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     this.setState({ comment: event.target.value });
   };
@@ -99,20 +121,40 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
     event.preventDefault();
 
     AXIOS.post({
-      endpoint: `articles/${this.props.match.params.slug}/comments`,
+      endpoint: `articles/${this.slug}/comments`,
       body: {
         comment: {
           body: `${this.state.comment}`
         }
       }
-    });
+    }).then(
+      () => (
+        this.setState({ comment: "" }),
+        AXIOS.noauthGet(`articles/${this.slug}/comments`).then(res =>
+          this.setState({ comments: res.data.comments })
+        )
+      )
+    );
   };
 
+  handleDeleteComment = (
+    event: React.MouseEvent<HTMLSpanElement, MouseEvent>
+  ) => {
+    AXIOS.DELETE({
+      endpoint: `articles/${this.slug}/comments/${event.currentTarget.id}`
+    }).then(() =>
+      AXIOS.noauthGet(`articles/${this.slug}/comments`).then(res =>
+        this.setState({ comments: res.data.comments })
+      )
+    );
+    // console.log(event.currentTarget.id);
+  };
   /* ****************** */
 
-  public render() {
+  render() {
     const article = this.state.article;
     const profile = this.state.profile;
+    const user = utl.getUserDetails();
     const token = localStorage.getItem("userToken");
     return (
       <>
@@ -125,11 +167,21 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
           profileName={profile.username}
           favorited={article.favorited}
           favoritesCount={article.favoritesCount}
+          loggedinUser={user.username}
           handleFollow={this.handleFollowClick}
           handleFavorite={this.handleFavoriteClick}
+          handleDelete={this.handleDeleteArticle}
         ></SlugBanner>
 
-        <Grid item style={{ marginTop: "2%", marginLeft: "15%" }}>
+        <Grid
+          item
+          style={{
+            marginTop: "2%",
+            marginLeft: "16%",
+            width: "69%",
+            textAlign: "justify"
+          }}
+        >
           <Grid item>{article.body}</Grid>
           <Grid item>
             <TagList tagList={article.tagList}></TagList>
@@ -145,26 +197,29 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
             profileName={profile.username}
             favorited={article.favorited}
             favoritesCount={article.favoritesCount}
+            loggedinUser={user.username}
             handleFollow={this.handleFollowClick}
             handleFavorite={this.handleFavoriteClick}
+            handleDelete={this.handleDeleteArticle}
           ></ArticleMeta>
         </Grid>
         <Grid container direction="column" justify="center" alignItems="center">
-          <Grid item></Grid>
-          {/* style={{ marginLeft: "25%", marginTop: "2%" }} */}
           <Grid item>
             <hr style={{ width: "1000px" }} />
 
             {token ? (
               <UserComment
                 comment={this.state.comment}
-                image={utl.getUserDetails().image}
+                image={user.image}
                 handleComment={this.handleComment}
                 handleSubmit={this.handleFormSubmit}
               ></UserComment>
             ) : null}
 
-            <Comments comments={this.state.comments}></Comments>
+            <Comments
+              comments={this.state.comments}
+              handleDeleteComment={this.handleDeleteComment}
+            ></Comments>
           </Grid>
         </Grid>
       </>

@@ -1,12 +1,12 @@
 import React from "react";
 
-interface FavButtonProps {
+interface FavoriteButtonProps {
   favorited: boolean;
   favoritesCount: number;
   handleFavorite: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const FavoriteButtonSlug: React.FC<FavButtonProps> = props => {
+const FavoriteButtonSlug: React.FC<FavoriteButtonProps> = props => {
   return (
     <button
       onClick={props.handleFavorite}

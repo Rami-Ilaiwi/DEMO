@@ -265,6 +265,13 @@
   border-color: #5cb85c;
 }
 
+.deleteArticle {
+  color: #b85c5c;
+  background-image: none;
+  background-color: transparent;
+  border-color: #b85c5c;
+}
+
 .unFav {
   color: #fff;
   background-color: #5cb85c;
@@ -497,7 +504,9 @@ a {
   background-color: #5cb85c;
 }
 
-p {
+.deleteIcon {
+  color: rgba(0, 0, 0, 0.54);
+  cursor: pointer;
 }
 
 .App-link {

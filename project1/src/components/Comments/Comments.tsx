@@ -7,6 +7,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 // import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import utl from "../../utils/utils";
+import DeleteComment from "./DeleteComment";
 
 interface CommentItem {
   id: number;
@@ -21,8 +23,11 @@ interface CommentItem {
   };
 }
 
-interface commentsProps {
+interface CommentsProps {
   comments: CommentItem[];
+  handleDeleteComment: (
+    event: React.MouseEvent<HTMLSpanElement, MouseEvent>
+  ) => void;
 }
 
 const useStyles = makeStyles({
@@ -31,8 +36,9 @@ const useStyles = makeStyles({
   }
 });
 
-const Comments: React.FC<commentsProps> = props => {
+const Comments: React.FC<CommentsProps> = props => {
   const classes = useStyles();
+  const user = utl.getUserDetails();
   const content = props.comments.map(item => {
     return (
       <div key={item.id} className="card">
@@ -66,18 +72,12 @@ const Comments: React.FC<commentsProps> = props => {
             </Typography>
           </CardContent>
 
-          {/* hereee */}
-          <CardActions>
-            {/* <Button size="small" color="primary">
-              Share
-            </Button>
-            <Button size="small" color="primary">
-              Learn More
-            </Button> */}
-            {/* <span className="mod-options ng-hide" ng-show="$ctrl.canModify">
-              <i className="ion-trash-a" ng-click="$ctrl.deleteCb()"></i>
-            </span> */}
-          </CardActions>
+          <DeleteComment
+            commentID={item.id}
+            user={user.username}
+            author={item.author.username}
+            handleDeleteComment={props.handleDeleteComment}
+          ></DeleteComment>
         </Card>
       </div>
     );
