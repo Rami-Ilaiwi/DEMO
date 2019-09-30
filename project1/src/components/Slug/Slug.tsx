@@ -1,12 +1,13 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import AXIOS from "../utils/AXIOS";
+import AXIOS from "../../utils/AXIOS";
 import { RouteComponentProps } from "react-router-dom";
-import TagList from "./TagList";
-import Comments from "./Comments";
-import ArticleMeta from "./ArticleMeta";
-import UserComment from "./UserComment";
-import utl from "../utils/utils";
+import TagList from "../Tags/TagList";
+import Comments from "../Comments/Comments";
+import ArticleMeta from "../Article/ArticleMeta";
+import UserComment from "../Comments/UserComment";
+import utl from "../../utils/utils";
+import SlugBanner from "./SlugBanner";
 
 class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
   public state = {
@@ -62,7 +63,9 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
 
   /* ***** handlers ***** */
 
-  handleFavClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  handleFavoriteClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     if (this.state.article.favorited) {
       AXIOS.DELETE({
         endpoint: `articles/${this.props.match.params.slug}/favorite`
@@ -110,37 +113,21 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
   public render() {
     const article = this.state.article;
     const profile = this.state.profile;
-
+    const token = localStorage.getItem("userToken");
     return (
       <>
-        <Grid container direction="column" justify="center">
-          <br />
-          <Grid
-            item
-            style={{
-              backgroundColor: "#333",
-              width: "100%",
-              color: "white"
-            }}
-          >
-            <Grid item style={{ marginLeft: "15%", width: "70%" }}>
-              <Grid>
-                <h1>{article.title}</h1>
-              </Grid>
-              <ArticleMeta
-                image={article.author.image}
-                username={article.author.username}
-                createdAt={article.createdAt}
-                following={profile.following}
-                profileName={profile.username}
-                favorited={article.favorited}
-                favoritesCount={article.favoritesCount}
-                handleFollow={this.handleFollowClick}
-                handleFav={this.handleFavClick}
-              ></ArticleMeta>
-            </Grid>
-          </Grid>
-        </Grid>
+        <SlugBanner
+          title={article.title}
+          image={article.author.image}
+          username={article.author.username}
+          createdAt={article.createdAt}
+          following={profile.following}
+          profileName={profile.username}
+          favorited={article.favorited}
+          favoritesCount={article.favoritesCount}
+          handleFollow={this.handleFollowClick}
+          handleFavorite={this.handleFavoriteClick}
+        ></SlugBanner>
 
         <Grid item style={{ marginTop: "2%", marginLeft: "15%" }}>
           <Grid item>{article.body}</Grid>
@@ -149,7 +136,7 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
           </Grid>
         </Grid>
 
-        <Grid item style={{ marginLeft: "30%" }}>
+        <Grid item style={{ marginLeft: "28%" }}>
           <ArticleMeta
             image={article.author.image}
             username={article.author.username}
@@ -159,7 +146,7 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
             favorited={article.favorited}
             favoritesCount={article.favoritesCount}
             handleFollow={this.handleFollowClick}
-            handleFav={this.handleFavClick}
+            handleFavorite={this.handleFavoriteClick}
           ></ArticleMeta>
         </Grid>
         <Grid container direction="column" justify="center" alignItems="center">
@@ -168,7 +155,7 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
           <Grid item>
             <hr style={{ width: "1000px" }} />
 
-            {localStorage.getItem("userToken") ? (
+            {token ? (
               <UserComment
                 comment={this.state.comment}
                 image={utl.getUserDetails().image}

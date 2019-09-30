@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { RouteComponentProps } from "@reach/router";
-import AXIOS from "../utils/AXIOS";
+import AXIOS from "../../utils/AXIOS";
 
 class NewArticle extends React.Component {
   public state = {

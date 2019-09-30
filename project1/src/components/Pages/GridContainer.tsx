@@ -1,10 +1,9 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 // import Paper from "@material-ui/core/Paper";
-import Banner from "./Banner";
+import Banner from "../Layout/Banner";
 import Grid from "@material-ui/core/Grid";
-import Tags from "./Tags";
-import Articles from "./Articles";
+import Tags from "../Tags/Tags";
+import Articles from "../Article/Articles";
 
 const GridContainer = () => {
   return (

@@ -1,35 +1,7 @@
 import React from "react";
-import styled from "@emotion/styled";
 import Grid from "@material-ui/core/Grid";
-import utl from "../utils/utils";
+import utl from "../../utils/utils";
 import { Link } from "react-router-dom";
-
-const HeaderBar = styled("div")`
-  list-style-type: none;
-  margin: 0;
-
-  overflow: hidden;
-  flex-grow: 1;
-  div {
-    float: right;
-    text-align: center;
-    margin-right: 150px;
-  }
-  ul {
-    li {
-      float: left;
-      position: inherit;
-      list-style: none;
-      padding-left: 0;
-      margin-top: 0;
-      box-sizing: inherit;
-    }
-    a {
-      text-align: center;
-      padding-left: 20px;
-    }
-  }
-`;
 
 class Header extends React.Component {
   render() {
@@ -40,6 +12,7 @@ class Header extends React.Component {
         direction="row"
         justify="space-around"
         alignItems="baseline"
+        style={{ marginTop: "1%" }}
       >
         <Grid item xs={3}>
           <span className="title">
@@ -100,19 +73,5 @@ class Header extends React.Component {
     );
   }
 }
-
-// const Header = () => {
-//   return (
-//     <div>
-//       <AppBar position="static">
-//         <Toolbar>
-//           <Typography variant="title" color="inherit">
-//             React & Material-UI
-//           </Typography>
-//         </Toolbar>
-//       </AppBar>
-//     </div>
-//   );
-// };
 
 export default Header;

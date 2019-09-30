@@ -1,7 +1,7 @@
 import React from "react";
-import AXIOS from "../utils/AXIOS";
+import AXIOS from "../../utils/AXIOS";
 import Grid from "@material-ui/core/Grid";
-import utl from "../utils/utils";
+import utl from "../../utils/utils";
 
 // const userDetails = utl.getUserDetails();
 

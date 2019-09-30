@@ -16,7 +16,7 @@ interface PROPS {
 class UserComment extends React.Component<PROPS> {
   render() {
     return (
-      <div className="comment-card">
+      <div className="card">
         <Card style={{ maxWidth: "600px" }}>
           <form onSubmit={this.props.handleSubmit}>
             <CardContent>

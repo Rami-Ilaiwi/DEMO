@@ -1,5 +1,5 @@
 import React from "react";
-import AXIOS from "../utils/AXIOS";
+import AXIOS from "../../utils/AXIOS";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 
@@ -29,7 +29,6 @@ class LoginComponent extends React.Component {
       localStorage.setItem("userToken", res.data.user.token);
       // this.props.history.push("/");
       window.location.href = "/";
-      // console.log(res.data.user.token);
     });
   };
 

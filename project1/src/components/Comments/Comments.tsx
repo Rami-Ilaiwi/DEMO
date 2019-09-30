@@ -2,13 +2,13 @@ import React from "react";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
+// import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-interface commentItem {
+interface CommentItem {
   id: number;
   createdAt: string;
   updatedAt: string;
@@ -22,7 +22,7 @@ interface commentItem {
 }
 
 interface commentsProps {
-  comments: commentItem[];
+  comments: CommentItem[];
 }
 
 const useStyles = makeStyles({
@@ -56,8 +56,13 @@ const Comments: React.FC<commentsProps> = props => {
                 )}
               </span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <p className="card-text">{item.body}</p>
+            <Typography
+              className="card-text"
+              variant="body2"
+              color="textSecondary"
+              component="p"
+            >
+              {item.body}
             </Typography>
           </CardContent>
 
@@ -77,7 +82,7 @@ const Comments: React.FC<commentsProps> = props => {
       </div>
     );
   });
-  return <ul>{content}</ul>;
+  return <div>{content}</div>;
 };
 
 export default Comments;
