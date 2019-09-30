@@ -1,14 +1,46 @@
 import React from "react";
 import moment from "moment";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-// import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-// import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import utl from "../../utils/utils";
 import DeleteComment from "./DeleteComment";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+
+const styles = () =>
+  createStyles({
+    root: {
+      boxShadow: "none",
+      position: "relative",
+      display: "block",
+      marginBottom: "0.75rem",
+      borderRadius: "0.25rem",
+      marginLeft: "19%"
+    },
+
+    commentAuthor: {
+      display: "inline-block"
+    },
+
+    commentAuthorImage: {
+      display: "inline-block",
+      verticalAlign: "middle",
+      height: "30px",
+      width: "30px",
+      borderRadius: "30px"
+    },
+
+    cardWidth: {
+      maxWidth: 600
+    },
+
+    date: {
+      color: "#bbb",
+      fontSize: "0.8rem",
+      display: "block"
+    }
+  });
 
 interface CommentItem {
   id: number;
@@ -30,44 +62,42 @@ interface CommentsProps {
   ) => void;
 }
 
-const useStyles = makeStyles({
-  card: {
-    maxWidth: 600
-  }
-});
+// const useStyles = makeStyles({
+//   cardWidth: {
+//     maxWidth: 600
+//   }
+// });
 
-const Comments: React.FC<CommentsProps> = props => {
-  const classes = useStyles();
+const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
+  // const classes = useStyles();
   const user = utl.getUserDetails();
   const content = props.comments.map(item => {
     return (
-      <div key={item.id} className="card">
-        <Card className={classes.card}>
+      <div key={item.id} className={props.classes.root}>
+        <Card className={props.classes.cardWidth}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              <a className="comment-author" href="#/@yiwei">
-                <img src={item.author.image} className="comment-author-img" />
+              <a className={props.classes.commentAuthor} href="#/@yiwei">
+                <img
+                  src={item.author.image}
+                  className={props.classes.commentAuthorImage}
+                />
               </a>
               <span>
                 {" "}
                 {/* edit this link */}
-                <a className="comment-author ng-binding" href="#/@yiwei">
+                <a className={props.classes.commentAuthor} href="#/@yiwei">
                   {item.author.username}
                 </a>
               </span>
               <br />
-              <span className="date">
+              <span className={props.classes.date}>
                 {moment(new Date(Date.parse(item.createdAt))).format(
                   "MMMM D, YYYY"
                 )}
               </span>
             </Typography>
-            <Typography
-              className="card-text"
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
+            <Typography variant="body2" color="textSecondary" component="p">
               {item.body}
             </Typography>
           </CardContent>
@@ -85,4 +115,4 @@ const Comments: React.FC<CommentsProps> = props => {
   return <div>{content}</div>;
 };
 
-export default Comments;
+export default withStyles(styles)(Comments);

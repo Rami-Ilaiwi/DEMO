@@ -1,36 +1,37 @@
 import React from "react";
-import styled from "@emotion/styled";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import AXIOS from "../../utils/AXIOS";
-const TagBar = styled("div")`
-  padding: 5px 10px 10px 10px;
-  background: #f3f3f3;
-  border-radius: 4px;
-  box-sizing: inherit;
-  line-height: 1.5;
-  float: right;
-  margin-right: 100px;
-  margin-top: 20px;
-  position: static;
 
-  a {
-    background-color: #818a91;
-    color: #fff !important;
-    font-size: 0.8rem;
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
-    white-space: nowrap;
-    margin-right: 3px;
-    margin-bottom: 0.2rem;
-    display: inline-block;
-    padding-right: 0.6em;
-    padding-left: 0.6em;
-    border-radius: 10rem;
-    touch-action: manipulation;
-    text-decoration: none;
+const styles = createStyles({
+  root: {
+    padding: "5px 10px 10px 10px",
+    background: "#f3f3f3",
+    borderRadius: "4px",
+    boxSizing: "inherit",
+    lineHeight: 1.5,
+    marginRight: "100px",
+    marginTop: "20px",
+    position: "static"
+  },
+  tag: {
+    backgroundColor: "#818a91",
+    color: "#fff !important",
+    fontSize: "0.8rem",
+    paddingTop: "0.1rem",
+    paddingBottom: "0.1rem",
+    whiteSpace: "nowrap",
+    marginRight: "3px",
+    marginBottom: "0.2rem",
+    display: "inline-block",
+    paddingRight: "0.6em",
+    paddingLeft: "0.6em",
+    borderRadius: "10rem",
+    touchAction: "manipulation",
+    textDecoration: "none"
   }
-`;
+});
 
-class Tags extends React.Component {
+class Tags extends React.Component<WithStyles<typeof styles>> {
   public state = {
     tags: [] as string[]
   };
@@ -45,15 +46,17 @@ class Tags extends React.Component {
 
   public render() {
     return (
-      <TagBar>
+      <div className={this.props.classes.root}>
         Popular Tags
         <br />
         {this.state.tags.map(ar => (
-          <a key={ar}>{ar}</a>
+          <a className={this.props.classes.tag} key={ar}>
+            {ar}
+          </a>
         ))}
-      </TagBar>
+      </div>
     );
   }
 }
 
-export default Tags;
+export default withStyles(styles)(Tags);

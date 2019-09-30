@@ -4,7 +4,7 @@ import FavoriteButton from "../Buttons/FavoriteButton";
 import TagList from "../Tags/TagList";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import ArticleInfo from "./ArticleInfo";
+import ArticleAuthor from "./ArticleAuthor";
 interface ArticleProps {
   image: string;
   username: string;
@@ -34,16 +34,14 @@ const Article: React.FC<ArticleProps> = props => {
           xs={6}
           spacing={2}
         >
-          <ArticleInfo
+          <ArticleAuthor
             image={props.image}
             createdAt={props.createdAt}
             username={props.username}
-          ></ArticleInfo>
+          />
         </Grid>
         <Grid item xs={1}>
-          <FavoriteButton
-            favoritesCount={props.favoritesCount}
-          ></FavoriteButton>
+          <FavoriteButton favoritesCount={props.favoritesCount} />
         </Grid>
       </Grid>
       <Link to={`/article/${props.slug}`}>
@@ -56,7 +54,7 @@ const Article: React.FC<ArticleProps> = props => {
             <span>Read more...</span>
           </Grid>
           <Grid item>
-            <TagList tagList={props.tagList}></TagList>
+            <TagList tagList={props.tagList} />
             {/* {console.log(props.tagList)} */}
           </Grid>
         </Grid>

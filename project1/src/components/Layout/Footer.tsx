@@ -1,36 +1,36 @@
 import React from "react";
-// import styled from "@emotion/styled";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 
-// const FooterS = styled("a")`
-//   position: fixed;
-//   bottom: 0;
-//   width: 100%;
-//   background: linear-gradient(#485563, #29323c);
-//   text-align: center;
-//   padding: 15px;
-//   z-index: 999;
-//   color: #fff;
-//   font-size: 1.5rem;
-//   display: block;
-//   text-decoration: none;
+const styles = () =>
+  createStyles({
+    footer: {
+      position: "fixed",
+      bottom: 0,
+      width: "100%",
+      background: "linear-gradient(#485563, #29323c)",
+      textAlign: "center",
+      padding: "15px",
+      boxShadow: "0 5px 5px 5px rgba(0, 0, 0, 0.4)",
+      zIndex: 999,
+      color: "#fff !important",
+      fontSize: "1.5rem",
+      display: "block",
+      "&:hover": {
+        textDecoration: "underline"
+      }
+    }
+  });
 
-//   &:hover {
-//     text-decoration: underline;
-//   }
-// `;
+const Footer = ({ classes }: WithStyles<typeof styles>) => {
+  return (
+    <a
+      href="https://github.com/gothinkster/angularjs-realworld-example-app"
+      target="_blank"
+      className={classes.footer}
+    >
+      <i className={"ion-social-github"}></i>&nbsp;&nbsp;Fork on GitHub
+    </a>
+  );
+};
 
-class Footer extends React.Component {
-  render() {
-    return (
-      <a
-        href="https://github.com/gothinkster/angularjs-realworld-example-app"
-        target="_blank"
-        className="footer"
-      >
-        <i className="ion-social-github"></i>&nbsp;&nbsp;Fork on GitHub
-      </a>
-    );
-  }
-}
-
-export default Footer;
+export default withStyles(styles)(Footer);

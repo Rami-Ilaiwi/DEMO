@@ -2,12 +2,12 @@
   text-align: center;
 }
 
-.title {
+/* .title {
   font-family: "Titillium Web", sans-serif;
   font-size: 1.5rem !important;
   text-decoration: none;
   color: #5cb85c !important;
-}
+} */
 
 .card {
   box-shadow: none !important;
@@ -27,9 +27,9 @@
   clear: both;
 }
 
-.card-text:last-child {
+/* .card-text:last-child {
   margin-bottom: 0;
-}
+} */
 
 .article-page .card .card-footer {
   border-top: 1px solid #e5e5e5;
@@ -251,12 +251,12 @@
   opacity: 0.8;
 }
 
-.follow {
+/* .follow {
   color: #ccc;
   background-image: none;
   background-color: transparent;
   border-color: #ccc;
-}
+} */
 
 .fav {
   color: #5cb85c;
@@ -265,12 +265,12 @@
   border-color: #5cb85c;
 }
 
-.deleteArticle {
+/* .deleteArticle {
   color: #b85c5c;
   background-image: none;
   background-color: transparent;
   border-color: #b85c5c;
-}
+} */
 
 .unFav {
   color: #fff;
@@ -278,11 +278,11 @@
   border-color: #5cb85c;
 }
 
-.unFollow {
+/* .unFollow {
   color: #373a3c;
   background-color: #fff;
   border-color: #ccc;
-}
+} */
 
 a:-webkit-any-link {
   color: inherit;
@@ -323,24 +323,24 @@ h6,
   font-size: 1rem;
 }
 
-.articleImage {
+/* .articleImage {
   height: 32px;
   width: 32px;
   border-radius: 30px;
   box-sizing: inherit;
   position: relative;
-}
+} */
 
-.user-pic {
+/* .user-pic {
   height: 26px;
   border-radius: 50px;
   float: left;
   box-sizing: inherit;
   margin-right: 5px;
   position: relative;
-}
+} */
 
-.logout {
+/* .logout {
   color: #b85c5c;
   background-color: transparent;
   border-color: #b85c5c;
@@ -359,7 +359,7 @@ h6,
 
   border: 1px solid;
   opacity: 0.8;
-}
+} */
 
 .row {
   text-align: center;
@@ -399,16 +399,16 @@ h6,
   resize: vertical;
 }
 
-.subTitle {
+/* .subTitle {
   font-family: "Source Sans Pro", sans-serif;
   line-height: 1.5;
   font-weight: 500;
   color: #373a3c;
   margin-bottom: 0;
   margin-top: 5%;
-}
+} */
 
-.tagList {
+/* .tagList {
   font-weight: 300;
   font-size: 0.8rem !important;
   padding-top: 0px !important;
@@ -426,9 +426,9 @@ h6,
   box-sizing: inherit;
   text-align: -webkit-match-parent;
   list-style: none !important;
-}
+} */
 
-.favoriteButton {
+/* .favoriteButton {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   border-radius: 0.2rem;
@@ -441,9 +441,9 @@ h6,
   color: #5cb85c;
   background-color: transparent;
   border-color: #5cb85c;
-}
+} */
 
-.footer {
+/* .footer {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -459,7 +459,7 @@ h6,
 
 .footer:hover {
   text-decoration: underline;
-}
+} */
 
 body {
   font-family: "Source Sans Pro", sans-serif;
@@ -483,7 +483,7 @@ a {
   color: white;
 }
 
-.submit {
+/* .submit {
   padding: 0.75rem 1.5rem;
   font-size: 1.25rem;
   border-radius: 0.3rem;
@@ -502,7 +502,7 @@ a {
   opacity: 0.8;
   color: white;
   background-color: #5cb85c;
-}
+} */
 
 .deleteIcon {
   color: rgba(0, 0, 0, 0.54);

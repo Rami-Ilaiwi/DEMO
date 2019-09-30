@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import FollowButton from "../Buttons/FollowButton";
 import FavoriteButtonSlug from "../Buttons/FavoriteButtonSlug";
-import ArticleInfo from "./ArticleInfo";
+import ArticleAuthor from "./ArticleAuthor";
 import DeleteButton from "../Buttons/DeleteButton";
 
 interface ArticleMetaProps {
@@ -14,54 +14,50 @@ interface ArticleMetaProps {
   favorited: boolean;
   favoritesCount: number;
   loggedinUser: string;
-  handleFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  handleFavorite: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  handleDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onFavorite: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-class ArticleMeta extends React.Component<ArticleMetaProps> {
-  //   handleFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  //     this.props.handleFollow(event)
+const ArticleMeta: React.FC<ArticleMetaProps> = props => {
+  //   onFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  //     this.props.onFollow(event)
   //   };
 
-  render() {
-    return (
-      <Grid container direction="row" justify="flex-start" alignItems="center">
-        <Grid item xs={4}>
-          <ArticleInfo
-            image={this.props.image}
-            username={this.props.username}
-            createdAt={this.props.createdAt}
-          ></ArticleInfo>
-        </Grid>
-
-        <Grid item container direction="row" xs={4} spacing={1}>
-          <Grid item>
-            <FollowButton
-              following={this.props.following}
-              handleFollow={this.props.handleFollow}
-              profileName={this.props.profileName}
-            ></FollowButton>
-          </Grid>
-          {this.props.loggedinUser == this.props.username ? (
-            <Grid item>
-              <DeleteButton
-                handleDelete={this.props.handleDelete}
-              ></DeleteButton>
-            </Grid>
-          ) : (
-            <Grid item>
-              <FavoriteButtonSlug
-                handleFavorite={this.props.handleFavorite}
-                favorited={this.props.favorited}
-                favoritesCount={this.props.favoritesCount}
-              ></FavoriteButtonSlug>
-            </Grid>
-          )}
-        </Grid>
+  return (
+    <Grid container direction="row" justify="flex-start" alignItems="center">
+      <Grid item xs={4}>
+        <ArticleAuthor
+          image={props.image}
+          username={props.username}
+          createdAt={props.createdAt}
+        />
       </Grid>
-    );
-  }
-}
+
+      <Grid item container direction="row" xs={4} spacing={1}>
+        <Grid item>
+          <FollowButton
+            following={props.following}
+            onFollow={props.onFollow}
+            profileName={props.profileName}
+          />
+        </Grid>
+        {props.loggedinUser == props.username ? (
+          <Grid item>
+            <DeleteButton onDelete={props.onDelete} />
+          </Grid>
+        ) : (
+          <Grid item>
+            <FavoriteButtonSlug
+              onFavorite={props.onFavorite}
+              favorited={props.favorited}
+              favoritesCount={props.favoritesCount}
+            />
+          </Grid>
+        )}
+      </Grid>
+    </Grid>
+  );
+};
 
 export default ArticleMeta;

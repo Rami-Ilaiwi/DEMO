@@ -77,7 +77,7 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
 
   /* ***** handlers ***** */
 
-  handleFavoriteClick = (
+  onFavoriteClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (this.state.article.favorited) {
@@ -91,9 +91,7 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
     }
   };
 
-  handleFollowClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  onFollowClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (this.state.profile.following) {
       AXIOS.DELETE({
         endpoint: `profiles/${this.state.profile.username}/follow`
@@ -105,9 +103,7 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
     }
   };
 
-  handleDeleteArticle = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  onDeleteClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     AXIOS.DELETE({ endpoint: `articles/${this.slug}` }).then(
       () => (window.location.href = "/")
     );
@@ -168,10 +164,10 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
           favorited={article.favorited}
           favoritesCount={article.favoritesCount}
           loggedinUser={user.username}
-          handleFollow={this.handleFollowClick}
-          handleFavorite={this.handleFavoriteClick}
-          handleDelete={this.handleDeleteArticle}
-        ></SlugBanner>
+          onFollow={this.onFollowClick}
+          onFavorite={this.onFavoriteClick}
+          onDelete={this.onDeleteClick}
+        />
 
         <Grid
           item
@@ -184,7 +180,7 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
         >
           <Grid item>{article.body}</Grid>
           <Grid item>
-            <TagList tagList={article.tagList}></TagList>
+            <TagList tagList={article.tagList} />
           </Grid>
         </Grid>
 
@@ -198,10 +194,10 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
             favorited={article.favorited}
             favoritesCount={article.favoritesCount}
             loggedinUser={user.username}
-            handleFollow={this.handleFollowClick}
-            handleFavorite={this.handleFavoriteClick}
-            handleDelete={this.handleDeleteArticle}
-          ></ArticleMeta>
+            onFollow={this.onFollowClick}
+            onFavorite={this.onFavoriteClick}
+            onDelete={this.onDeleteClick}
+          />
         </Grid>
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item>
@@ -213,13 +209,13 @@ class Slug extends React.Component<RouteComponentProps<{ slug: string }>> {
                 image={user.image}
                 handleComment={this.handleComment}
                 handleSubmit={this.handleFormSubmit}
-              ></UserComment>
+              />
             ) : null}
 
             <Comments
               comments={this.state.comments}
               handleDeleteComment={this.handleDeleteComment}
-            ></Comments>
+            />
           </Grid>
         </Grid>
       </>

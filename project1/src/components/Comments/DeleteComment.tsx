@@ -1,5 +1,17 @@
 import React from "react";
 import CardActions from "@material-ui/core/CardActions";
+import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+
+const styles = () =>
+  createStyles({
+    root: { float: "right", marginRight: "2%" },
+    deleteIcon: {
+      color: "rgba(0, 0, 0, 0.54)",
+      cursor: "pointer",
+      fontSize: "1.3rem"
+    }
+  });
 
 interface DeleteCommentProps {
   user: string;
@@ -10,17 +22,22 @@ interface DeleteCommentProps {
   ) => void;
 }
 
-const DeleteComment: React.FC<DeleteCommentProps> = props => {
+const DeleteComment: React.FC<
+  DeleteCommentProps & WithStyles<typeof styles>
+> = props => {
   return (
     <div>
       {props.user == props.author ? (
-        <CardActions style={{ float: "right", marginRight: "2%" }}>
+        <CardActions className={props.classes.root}>
           <span
-            className="deleteIcon"
+            className={props.classes.deleteIcon}
             onClick={props.handleDeleteComment}
             id={`${props.commentID}`}
           >
-            <i className="ion-android-delete" id={`${props.commentID}`}></i>
+            <DeleteForeverRoundedIcon
+              className={props.classes.deleteIcon}
+              id={`${props.commentID}`}
+            />
           </span>
         </CardActions>
       ) : null}
@@ -28,4 +45,4 @@ const DeleteComment: React.FC<DeleteCommentProps> = props => {
   );
 };
 
-export default DeleteComment;
+export default withStyles(styles)(DeleteComment);

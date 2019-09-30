@@ -12,9 +12,9 @@ interface SlugProps {
   favorited: boolean;
   favoritesCount: number;
   loggedinUser: string;
-  handleFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  handleFavorite: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  handleDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onFavorite: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const SlugBanner: React.FC<SlugProps> = props => {
@@ -42,9 +42,9 @@ const SlugBanner: React.FC<SlugProps> = props => {
             favorited={props.favorited}
             favoritesCount={props.favoritesCount}
             loggedinUser={props.loggedinUser}
-            handleFollow={props.handleFollow}
-            handleFavorite={props.handleFavorite}
-            handleDelete={props.handleDelete}
+            onFollow={props.onFollow}
+            onFavorite={props.onFavorite}
+            onDelete={props.onDelete}
           ></ArticleMeta>
         </Grid>
       </Grid>
