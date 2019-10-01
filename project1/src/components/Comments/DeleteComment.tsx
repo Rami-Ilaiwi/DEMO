@@ -1,17 +1,8 @@
 import React from "react";
 import CardActions from "@material-ui/core/CardActions";
 import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
-
-const styles = () =>
-  createStyles({
-    root: { float: "right", marginRight: "2%" },
-    deleteIcon: {
-      color: "rgba(0, 0, 0, 0.54)",
-      cursor: "pointer",
-      fontSize: "1.3rem"
-    }
-  });
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/DeleteComment";
 
 interface DeleteCommentProps {
   user: string;

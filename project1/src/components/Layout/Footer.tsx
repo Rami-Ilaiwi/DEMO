@@ -1,25 +1,6 @@
 import React from "react";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
-
-const styles = () =>
-  createStyles({
-    footer: {
-      position: "fixed",
-      bottom: 0,
-      width: "100%",
-      background: "linear-gradient(#485563, #29323c)",
-      textAlign: "center",
-      padding: "15px",
-      boxShadow: "0 5px 5px 5px rgba(0, 0, 0, 0.4)",
-      zIndex: 999,
-      color: "#fff !important",
-      fontSize: "1.5rem",
-      display: "block",
-      "&:hover": {
-        textDecoration: "underline"
-      }
-    }
-  });
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/FooterStyle";
 
 const Footer = ({ classes }: WithStyles<typeof styles>) => {
   return (

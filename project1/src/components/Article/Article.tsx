@@ -2,9 +2,11 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import FavoriteButton from "../Buttons/FavoriteButton";
 import TagList from "../Tags/TagList";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import ArticleAuthor from "./ArticleAuthor";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/ArticleStyle";
+
 interface ArticleProps {
   image: string;
   username: string;
@@ -16,9 +18,9 @@ interface ArticleProps {
   slug: string;
 }
 
-const Article: React.FC<ArticleProps> = props => {
+const Article: React.FC<ArticleProps & WithStyles<typeof styles>> = props => {
   return (
-    <Grid container direction="column">
+    <Grid className={props.classes.root} container direction="column">
       <Grid
         container
         direction="row"
@@ -44,9 +46,9 @@ const Article: React.FC<ArticleProps> = props => {
           <FavoriteButton favoritesCount={props.favoritesCount} />
         </Grid>
       </Grid>
-      <Link to={`/article/${props.slug}`}>
+      <Link className={props.classes.articleBody} to={`/article/${props.slug}`}>
         <Grid item>
-          <h1>{props.title}</h1>
+          <h1 className={props.classes.title}>{props.title}</h1>
           <p>{props.description}</p>
         </Grid>
         <Grid container direction="row" justify="space-between">
@@ -63,4 +65,4 @@ const Article: React.FC<ArticleProps> = props => {
   );
 };
 
-export default Article;
+export default withStyles(styles)(Article);

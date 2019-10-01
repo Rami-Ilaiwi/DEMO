@@ -24,7 +24,7 @@ class Articles extends React.Component {
       <div>
         {this.state.articles.map((article, index: number) => (
           <Grid container justify="center" key={index}>
-            <Grid item xs={10}>
+            <Grid item xs={7}>
               <Article
                 username={article.author.username}
                 image={article.author.image}

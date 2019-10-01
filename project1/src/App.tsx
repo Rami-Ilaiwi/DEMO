@@ -1,6 +1,4 @@
 import React from "react";
-import "./App.css";
-// import Tags from "./components/Tags";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
 import GridContainer from "./Pages/GridContainer";

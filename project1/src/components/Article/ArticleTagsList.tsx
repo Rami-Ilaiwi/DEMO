@@ -1,29 +1,7 @@
 import React from "react";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
-
-const styles = () =>
-  createStyles({
-    root: {},
-
-    list: {
-      fontSize: "15px !important",
-      border: "1px solid #ddd",
-      color: "#aaa !important",
-      display: "inline-block",
-      marginRight: "3px",
-      paddingRight: "0.6em",
-      paddingLeft: "0.6em",
-      borderRadius: "10rem"
-    },
-
-    tag: { marginBottom: "1%" },
-
-    icon: {
-      fontSize: "inherit",
-      cursor: "pointer"
-    }
-  });
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/ArticleTagsListStyle";
 
 interface TagsProps {
   tagsList: string[];

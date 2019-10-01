@@ -1,24 +1,8 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import moment from "moment";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
-
-const styles = () =>
-  createStyles({
-    image: {
-      height: "32px",
-      width: "32px",
-      borderRadius: "30px",
-      boxSizing: "inherit",
-      position: "relative"
-    },
-
-    date: {
-      color: "#bbb",
-      fontSize: "0.8rem",
-      display: "block"
-    }
-  });
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/ArticleAuthorStyle";
 
 interface ArticleInfoProps {
   image: string;
@@ -41,14 +25,11 @@ const ArticleInfo: React.FC<
         spacing={2}
       >
         <Grid item>
-          <img
-            src={props.image}
-            className={props.classes.image}
-            alt={props.username}
-          />
+          <img src={props.image} className={props.classes.image} />
         </Grid>
         <Grid item>
-          <Grid>{props.username}</Grid> {/* Make this a Link */}
+          <Grid className={props.classes.author}>{props.username}</Grid>{" "}
+          {/* Make this a Link */}
           <Grid className={props.classes.date}>{date}</Grid>
         </Grid>
       </Grid>

@@ -1,22 +1,7 @@
 import React from "react";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import ArticleTagsList from "./ArticleTagsList";
-
-const styles = createStyles({
-  input: {
-    marginTop: "1.5%",
-    padding: "0.5rem 0.75rem",
-    width: "100%",
-    lineHeight: "1.25",
-    color: "#55595c",
-    backgroundColor: "#fff",
-    backgroundClip: "padding-box",
-    border: "1px solid rgba(0, 0, 0, 0.15)",
-    borderRadius: "0.25rem",
-    fontFamily: "'Source Sans Pro', sans-serif",
-    fontSize: "1.25rem"
-  }
-});
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/TagsInputStyle";
 
 export interface TagsProps {
   tagsList: string[];
