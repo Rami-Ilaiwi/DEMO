@@ -1,56 +1,43 @@
-import React from "react";
-import AXIOS from "../utils/AXIOS";
-// import Paper from "@material-ui/core/Paper";
+import React, { useState, useEffect } from "react";
+import AXIOS from "../../utils/AXIOS";
 import Grid from "@material-ui/core/Grid";
 import Article from "./Article";
-import { Article as ArticleItem } from "../dtos/ArticleResponseDto";
+import { Article as ArticleItem } from "../../dtos/ArticleResponseDto";
+import Pagination from "../Buttons/Pagination";
 
-// const classes = useStyles();
-class Articles extends React.Component {
-  state = {
-    articles: [] as Array<ArticleItem>
-  };
+const Articles = () => {
+  const [articles, setArticles] = useState([] as Array<ArticleItem>);
+  const [numberOfPages, setNumberOfPages] = useState(0);
 
-  componentDidMount() {
-    AXIOS.noauthGet("articles").then(res => {
-      const articles = res.data.articles;
-      this.setState({
-        articles
-      });
+  useEffect(() => {
+    AXIOS.noauthGet(`articles?limit=10`).then(res => {
+      setArticles(res.data.articles);
+      setNumberOfPages(res.data.articlesCount);
     });
-    // axios.get("https://conduit.productionready.io/api/articles").then(res => {
-    //   const articles = res.data.articles;
-    //   this.setState({
-    //     articles
-    //   });
-    // });
-  }
+  }, [numberOfPages]);
 
-  render() {
-    return (
-      <div>
-        {this.state.articles.map(article => (
-          <Grid container justify="center">
-            <Grid item xs={10}>
-              <Article
-                key={article.createdAt}
-                username={article.author.username}
-                image={article.author.image}
-                createdAt={article.createdAt}
-                title={article.title}
-                description={article.description}
-                favoritesCount={article.favoritesCount}
-                tagList={article.tagList}
-                slug={article.slug}
-              />
-              {/* {console.log(article)} */}
-              <hr />
-            </Grid>
+  return (
+    <div>
+      {articles.map((article, index: number) => (
+        <Grid container justify="center" key={index}>
+          <Grid item xs={7}>
+            <Article
+              username={article.author.username}
+              image={article.author.image}
+              createdAt={article.createdAt}
+              title={article.title}
+              description={article.description}
+              favoritesCount={article.favoritesCount}
+              tagList={article.tagList}
+              slug={article.slug}
+            />
+            <hr />
           </Grid>
-        ))}
-      </div>
-    );
-  }
-}
+        </Grid>
+      ))}
+      {/* <Pagination numberOfPages={numberOfPages} /> */}
+    </div>
+  );
+};
 
 export default Articles;

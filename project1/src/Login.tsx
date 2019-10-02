@@ -1,13 +1,13 @@
 import React from "react";
-import Footer from "./components/Footer";
-import Header from "./components/header";
-import LoginComponent from "./components/LoginComponent";
+import Footer from "./components/Layout/Footer";
+import Header from "./components/Layout/Header";
+import LoginPage from "./Pages/LoginPage";
 
 const Login = () => {
   return (
     <div className="App">
       <Header></Header>
-      <LoginComponent></LoginComponent>
+      <LoginPage></LoginPage>
       <div style={{ padding: "15px" }} />
       <Footer></Footer>
     </div>

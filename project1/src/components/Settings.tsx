@@ -1,133 +1,127 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AXIOS from "../utils/AXIOS";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import utl from "../utils/utils";
 
-// const userDetails = utl.getUserDetails();
+const Settings = ({ classes }: WithStyles<typeof styles>) => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [image, setImage] = useState("");
+  const [bio, setBio] = useState("");
+  const [newPass, setNewPass] = useState("");
 
-class Settings extends React.Component {
-  public state = {
-    image: "",
-    username: "",
-    bio: "",
-    email: "",
-    newPass: ""
-  };
-
-  public componentDidMount() {
+  useEffect(() => {
     const userData = utl.getUserDetails();
-    this.setState({
-      image: userData.image,
-      username: userData.username,
-      bio: userData.bio,
-      email: userData.email
-    });
-  }
+    setUsername(userData.image);
+    setEmail(userData.username);
+    setImage(userData.bio);
+    setBio(userData.email);
+  }, []);
 
-  public handlePicture = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ image: event.target.value });
+  const handlePicture = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setImage(event.target.value);
   };
 
-  public handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ username: event.target.value });
+  const handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
   };
 
-  public handleBio = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    this.setState({ bio: event.target.value });
+  const handleBio = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setBio(event.target.value);
   };
 
-  public handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ email: event.target.value });
+  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   };
 
-  public handleNewPass = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ newPass: event.target.value });
+  const handleNewPass = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewPass(event.target.value);
   };
 
-  public handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // console.log(localStorage.getItem("userToken"));
     AXIOS.put({
       endpoint: "user",
       body: {
         user: {
-          image: this.state.image || undefined,
-          username: this.state.username || undefined,
-          bio: this.state.bio || undefined,
-          email: this.state.email || undefined,
-          password: this.state.newPass || undefined
+          image: image || undefined,
+          username: username || undefined,
+          bio: bio || undefined,
+          email: email || undefined,
+          password: newPass || undefined
         }
       }
     }).then(res => console.log(res));
   };
 
-  public handleLogout = () => {
+  const handleLogout = () => {
     localStorage.clear();
     window.location.href = "/";
   };
 
-  public render() {
-    return (
-      <Grid container direction="column" alignItems="center">
-        <Grid item>
-          <h1 className="subTitle">Your Settings</h1>
-        </Grid>
-        <Grid item style={{ width: 700 }}>
-          <form onSubmit={this.handleFormSubmition}>
-            <input
-              className="input"
-              placeholder="URL of profile picture"
-              value={this.state.image}
-              onChange={this.handlePicture}
-            ></input>
-            <input
-              className="input"
-              placeholder="Username"
-              value={this.state.username}
-              onChange={this.handleUsername}
-            ></input>
-            <textarea
-              className="textarea"
-              placeholder="Short bio about you"
-              value={this.state.bio}
-              onChange={this.handleBio}
-            ></textarea>
-            <input
-              className="input"
-              placeholder="Email"
-              value={this.state.email}
-              onChange={this.handleEmail}
-            ></input>
-            <input
-              className="input"
-              placeholder="New Password"
-              value={this.state.newPass}
-              onChange={this.handleNewPass}
-              type="password"
-            ></input>
-            <Grid item>
-              <input
-                type="submit"
-                className="submit"
-                value="Update Settings"
-              ></input>
-            </Grid>
-            <hr />
-          </form>
+  return (
+    <Grid container direction="column" alignItems="center">
+      <Grid item>
+        <Typography gutterBottom variant="h4">
+          Your Settings
+        </Typography>
+      </Grid>
+      <Grid item style={{ width: 700 }}>
+        <form onSubmit={handleFormSubmition}>
+          <input
+            className={classes.input}
+            placeholder="URL of profile picture"
+            value={image}
+            onChange={handlePicture}
+          />
+          <input
+            className={classes.input}
+            placeholder="Username"
+            value={username}
+            onChange={handleUsername}
+          />
+          <textarea
+            className={`${classes.input} ${classes.textarea}`}
+            placeholder="Short bio about you"
+            value={bio}
+            onChange={handleBio}
+          ></textarea>
+          <input
+            className={classes.input}
+            placeholder="Email"
+            value={email}
+            onChange={handleEmail}
+          />
+          <input
+            className={classes.input}
+            placeholder="New Password"
+            value={newPass}
+            onChange={handleNewPass}
+            type="password"
+          />
           <Grid item>
             <input
               type="submit"
-              className="logout"
-              value="Or click here to logout."
-              onClick={this.handleLogout}
-            ></input>
+              className={classes.submit}
+              value="Update Settings"
+            />
           </Grid>
+          <hr />
+        </form>
+        <Grid item>
+          <input
+            type="submit"
+            className={classes.logout}
+            value="Or click here to logout."
+            onClick={handleLogout}
+          />
         </Grid>
       </Grid>
-    );
-  }
-}
+    </Grid>
+  );
+};
 
 export default Settings;
 
