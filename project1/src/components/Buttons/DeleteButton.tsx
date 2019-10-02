@@ -1,16 +1,26 @@
 import React from "react";
+import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/DeleteButtonStyle";
 
 interface DeleteButtonProps {
-  handleDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const DeleteButton: React.FC<DeleteButtonProps> = props => {
+const DeleteButton: React.FC<
+  DeleteButtonProps & WithStyles<typeof styles>
+> = props => {
   return (
-    <button onClick={props.handleDelete} className={`btn deleteArticle`}>
-      <i className="ion-android-delete"></i>
+    <button
+      onClick={props.onDelete}
+      className={`${props.classes.root} ${props.classes.delete}`}
+    >
+      <DeleteForeverRoundedIcon
+        className={props.classes.icon}
+      ></DeleteForeverRoundedIcon>
       <span> Delete Article</span>
     </button>
   );
 };
 
-export default DeleteButton;
+export default withStyles(styles)(DeleteButton);

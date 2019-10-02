@@ -1,16 +1,14 @@
 import React from "react";
-import "./App.css";
-// import Tags from "./components/Tags";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
-import GridContainer from "./components/Pages/GridContainer";
-import LoginComponent from "./components/Pages/LoginComponent";
-import RegisterComponent from "./components/Pages/RegisterComponent";
+import GridContainer from "./Pages/GridContainer";
+import LoginComponent from "./Pages/LoginComponent";
+import RegisterComponent from "./Pages/RegisterComponent";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import NewArticle from "./components/Article/NewArticle";
-import Settings from "./components/Pages/Settings";
+import NewArticle from "./Pages/NewArticle";
+import Settings from "./Pages/Settings";
 import Slug from "./components/Slug/Slug";
-import Profile from "./components/Pages/Profile";
+import Profile from "./Pages/Profile";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 // import { Router } from "@reach/router";

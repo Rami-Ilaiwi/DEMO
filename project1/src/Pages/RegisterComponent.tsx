@@ -1,27 +1,29 @@
 import React from "react";
-import AXIOS from "../../utils/AXIOS";
+import AXIOS from "../utils/AXIOS";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/RegisterComponentStyle";
 
-class RegisterComponent extends React.Component {
+class RegisterComponent extends React.Component<WithStyles<typeof styles>> {
   state = { username: "", email: "", password: "" };
 
-  public handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ username: event.target.value });
   };
 
-  public handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ email: event.target.value });
   };
 
-  public handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ password: event.target.value });
   };
 
-  public handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
+  handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    AXIOS.post({
+    AXIOS.noauthPost({
       endpoint: "users",
       body: {
         user: {
@@ -31,44 +33,51 @@ class RegisterComponent extends React.Component {
         }
       }
     }).then(res => {
-      console.log(res);
-      // this.props.history.push("/");
+      localStorage.setItem("userData", JSON.stringify(res));
+      localStorage.setItem("userToken", res.data.user.token);
+      window.location.href = "/";
     });
   };
 
-  public render() {
+  render() {
     return (
       <Grid container justify="center">
         <Grid container direction="column" alignItems="center">
           <Grid item>
-            <h1 className="subTitle">Sign up</h1>
-            <Link to="/login">Have an account?</Link>
+            <h1 className={this.props.classes.title}>Sign up</h1>
+            <Link className={this.props.classes.link} to="/login">
+              Have an account?
+            </Link>
           </Grid>
           <Grid item>
             <form onSubmit={this.handleFormSubmition}>
               <input
-                className="input"
+                className={this.props.classes.input}
                 placeholder="Username"
                 value={this.state.username}
                 onChange={this.handleUsername}
               ></input>
               <br />
               <input
-                className="input"
+                className={this.props.classes.input}
                 placeholder="Email"
                 value={this.state.email}
                 onChange={this.handleEmail}
               ></input>
               <br />
               <input
-                className="input"
+                className={this.props.classes.input}
                 type="password"
                 placeholder="Password"
                 value={this.state.password}
                 onChange={this.handlePassword}
               ></input>
               <br />
-              <input className="submit" type="submit" value="Sign up"></input>
+              <input
+                className={this.props.classes.submit}
+                type="submit"
+                value="Sign up"
+              ></input>
             </form>
           </Grid>
         </Grid>
@@ -77,4 +86,4 @@ class RegisterComponent extends React.Component {
   }
 }
 
-export default RegisterComponent;
+export default withStyles(styles)(RegisterComponent);

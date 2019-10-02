@@ -1,5 +1,4 @@
 import React from "react";
-import "../../App.css";
 
 import { storiesOf } from "@storybook/react";
 import Tags from "./Tags";

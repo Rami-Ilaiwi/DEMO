@@ -1,18 +1,25 @@
 import React from "react";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/FavoriteButtonSlugStyle";
 
 interface FavoriteButtonProps {
   favorited: boolean;
   favoritesCount: number;
-  handleFavorite: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onFavorite: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const FavoriteButtonSlug: React.FC<FavoriteButtonProps> = props => {
+const FavoriteButtonSlug: React.FC<
+  FavoriteButtonProps & WithStyles<typeof styles>
+> = props => {
   return (
     <button
-      onClick={props.handleFavorite}
-      className={`btn ${props.favorited ? "unFav" : "fav"}`}
+      onClick={props.onFavorite}
+      className={`${props.classes.root} ${
+        props.favorited ? props.classes.unfavorite : props.classes.favorite
+      }`}
     >
-      <i className="ion-heart"></i>
+      <FavoriteIcon className={props.classes.icon}></FavoriteIcon>
       <span>
         {props.favorited ? " Unfavorite" : " Favorite"} Article (
         {props.favoritesCount})
@@ -21,4 +28,4 @@ const FavoriteButtonSlug: React.FC<FavoriteButtonProps> = props => {
   );
 };
 
-export default FavoriteButtonSlug;
+export default withStyles(styles)(FavoriteButtonSlug);

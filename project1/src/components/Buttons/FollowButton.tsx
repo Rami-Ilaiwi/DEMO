@@ -1,18 +1,27 @@
 import React from "react";
+import AddRoundedIcon from "@material-ui/icons/AddRounded";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/FollowButtonStyle";
 
 interface FollowButtonProps {
   following: boolean;
   profileName: string;
-  handleFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const FollowButton: React.FC<FollowButtonProps> = props => {
+const FollowButton: React.FC<
+  FollowButtonProps & WithStyles<typeof styles>
+> = props => {
   return (
     <button
-      onClick={props.handleFollow}
-      className={`btn ${props.following ? "unFollow" : "follow"}`}
+      onClick={props.onFollow}
+      className={`${props.classes.root} ${
+        props.following ? props.classes.unfollow : props.classes.follow
+      }`}
+      // className={`btn ${props.following ? "unfollow" : "follow"}`}
     >
-      <i className="ion-plus-round"></i>
+      <AddRoundedIcon className={props.classes.icon}></AddRoundedIcon>
+
       <span>
         {props.following ? " Unfollow" : " Follow"} {props.profileName}
       </span>
@@ -20,4 +29,4 @@ const FollowButton: React.FC<FollowButtonProps> = props => {
   );
 };
 
-export default FollowButton;
+export default withStyles(styles)(FollowButton);

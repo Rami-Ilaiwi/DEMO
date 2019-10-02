@@ -1,15 +1,16 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import AXIOS from "../../utils/AXIOS";
-import AddTags from "./AddTags";
+import AXIOS from "../utils/AXIOS";
+import TagsInput, { TagsProps } from "../components/Article/TagsInput";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/NewArticleStyle";
 
-class NewArticle extends React.Component {
+class NewArticle extends React.Component<WithStyles<typeof styles>> {
   state = {
     articleTitle: "",
     articleDescription: "",
     articleBody: "",
-    articleTags: "",
-    tagsList: [] as string[] // heree
+    tagsList: [] as string[]
   };
 
   handleArticleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,30 +25,23 @@ class NewArticle extends React.Component {
     this.setState({ articleBody: event.target.value });
   };
 
-  handleArticleTags = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ articleTags: event.target.value });
+  handleEnterForm = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    if (event.key === "Enter") event.preventDefault();
   };
 
-  handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      if (!this.state.articleTags) return;
-      // console.log(this.state.articleTags);
-      else {
-        this.setState({
-          tagsList: [...this.state.tagsList, this.state.articleTags],
-          articleTags: ""
-        });
-      }
-    }
+  handleAddTag = (tag: string) => {
+    this.setState({
+      tagsList: [...this.state.tagsList, tag]
+    });
   };
 
-  handleDelete = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    const newSelectedItem = [...this.state.tagsList];
-    // console.log(event.currentTarget.id);
-    newSelectedItem.splice(newSelectedItem.indexOf(event.currentTarget.id), 1);
+  handleDeleteTag = (tagID: string) => {
+    const newSelectedItem = this.state.tagsList.filter(id => id !== tagID);
     this.setState({ tagsList: newSelectedItem });
-    // console.log(this.state.tagsList);
   };
+  // handleAddTag:TagsProps["onAddTag"] = (tag)=>{
+  //   tag.
+  // }
 
   handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -69,57 +63,40 @@ class NewArticle extends React.Component {
       <Grid container direction="column" justify="center" alignItems="center">
         <Grid item style={{ width: 1000 }}>
           <form
-            onKeyPress={e => {
-              if (e.key === "Enter") e.preventDefault();
-            }}
+            onKeyPress={this.handleEnterForm}
             onSubmit={this.handleFormSubmition}
           >
             <input
-              className="input"
+              className={this.props.classes.input}
               placeholder="Article title"
               value={this.state.articleTitle}
               onChange={this.handleArticleTitle}
-            ></input>
+            />
             <input
-              className="input"
+              className={this.props.classes.input}
               placeholder="What's this article about?"
               value={this.state.articleDescription}
               onChange={this.handleArticleDescription}
-            ></input>
+            />
             <textarea
-              className="textarea"
+              className={`${this.props.classes.input} ${this.props.classes.textarea}`}
               placeholder="Write your article (in markdown)"
               value={this.state.articleBody}
               onChange={this.handleArticleBody}
-            ></textarea>
-            <input
-              className="input"
-              placeholder="Article tag"
-              value={this.state.articleTags}
-              onChange={this.handleArticleTags}
-              onKeyPress={this.handleEnter}
-            ></input>
-            {/* <div>{this.state.tagsList}</div> */}
-            {/* <AddTags tagsList={this.state.tagsList}></AddTags> */}
-            {/* <div>
-              {this.state.tagsList.map((tag, index: number) => (
-                <Chip
-                  key={index}
-                  onDelete={this.handleDelete}
-                  label={tag}
-                ></Chip>
-              ))}
-            </div> */}
-            <AddTags
+            />
+
+            <TagsInput
               tagsList={this.state.tagsList}
-              handleDelete={this.handleDelete}
-            ></AddTags>
+              onAddTag={this.handleAddTag}
+              onDeleteTag={this.handleDeleteTag}
+            />
+
             <Grid item>
               <input
                 type="submit"
-                className="submit"
+                className={this.props.classes.submit}
                 value="Publish Article"
-              ></input>
+              />
             </Grid>
           </form>
         </Grid>
@@ -128,4 +105,4 @@ class NewArticle extends React.Component {
   }
 }
 
-export default NewArticle;
+export default withStyles(styles)(NewArticle);

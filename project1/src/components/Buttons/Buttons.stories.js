@@ -1,13 +1,11 @@
 import React from "react";
-import "../../App.css";
 import { action } from "@storybook/addon-actions";
-
 import { storiesOf } from "@storybook/react";
 import FavButtonArticle from "./FavoriteButtonSlug";
 import FavoriteButton from "./FavoriteButton";
 import FollowButton from "./FollowButton";
 import DeleteButton from "./DeleteButton";
-import { State } from "react-powerplug";
+// import { State } from "react-powerplug";
 
 storiesOf("Buttons", module)
   .add("Favorite Button inside Slug", () => (

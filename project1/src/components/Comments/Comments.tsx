@@ -1,14 +1,13 @@
 import React from "react";
 import moment from "moment";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-// import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-// import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import utl from "../../utils/utils";
 import DeleteComment from "./DeleteComment";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import { styles } from "./styles/CommentsStyle";
 
 interface CommentItem {
   id: number;
@@ -30,44 +29,35 @@ interface CommentsProps {
   ) => void;
 }
 
-const useStyles = makeStyles({
-  card: {
-    maxWidth: 600
-  }
-});
-
-const Comments: React.FC<CommentsProps> = props => {
-  const classes = useStyles();
+const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
   const user = utl.getUserDetails();
   const content = props.comments.map(item => {
     return (
-      <div key={item.id} className="card">
-        <Card className={classes.card}>
+      <div key={item.id} className={props.classes.root}>
+        <Card className={props.classes.cardWidth}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              <a className="comment-author" href="#/@yiwei">
-                <img src={item.author.image} className="comment-author-img" />
-              </a>
+              <Link className={props.classes.commentAuthor} to="/@yiwei">
+                <img
+                  src={item.author.image}
+                  className={props.classes.commentAuthorImage}
+                />
+              </Link>
               <span>
                 {" "}
                 {/* edit this link */}
-                <a className="comment-author ng-binding" href="#/@yiwei">
+                <Link className={props.classes.commentAuthor} to="/@yiwei">
                   {item.author.username}
-                </a>
+                </Link>
               </span>
               <br />
-              <span className="date">
+              <span className={props.classes.date}>
                 {moment(new Date(Date.parse(item.createdAt))).format(
                   "MMMM D, YYYY"
                 )}
               </span>
             </Typography>
-            <Typography
-              className="card-text"
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
+            <Typography variant="body2" color="textSecondary" component="p">
               {item.body}
             </Typography>
           </CardContent>
@@ -85,4 +75,4 @@ const Comments: React.FC<CommentsProps> = props => {
   return <div>{content}</div>;
 };
 
-export default Comments;
+export default withStyles(styles)(Comments);

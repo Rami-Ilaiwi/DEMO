@@ -1,14 +1,15 @@
 import React from "react";
-import "../../App.css";
 import { action } from "@storybook/addon-actions";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { storiesOf } from "@storybook/react";
 import Article from "./Article";
 import Articles from "./Articles";
-import ArticleInfo from "./ArticleInfo";
+import ArticleAuthor from "./ArticleAuthor";
 import ArticleMeta from "./ArticleMeta";
-import NewArticle from "./NewArticle";
+import NewArticle from "../../Pages/NewArticle";
+import ArticleTagsList from "./ArticleTagsList";
+import TagsInput from "./TagsInput";
 
 storiesOf("Article", module)
   .add("Article", () => (
@@ -30,14 +31,14 @@ storiesOf("Article", module)
       <Articles />
     </Router>
   ))
-  .add("ArticleInfo", () => (
-    <ArticleInfo
+  .add("Article Author", () => (
+    <ArticleAuthor
       username={"Name"}
       image={"https://avatarfiles.alphacoders.com/165/thumb-165504.png"}
       createdAt={"2019-09-11T11:55:18.705Z"}
-    ></ArticleInfo>
+    />
   ))
-  .add("ArticleMeta", () => (
+  .add("Article Meta", () => (
     <ArticleMeta
       image={"https://avatarfiles.alphacoders.com/165/thumb-165504.png"}
       username={"Name"}
@@ -48,6 +49,13 @@ storiesOf("Article", module)
       favoritesCount={5}
       handleFollow={action("button-click")}
       handleFavorite={action("button-click")}
-    ></ArticleMeta>
+    />
   ))
-  .add("NewArticle", () => <NewArticle></NewArticle>);
+  .add("NewArticle", () => <NewArticle />)
+  .add("Add tag", () => (
+    <ArticleTagsList
+      tagsList={["a", "b", "c"]}
+      handleDelete={action("handleDelete")}
+    />
+  ))
+  .add("Tags Input", () => <TagsInput tagsList={[]} articleTag="" />);

@@ -1,12 +1,12 @@
 import React from "react";
-import AXIOS from "../../utils/AXIOS";
+import AXIOS from "../utils/AXIOS";
 import Grid from "@material-ui/core/Grid";
-import utl from "../../utils/utils";
+import utl from "../utils/utils";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/SettingsStyle";
 
-// const userDetails = utl.getUserDetails();
-
-class Settings extends React.Component {
-  public state = {
+class Settings extends React.Component<WithStyles<typeof styles>> {
+  state = {
     image: "",
     username: "",
     bio: "",
@@ -14,7 +14,7 @@ class Settings extends React.Component {
     newPass: ""
   };
 
-  public componentDidMount() {
+  componentDidMount() {
     const userData = utl.getUserDetails();
     this.setState({
       image: userData.image,
@@ -24,27 +24,27 @@ class Settings extends React.Component {
     });
   }
 
-  public handlePicture = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handlePicture = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ image: event.target.value });
   };
 
-  public handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ username: event.target.value });
   };
 
-  public handleBio = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  handleBio = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     this.setState({ bio: event.target.value });
   };
 
-  public handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ email: event.target.value });
   };
 
-  public handleNewPass = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleNewPass = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ newPass: event.target.value });
   };
 
-  public handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
+  handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // console.log(localStorage.getItem("userToken"));
@@ -62,66 +62,66 @@ class Settings extends React.Component {
     }).then(res => console.log(res));
   };
 
-  public handleLogout = () => {
+  handleLogout = () => {
     localStorage.clear();
     window.location.href = "/";
   };
 
-  public render() {
+  render() {
     return (
       <Grid container direction="column" alignItems="center">
         <Grid item>
-          <h1 className="subTitle">Your Settings</h1>
+          <h1 className={this.props.classes.title}>Your Settings</h1>
         </Grid>
         <Grid item style={{ width: 700 }}>
           <form onSubmit={this.handleFormSubmition}>
             <input
-              className="input"
+              className={this.props.classes.input}
               placeholder="URL of profile picture"
               value={this.state.image}
               onChange={this.handlePicture}
-            ></input>
+            />
             <input
-              className="input"
+              className={this.props.classes.input}
               placeholder="Username"
               value={this.state.username}
               onChange={this.handleUsername}
-            ></input>
+            />
             <textarea
-              className="textarea"
+              className={`${this.props.classes.input} ${this.props.classes.textarea}`}
               placeholder="Short bio about you"
               value={this.state.bio}
               onChange={this.handleBio}
             ></textarea>
             <input
-              className="input"
+              className={this.props.classes.input}
               placeholder="Email"
               value={this.state.email}
               onChange={this.handleEmail}
-            ></input>
+            />
             <input
-              className="input"
+              className={this.props.classes.input}
               placeholder="New Password"
               value={this.state.newPass}
               onChange={this.handleNewPass}
               type="password"
-            ></input>
+            />
             <Grid item>
               <input
                 type="submit"
-                className="submit"
+                className={this.props.classes.submit}
                 value="Update Settings"
-              ></input>
+              />
             </Grid>
             <hr />
           </form>
           <Grid item>
             <input
               type="submit"
-              className="logout"
+              className={this.props.classes.logout}
               value="Or click here to logout."
               onClick={this.handleLogout}
-            ></input>
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -129,26 +129,4 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
-
-/*
- 
-<Grid item style={{ width: 500 }}>
-          <form>
-            <input className="input" placeholder="Article title"></input>
-            <input
-              className="input"
-              placeholder="What's this article about?"
-            ></input>
-            <textarea
-              className="textarea"
-              placeholder="Write your article (in markdown)"
-            ></textarea>
-            <input className="input" placeholder="Article tag"></input>
-            <Grid item>
-              <input type="submit" className="submit"></input>
-            </Grid>
-          </form>
-        </Grid>
-
- */
+export default withStyles(styles)(Settings);
