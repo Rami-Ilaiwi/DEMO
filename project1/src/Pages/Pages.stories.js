@@ -4,18 +4,18 @@ import { storiesOf } from "@storybook/react";
 
 import LoginPage from "./LoginPage";
 
-import RegisterComponent from "./RegisterComponent";
-import Settings from "./Settings";
+import RegisterPage from "./RegisterPage";
+import SettingsPage from "./SettingsPage";
 
 storiesOf("Pages", module)
-  .add("Login Component", () => (
+  .add("Login Page", () => (
     <Router>
       <LoginPage />
     </Router>
   ))
-  .add("Register Component", () => (
+  .add("Register Page", () => (
     <Router>
-      <RegisterComponent />
+      <RegisterPage />
     </Router>
   ))
-  .add("Settings", () => <Settings />);
+  .add("Settings Page", () => <SettingsPage />);
