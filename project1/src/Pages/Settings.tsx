@@ -3,6 +3,8 @@ import AXIOS from "../utils/AXIOS";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import utl from "../utils/utils";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/SettingsStyle";
 
 const Settings = ({ classes }: WithStyles<typeof styles>) => {
   const [username, setUsername] = useState("");
@@ -123,26 +125,4 @@ const Settings = ({ classes }: WithStyles<typeof styles>) => {
   );
 };
 
-export default Settings;
-
-/*
- 
-<Grid item style={{ width: 500 }}>
-          <form>
-            <input className="input" placeholder="Article title"></input>
-            <input
-              className="input"
-              placeholder="What's this article about?"
-            ></input>
-            <textarea
-              className="textarea"
-              placeholder="Write your article (in markdown)"
-            ></textarea>
-            <input className="input" placeholder="Article tag"></input>
-            <Grid item>
-              <input type="submit" className="submit"></input>
-            </Grid>
-          </form>
-        </Grid>
-
- */
+export default withStyles(styles)(Settings);

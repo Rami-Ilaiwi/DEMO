@@ -1,9 +1,12 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import FavoriteButton from "./FavoriteButton";
-import TagList from "./TagList";
-import moment from "moment";
+import FavoriteButton from "../Buttons/FavoriteButton";
+import TagList from "../Tags/TagList";
 import { Link } from "react-router-dom";
+import ArticleAuthor from "./ArticleAuthor";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/ArticleStyle";
+
 interface ArticleProps {
   image: string;
   username: string;
@@ -15,9 +18,9 @@ interface ArticleProps {
   slug: string;
 }
 
-const Article: React.FC<ArticleProps> = props => {
+const Article: React.FC<ArticleProps & WithStyles<typeof styles>> = props => {
   return (
-    <Grid container direction="column">
+    <Grid className={props.classes.root} container direction="column">
       <Grid
         container
         direction="row"
@@ -33,35 +36,19 @@ const Article: React.FC<ArticleProps> = props => {
           xs={6}
           spacing={2}
         >
-          <Grid item>
-            <a>
-              <img
-                src={props.image}
-                className="articleImage"
-                alt={props.username}
-              ></img>
-            </a>
-          </Grid>
-          <Grid item>
-            <div>
-              <a>{props.username}</a>
-            </div>
-            <span>
-              {moment(new Date(Date.parse(props.createdAt))).format(
-                "MMMM D, YYYY"
-              )}
-            </span>
-          </Grid>
+          <ArticleAuthor
+            image={props.image}
+            createdAt={props.createdAt}
+            username={props.username}
+          />
         </Grid>
         <Grid item xs={1}>
-          <FavoriteButton
-            favoritesCount={props.favoritesCount}
-          ></FavoriteButton>
+          <FavoriteButton favoritesCount={props.favoritesCount} />
         </Grid>
       </Grid>
-      <Link to={`/article/${props.slug}`}>
+      <Link className={props.classes.articleBody} to={`/article/${props.slug}`}>
         <Grid item>
-          <h1>{props.title}</h1>
+          <h1 className={props.classes.title}>{props.title}</h1>
           <p>{props.description}</p>
         </Grid>
         <Grid container direction="row" justify="space-between">
@@ -69,7 +56,7 @@ const Article: React.FC<ArticleProps> = props => {
             <span>Read more...</span>
           </Grid>
           <Grid item>
-            <TagList tagList={props.tagList}></TagList>
+            <TagList tagList={props.tagList} />
             {/* {console.log(props.tagList)} */}
           </Grid>
         </Grid>
@@ -78,4 +65,4 @@ const Article: React.FC<ArticleProps> = props => {
   );
 };
 
-export default Article;
+export default withStyles(styles)(Article);

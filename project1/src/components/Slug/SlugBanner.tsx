@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import ArticleMeta from "../Article/ArticleMeta";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/SlugBannerStyle";
+
 import Typography from "@material-ui/core/Typography";
 
 interface SlugProps {

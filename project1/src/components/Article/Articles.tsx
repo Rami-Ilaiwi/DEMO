@@ -8,7 +8,6 @@ import Pagination from "../Buttons/Pagination";
 const Articles = () => {
   const [articles, setArticles] = useState([] as Array<ArticleItem>);
   const [numberOfPages, setNumberOfPages] = useState(0);
-
   useEffect(() => {
     AXIOS.noauthGet(`articles?limit=10`).then(res => {
       setArticles(res.data.articles);

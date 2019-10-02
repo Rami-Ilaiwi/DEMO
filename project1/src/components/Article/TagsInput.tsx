@@ -25,7 +25,6 @@ const TagsInput: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
       }
     }
   };
-
   const handleDelete = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     props.onDeleteTag(event.currentTarget.id);
   };

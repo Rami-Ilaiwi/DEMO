@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AXIOS from "../utils/AXIOS";
 import { Link, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
+
 import Typography from "@material-ui/core/Typography";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/RegisterComponentStyle";
@@ -32,7 +33,7 @@ const RegisterComponent = ({ classes }: WithStyles<typeof styles>) => {
   const handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    AXIOS.post({
+    AXIOS.noauthPost({
       endpoint: "users",
       body: {
         user: {
@@ -45,6 +46,7 @@ const RegisterComponent = ({ classes }: WithStyles<typeof styles>) => {
       localStorage.setItem("userData", JSON.stringify(res));
       localStorage.setItem("userToken", res.data.user.token);
       window.location.href = "/";
+
       // setIsLoggedIn(true);
     });
   };
@@ -97,4 +99,4 @@ const RegisterComponent = ({ classes }: WithStyles<typeof styles>) => {
   );
 };
 
-export default RegisterComponent;
+export default withStyles(styles)(RegisterComponent);

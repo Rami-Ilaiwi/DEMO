@@ -10,6 +10,7 @@ export const styles = () =>
       borderRadius: "0.2rem",
       fontSize: "0.875rem",
       padding: "0.25rem 0.5rem",
+
       border: "1px solid transparent",
       cursor: "pointer"
     },

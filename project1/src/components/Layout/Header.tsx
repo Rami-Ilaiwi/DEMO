@@ -6,6 +6,7 @@ import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
 import BorderColorRoundedIcon from "@material-ui/icons/BorderColorRounded";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/HeaderStyle";
+
 import Typography from "@material-ui/core/Typography";
 
 const Header = ({ classes }: WithStyles<typeof styles>) => {

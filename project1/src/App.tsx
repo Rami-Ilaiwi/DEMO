@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
+
 import FeedPage from "./Pages/FeedPage";
 import LoginPage from "./Pages/LoginPage";
 import RegisterComponent from "./Pages/RegisterComponent";
@@ -10,6 +11,7 @@ import Settings from "./Pages/Settings";
 import ArticlePage from "./Pages/ArticlePage";
 import Profile from "./Pages/Profile";
 import CssBaseline from "@material-ui/core/CssBaseline";
+
 // import { Router } from "@reach/router";
 
 const App = () => {
@@ -18,6 +20,7 @@ const App = () => {
   // const logout = () => setLoggedIn(false);
   return (
     // <Provider value={{isLoggedIn, login, logout}}>
+
     <>
       <CssBaseline />
       <Router>
@@ -29,14 +32,16 @@ const App = () => {
         <Route path="/editor/" component={NewArticle} />
         <Route path="/settings/" component={Settings} />
         <Route path="/article/:slug" component={ArticlePage} />
+
         <Route path="/@:user" component={Profile} />
         {/* <GridContainer path="/"></GridContainer>
         <LoginComponent path="/login/"></LoginComponent> */}
-      {/* <Tags></Tags> */}
-      {/* <LoginComponent></LoginComponent> */}
-      <div style={{ padding: "50px" }} />
-      <Footer></Footer>
-    </Router>
+        {/* <Tags></Tags> */}
+        {/* <LoginComponent></LoginComponent> */}
+        <div style={{ padding: "50px" }} />
+        <Footer></Footer>
+      </Router>
+    </>
   );
 };
 
