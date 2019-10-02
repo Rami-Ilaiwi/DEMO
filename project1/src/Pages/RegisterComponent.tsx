@@ -23,7 +23,7 @@ class RegisterComponent extends React.Component<WithStyles<typeof styles>> {
   handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    AXIOS.post({
+    AXIOS.noauthPost({
       endpoint: "users",
       body: {
         user: {
@@ -33,8 +33,9 @@ class RegisterComponent extends React.Component<WithStyles<typeof styles>> {
         }
       }
     }).then(res => {
-      console.log(res);
-      // this.props.history.push("/");
+      localStorage.setItem("userData", JSON.stringify(res));
+      localStorage.setItem("userToken", res.data.user.token);
+      window.location.href = "/";
     });
   };
 
