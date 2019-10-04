@@ -16,9 +16,20 @@ interface ArticleProps {
   description: string;
   tagList: Array<string>;
   slug: string;
+  favorited: boolean;
+  onFavorite: (article: { favorited: boolean; slug: string }) => void;
 }
 
 const Article: React.FC<ArticleProps & WithStyles<typeof styles>> = props => {
+  const handleFavorite = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    props.onFavorite({
+      slug: event.currentTarget.id,
+      favorited: props.favorited
+    });
+  };
+
   return (
     <Grid className={props.classes.root} container direction="column">
       <Grid
@@ -43,7 +54,12 @@ const Article: React.FC<ArticleProps & WithStyles<typeof styles>> = props => {
           />
         </Grid>
         <Grid item xs={1}>
-          <FavoriteButton favoritesCount={props.favoritesCount} />
+          <FavoriteButton
+            favorited={props.favorited}
+            favoritesCount={props.favoritesCount}
+            slug={props.slug}
+            onFavorite={handleFavorite}
+          />{" "}
         </Grid>
       </Grid>
       <Link className={props.classes.articleBody} to={`/article/${props.slug}`}>

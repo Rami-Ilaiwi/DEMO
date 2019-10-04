@@ -16,6 +16,17 @@ export const styles = () =>
       backgroundColor: "transparent",
       borderColor: "#5cb85c"
     },
+    favorite: {
+      color: "#5cb85c",
+      backgroundColor: "transparent",
+      borderColor: "#5cb85c"
+    },
+
+    unfavorite: {
+      color: "#fff",
+      backgroundColor: "#5cb85c",
+      borderColor: "#5cb85c"
+    },
     icon: {
       fontSize: "inherit"
     }

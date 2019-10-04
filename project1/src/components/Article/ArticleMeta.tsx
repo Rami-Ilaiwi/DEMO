@@ -4,6 +4,7 @@ import FollowButton from "../Buttons/FollowButton";
 import FavoriteButtonSlug from "../Buttons/FavoriteButtonSlug";
 import ArticleAuthor from "./ArticleAuthor";
 import DeleteButton from "../Buttons/DeleteButton";
+import EditButton from "../Buttons/EditButton";
 
 interface ArticleMetaProps {
   image: string;
@@ -14,9 +15,11 @@ interface ArticleMetaProps {
   favorited: boolean;
   favoritesCount: number;
   loggedinUser: string;
+  slug: string;
   onFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onFavorite: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onEdit: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
 const ArticleMeta: React.FC<ArticleMetaProps> = props => {
@@ -35,25 +38,33 @@ const ArticleMeta: React.FC<ArticleMetaProps> = props => {
       </Grid>
 
       <Grid item container xs={4} spacing={1}>
-        <Grid item>
-          <FollowButton
-            following={props.following}
-            onFollow={props.onFollow}
-            profileName={props.profileName}
-          />
-        </Grid>
         {props.loggedinUser == props.username ? (
-          <Grid item>
-            <DeleteButton onDelete={props.onDelete} />
-          </Grid>
+          <>
+            <Grid item style={{ marginTop: "1%" }}>
+              <EditButton slug={props.slug} onEdit={props.onEdit}></EditButton>
+            </Grid>
+            <Grid item>
+              <DeleteButton onDelete={props.onDelete} />
+            </Grid>
+          </>
         ) : (
-          <Grid item>
-            <FavoriteButtonSlug
-              onFavorite={props.onFavorite}
-              favorited={props.favorited}
-              favoritesCount={props.favoritesCount}
-            />
-          </Grid>
+          <>
+            <Grid item>
+              <FollowButton
+                following={props.following}
+                onFollow={props.onFollow}
+                profileName={props.profileName}
+              />
+            </Grid>
+
+            <Grid item>
+              <FavoriteButtonSlug
+                onFavorite={props.onFavorite}
+                favorited={props.favorited}
+                favoritesCount={props.favoritesCount}
+              />
+            </Grid>
+          </>
         )}
       </Grid>
     </Grid>
