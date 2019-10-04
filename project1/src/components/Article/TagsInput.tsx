@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ArticleTagsList from "./ArticleTagsList";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/TagsInputStyle";
@@ -9,50 +9,38 @@ export interface TagsProps {
   onDeleteTag: (tag: string) => void;
 }
 
-class TagsInput extends React.Component<TagsProps & WithStyles<typeof styles>> {
-  state = {
-    articleTag: "",
-    tagsList: this.props.tagsList
+const TagsInput: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
+  const [articleTag, setArticleTag] = useState("");
+
+  const handleChangeTag = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setArticleTag(event.target.value);
   };
 
-  handleChangeTag = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ articleTag: event.target.value });
-  };
-
-  handleEnterInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleEnterInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      if (!this.state.articleTag) return;
-      // console.log(this.state.articleTag);
+      if (!articleTag) return;
       else {
-        this.props.onAddTag(this.state.articleTag);
-        this.setState({
-          articleTag: ""
-        });
+        props.onAddTag(articleTag);
+        setArticleTag("");
       }
     }
   };
-
-  handleDelete = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    this.props.onDeleteTag(event.currentTarget.id);
+  const handleDelete = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    props.onDeleteTag(event.currentTarget.id);
   };
 
-  render() {
-    return (
-      <>
-        <input
-          className={this.props.classes.input}
-          placeholder="Article tag"
-          value={this.state.articleTag}
-          onChange={this.handleChangeTag}
-          onKeyPress={this.handleEnterInput}
-        />
-        <ArticleTagsList
-          tagsList={this.props.tagsList}
-          handleDelete={this.handleDelete}
-        />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <input
+        className={props.classes.input}
+        placeholder="Article tag"
+        value={articleTag}
+        onChange={handleChangeTag}
+        onKeyPress={handleEnterInput}
+      />
+      <ArticleTagsList tagsList={props.tagsList} handleDelete={handleDelete} />
+    </>
+  );
+};
 
 export default withStyles(styles)(TagsInput);

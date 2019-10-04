@@ -9,9 +9,9 @@ interface TagListProps {
 const TagList: React.FC<TagListProps & WithStyles<typeof styles>> = props => {
   return (
     <ul>
-      {props.tagList.map((item: string, index: number) => {
+      {props.tagList.map((item: string) => {
         return (
-          <li key={index} className={props.classes.tagList}>
+          <li key={item} className={props.classes.tagList}>
             {item}
           </li>
         );

@@ -1,19 +1,21 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { storiesOf } from "@storybook/react";
-import LoginComponent from "./LoginComponent";
-import RegisterComponent from "./RegisterComponent";
-import Settings from "./Settings";
+
+import LoginPage from "./LoginPage";
+
+import RegisterPage from "./RegisterPage";
+import SettingsPage from "./SettingsPage";
 
 storiesOf("Pages", module)
-  .add("Login Component", () => (
+  .add("Login Page", () => (
     <Router>
-      <LoginComponent />
+      <LoginPage />
     </Router>
   ))
-  .add("Register Component", () => (
+  .add("Register Page", () => (
     <Router>
-      <RegisterComponent />
+      <RegisterPage />
     </Router>
   ))
-  .add("Settings", () => <Settings />);
+  .add("Settings Page", () => <SettingsPage />);

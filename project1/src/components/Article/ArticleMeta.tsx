@@ -25,7 +25,7 @@ const ArticleMeta: React.FC<ArticleMetaProps> = props => {
   //   };
 
   return (
-    <Grid container direction="row" justify="flex-start" alignItems="center">
+    <Grid container>
       <Grid item xs={4}>
         <ArticleAuthor
           image={props.image}
@@ -34,7 +34,7 @@ const ArticleMeta: React.FC<ArticleMetaProps> = props => {
         />
       </Grid>
 
-      <Grid item container direction="row" xs={4} spacing={1}>
+      <Grid item container xs={4} spacing={1}>
         <Grid item>
           <FollowButton
             following={props.following}

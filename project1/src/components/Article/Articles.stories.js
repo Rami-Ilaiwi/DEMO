@@ -52,7 +52,7 @@ storiesOf("Article", module)
     />
   ))
   .add("NewArticle", () => <NewArticle />)
-  .add("Add tag", () => (
+  .add("Article Tags List", () => (
     <ArticleTagsList
       tagsList={["a", "b", "c"]}
       handleDelete={action("handleDelete")}

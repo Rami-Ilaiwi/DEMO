@@ -6,10 +6,14 @@ export const styles = () =>
       marginTop: "1%"
     },
     title: {
-      fontFamily: "'Titillium Web', sans-serif",
-      fontSize: "1.5rem !important",
       textDecoration: "none",
-      color: "#5cb85c !important"
+      color: "#5cb85c"
+    },
+    subtitle: {
+      textDecoration: "none",
+      color: "rgba(0, 0, 0, 0.8)",
+      fontFamily: "'Titillium Web', sans-serif",
+      fontSize: "1.5rem"
     },
     userPicture: {
       height: "26px",
@@ -20,10 +24,10 @@ export const styles = () =>
       position: "relative"
     },
     icon: {
-      fontSize: "15px !important"
+      fontSize: "15px"
     },
-    link: {
-      color: "inherit",
-      textDecoration: "none"
+    logoText: {
+      fontFamily: "'Titillium Web', sans-serif",
+      fontSize: "1.5rem"
     }
   });

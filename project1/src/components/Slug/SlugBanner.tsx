@@ -4,6 +4,8 @@ import ArticleMeta from "../Article/ArticleMeta";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/SlugBannerStyle";
 
+import Typography from "@material-ui/core/Typography";
+
 interface SlugProps {
   title: string;
   image: string;
@@ -23,18 +25,13 @@ const SlugBanner: React.FC<SlugProps & WithStyles<typeof styles>> = props => {
   return (
     <Grid container direction="column" justify="center">
       <br />
-      <Grid
-        item
-        style={{
-          backgroundColor: "#333",
-          width: "100%",
-          color: "white"
-        }}
-      >
-        <Grid item style={{ marginLeft: "15%", width: "70%" }}>
-          <Grid>
-            <h1 className={props.classes.title}>{props.title}</h1>
-          </Grid>
+      <Grid item className={props.classes.root}>
+        <Grid item>
+          <Typography className={props.classes.title} variant="h4">
+            {props.title}
+          </Typography>
+        </Grid>
+        <Grid item>
           <ArticleMeta
             image={props.image}
             username={props.username}
@@ -47,7 +44,7 @@ const SlugBanner: React.FC<SlugProps & WithStyles<typeof styles>> = props => {
             onFollow={props.onFollow}
             onFavorite={props.onFavorite}
             onDelete={props.onDelete}
-          ></ArticleMeta>
+          />
         </Grid>
       </Grid>
     </Grid>

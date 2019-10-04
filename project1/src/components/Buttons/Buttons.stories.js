@@ -5,6 +5,7 @@ import FavButtonArticle from "./FavoriteButtonSlug";
 import FavoriteButton from "./FavoriteButton";
 import FollowButton from "./FollowButton";
 import DeleteButton from "./DeleteButton";
+import Pagination from "./Pagination";
 // import { State } from "react-powerplug";
 
 storiesOf("Buttons", module)
@@ -39,4 +40,5 @@ storiesOf("Buttons", module)
   ))
   .add("Delete Button", () => (
     <DeleteButton handleDelete={action("button-click")}></DeleteButton>
-  ));
+  ))
+  .add("Pagination", () => <Pagination />);
