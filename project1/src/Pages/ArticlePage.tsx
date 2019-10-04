@@ -53,15 +53,14 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const slug = props.match.params.slug;
 
   useEffect(() => {
-    AXIOS.noauthGet(`articles/${slug}`)
+    AXIOS.get(`articles/${slug}`)
       .then(res => {
         const article = res.data.article;
         setArticle(article);
         return article;
       })
       .then(article =>
-        AXIOS.noauthGet(`profiles/${article.author.username}`).then(res => {
-          console.log(article.author.username);
+        AXIOS.get(`profiles/${article.author.username}`).then(res => {
           const profile = res.data.profile;
           setProfile(profile);
         })
@@ -106,6 +105,12 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     AXIOS.DELETE({ endpoint: `articles/${slug}` }).then(
+      () => (window.location.href = "/")
+    );
+  };
+
+  const onEditClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    AXIOS.put({ endpoint: `articles/${slug}` }).then(
       () => (window.location.href = "/")
     );
   };
@@ -161,10 +166,12 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
         profileName={profile.username}
         favorited={article.favorited}
         favoritesCount={article.favoritesCount}
+        slug={slug}
         loggedinUser={user.username}
         onFollow={onFollowClick}
         onFavorite={onFavoriteClick}
         onDelete={onDeleteClick}
+        onEdit={onEditClick}
       />
 
       <Grid
@@ -192,9 +199,11 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
           favorited={article.favorited}
           favoritesCount={article.favoritesCount}
           loggedinUser={user.username}
+          slug={slug}
           onFollow={onFollowClick}
           onFavorite={onFavoriteClick}
           onDelete={onDeleteClick}
+          onEdit={onEditClick}
         />
       </Grid>
       <Grid container direction="column" justify="center" alignItems="center">

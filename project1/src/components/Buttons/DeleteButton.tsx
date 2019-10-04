@@ -15,9 +15,7 @@ const DeleteButton: React.FC<
       onClick={props.onDelete}
       className={`${props.classes.root} ${props.classes.delete}`}
     >
-      <DeleteForeverRoundedIcon
-        className={props.classes.icon}
-      ></DeleteForeverRoundedIcon>
+      <DeleteForeverRoundedIcon className={props.classes.icon} />
       <span> Delete Article</span>
     </button>
   );

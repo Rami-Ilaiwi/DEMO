@@ -29,9 +29,10 @@ const App = () => {
         <Route exact path="/" component={FeedPage} />
         <Route path="/login/" component={LoginPage} />
         <Route path="/register/" component={RegisterComponent} />
-        <Route path="/editor/" component={NewArticle} />
+        <Route exact path={["/editor"]} component={NewArticle} />
+        <Route path="/editor/:slug" component={NewArticle} />
         <Route path="/settings/" component={Settings} />
-        <Route path="/article/:slug" component={ArticlePage} />
+        <Route path="/article/:slug/" component={ArticlePage} />
 
         <Route path="/@:user" component={Profile} />
         {/* <GridContainer path="/"></GridContainer>
