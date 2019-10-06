@@ -6,7 +6,7 @@ import utl from "../utils/utils";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/SettingsStyle";
 
-const SettingsPage = ({ classes }: WithStyles<typeof styles>) => {
+const Settings = ({ classes }: WithStyles<typeof styles>) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
@@ -125,4 +125,4 @@ const SettingsPage = ({ classes }: WithStyles<typeof styles>) => {
   );
 };
 
-export default withStyles(styles)(SettingsPage);
+export default withStyles(styles)(Settings);

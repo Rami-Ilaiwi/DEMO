@@ -6,6 +6,9 @@ import FavoriteButton from "./FavoriteButton";
 import FollowButton from "./FollowButton";
 import DeleteButton from "./DeleteButton";
 import Pagination from "./Pagination";
+import EditButton from "./EditButton";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+
 // import { State } from "react-powerplug";
 
 storiesOf("Buttons", module)
@@ -41,4 +44,9 @@ storiesOf("Buttons", module)
   .add("Delete Button", () => (
     <DeleteButton handleDelete={action("button-click")}></DeleteButton>
   ))
-  .add("Pagination", () => <Pagination />);
+  .add("Pagination", () => <Pagination />)
+  .add("Edit article button", () => (
+    <Router>
+      <EditButton slug="article-wdx2ja" onEdit={action("onEdit")} />
+    </Router>
+  ));

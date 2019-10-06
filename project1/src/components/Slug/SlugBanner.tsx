@@ -16,9 +16,11 @@ interface SlugProps {
   favorited: boolean;
   favoritesCount: number;
   loggedinUser: string;
+  slug: string;
   onFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onFavorite: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onEdit: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
 const SlugBanner: React.FC<SlugProps & WithStyles<typeof styles>> = props => {
@@ -41,9 +43,11 @@ const SlugBanner: React.FC<SlugProps & WithStyles<typeof styles>> = props => {
             favorited={props.favorited}
             favoritesCount={props.favoritesCount}
             loggedinUser={props.loggedinUser}
+            slug={props.slug}
             onFollow={props.onFollow}
             onFavorite={props.onFavorite}
             onDelete={props.onDelete}
+            onEdit={props.onEdit}
           />
         </Grid>
       </Grid>
