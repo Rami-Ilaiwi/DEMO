@@ -1,34 +1,35 @@
-import React from "react";
-import AXIOS from "../../utils/AXIOS";
+import React, { useState, useEffect } from "react";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/TagsStyle";
 
-class Tags extends React.Component<WithStyles<typeof styles>> {
-  public state = {
-    tags: [] as string[]
-  };
-  public componentDidMount() {
-    AXIOS.noauthGet("tags").then(res => {
-      const tags = res.data.tags;
-      this.setState({
-        tags
-      });
-    });
-  }
-
-  public render() {
-    return (
-      <div className={this.props.classes.root}>
-        Popular Tags
-        <br />
-        {this.state.tags.map(ar => (
-          <a className={this.props.classes.tag} key={ar}>
-            {ar}
-          </a>
-        ))}
-      </div>
-    );
-  }
+interface TagsProps {
+  tags: string[];
+  onClickTag: (tag: string) => void;
 }
+
+const Tags: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
+  const handleTagClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    props.onClickTag(event.currentTarget.id);
+  };
+
+  return (
+    <div className={props.classes.root}>
+      Popular Tags
+      <br />
+      {props.tags.map(tag => (
+        <button
+          onClick={handleTagClick}
+          id={tag}
+          className={props.classes.tag}
+          key={tag}
+        >
+          {tag}
+        </button>
+      ))}
+    </div>
+  );
+};
 
 export default withStyles(styles)(Tags);

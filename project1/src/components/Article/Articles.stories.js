@@ -1,15 +1,14 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
 import { storiesOf } from "@storybook/react";
 import Article from "./Article";
 import Articles from "./Articles";
 import ArticleAuthor from "./ArticleAuthor";
 import ArticleMeta from "./ArticleMeta";
-import NewArticle from "../../Pages/NewArticle";
 import ArticleTagsList from "./ArticleTagsList";
 import TagsInput from "./TagsInput";
+import articles from "./articlesFixtures.json";
 
 storiesOf("Article", module)
   .add("Article", () => (
@@ -28,7 +27,10 @@ storiesOf("Article", module)
   ))
   .add("Articles", () => (
     <Router>
-      <Articles />
+      <Articles
+        articles={articles}
+        handleFavoriteToggle={action("handleFavoriteToggle")}
+      />
     </Router>
   ))
   .add("Article Author", () => (
@@ -51,7 +53,6 @@ storiesOf("Article", module)
       handleFavorite={action("button-click")}
     />
   ))
-  .add("NewArticle", () => <NewArticle />)
   .add("Article Tags List", () => (
     <ArticleTagsList
       tagsList={["a", "b", "c"]}

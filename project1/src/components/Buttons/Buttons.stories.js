@@ -8,6 +8,7 @@ import DeleteButton from "./DeleteButton";
 import Pagination from "./Pagination";
 import EditButton from "./EditButton";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import FeedTabs from "./FeedTabs";
 
 // import { State } from "react-powerplug";
 
@@ -49,4 +50,5 @@ storiesOf("Buttons", module)
     <Router>
       <EditButton slug="article-wdx2ja" onEdit={action("onEdit")} />
     </Router>
-  ));
+  ))
+  .add("Feed Tabs", () => <FeedTabs />);
