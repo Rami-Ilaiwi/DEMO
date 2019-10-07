@@ -15,10 +15,10 @@ const Settings = ({ classes }: WithStyles<typeof styles>) => {
 
   useEffect(() => {
     const userData = utl.getUserDetails();
-    setUsername(userData.image);
-    setEmail(userData.username);
-    setImage(userData.bio);
-    setBio(userData.email);
+    setUsername(userData.username);
+    setEmail(userData.email);
+    setImage(userData.image);
+    setBio(userData.bio);
   }, []);
 
   const handlePicture = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +55,10 @@ const Settings = ({ classes }: WithStyles<typeof styles>) => {
           password: newPass || undefined
         }
       }
-    }).then(res => console.log(res));
+    }).then(res => {
+      localStorage.setItem("userData", JSON.stringify(res));
+      localStorage.setItem("userToken", res.data.user.token);
+    });
   };
 
   const handleLogout = () => {

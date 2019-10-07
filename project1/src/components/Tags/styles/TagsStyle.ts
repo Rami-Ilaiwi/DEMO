@@ -13,10 +13,9 @@ export const styles = createStyles({
   },
   tag: {
     backgroundColor: "#818a91",
-    color: "#fff !important",
-    fontSize: "0.8rem",
-    paddingTop: "0.1rem",
-    paddingBottom: "0.1rem",
+    color: "#fff",
+    fontSize: "0.85rem",
+    padding: "5px",
     whiteSpace: "nowrap",
     marginRight: "3px",
     marginBottom: "0.2rem",
@@ -25,6 +24,11 @@ export const styles = createStyles({
     paddingLeft: "0.6em",
     borderRadius: "10rem",
     touchAction: "manipulation",
-    textDecoration: "none"
+    textDecoration: "none",
+    border: "none",
+    cursor: "pointer",
+    "&:hover": {
+      textDecoration: "underline"
+    }
   }
 });

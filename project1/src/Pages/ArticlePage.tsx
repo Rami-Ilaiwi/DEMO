@@ -104,15 +104,13 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const onDeleteClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    AXIOS.DELETE({ endpoint: `articles/${slug}` }).then(
-      () => (window.location.href = "/")
+    AXIOS.DELETE({ endpoint: `articles/${slug}` }).then(() =>
+      props.history.push("/")
     );
   };
 
   const onEditClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    AXIOS.put({ endpoint: `articles/${slug}` }).then(
-      () => (window.location.href = "/")
-    );
+    AXIOS.put({ endpoint: `articles/${slug}` });
   };
 
   const handleComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -149,7 +147,6 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
         setComments(res.data.comments)
       )
     );
-    // console.log(event.currentTarget.id);
   };
   /* ****************** */
 

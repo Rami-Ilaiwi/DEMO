@@ -7,26 +7,20 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/LoginComponentStyle";
 
 const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
-  // class LoginComponent extends React.Component<WithStyles<typeof styles>> {
-
   const hasLogginCookie = localStorage.getItem("userToken") ? true : false;
   const [isLoggedIn, setIsLoggedIn] = useState(hasLogginCookie);
-  //   const {isLoggedIn, login, logout} = React.useContext(LoggedIn);
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
 
   if (isLoggedIn) {
     return <Redirect to="/" />;
   }
-  // state = { email: "", password: "" };
 
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // this.setState({ email: event.target.value });
     setEmail(event.target.value);
   };
 
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // this.setState({ password: event.target.value });
     setpassword(event.target.value);
   };
 

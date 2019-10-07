@@ -68,7 +68,7 @@ const NewArticle: React.FC<
           tagList: tagsList
         }
       }
-    }).then(data => (window.location.href = `/article/${data.article.slug}`));
+    }).then(data => props.history.push(`/article/${data.article.slug}`));
   };
 
   return (

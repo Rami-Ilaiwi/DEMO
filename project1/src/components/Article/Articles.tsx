@@ -1,61 +1,22 @@
-import React, { useState, useEffect } from "react";
-import AXIOS from "../../utils/AXIOS";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Article from "./Article";
 import { Article as ArticleItem } from "../../dtos/ArticleResponseDto";
 import Pagination from "../Buttons/Pagination";
 
-const Articles = () => {
-  const [articles, setArticles] = useState([] as Array<ArticleItem>);
-  // const [numberOfPages, setNumberOfPages] = useState(0);
+interface ArticlesProps {
+  articles: Array<ArticleItem>;
+  handleFavoriteToggle: (article: { favorited: boolean; slug: string }) => void;
+}
 
+const Articles: React.FC<ArticlesProps> = props => {
   const onFavoriteClick = (article: { favorited: boolean; slug: string }) => {
-    let promise;
-    if (article.favorited) {
-      AXIOS.DELETE({
-        endpoint: `articles/${article.slug}/favorite`
-      }).then(() => {
-        setArticles(
-          articles.map(a => {
-            return a.slug == article.slug
-              ? {
-                  ...a,
-                  favorited: !article.favorited,
-                  favoritesCount: --a.favoritesCount
-                }
-              : a;
-          })
-        );
-      });
-    } else {
-      AXIOS.post({
-        endpoint: `articles/${article.slug}/favorite`
-      }).then(() => {
-        setArticles(
-          articles.map(a => {
-            return a.slug == article.slug
-              ? {
-                  ...a,
-                  favorited: !article.favorited,
-                  favoritesCount: ++a.favoritesCount
-                }
-              : a;
-          })
-        );
-      });
-    }
+    props.handleFavoriteToggle(article);
   };
-
-  useEffect(() => {
-    AXIOS.noauthGet(`articles?limit=10`).then(res => {
-      setArticles(res.data.articles);
-      //setNumberOfPages(res.data.articlesCount);
-    });
-  }, []);
 
   return (
     <div>
-      {articles.map((article, index: number) => (
+      {props.articles.map((article, index: number) => (
         <Grid container justify="center" key={index}>
           <Grid item xs={7}>
             <Article
