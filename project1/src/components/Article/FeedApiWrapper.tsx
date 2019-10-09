@@ -3,13 +3,20 @@ import { Article } from "../../dtos/ArticleResponseDto";
 import AXIOS from "../../utils/AXIOS";
 import { RouteComponentProps } from "react-router-dom";
 
+export type FeedType =
+  | "yourFeed"
+  | "globalFeed"
+  | "tagFeed"
+  | "myArticlesFeed"
+  | "favoritedArticlesFeed";
+
 interface OnChangeProps {
   articles: Array<Article>;
   handleFavoriteToggle: (article: { favorited: boolean; slug: string }) => void;
 }
 
 interface FeedApiWrapperProps {
-  feedID: number;
+  selectedFeedTab: FeedType;
   tag?: string;
   author?: string;
   isLoggedIn: boolean;
@@ -64,7 +71,7 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
 
   useEffect(() => {
     if (!props.author) {
-      if (props.feedID == 0) {
+      if (props.selectedFeedTab == "globalFeed") {
         if (props.isLoggedIn) {
           AXIOS.get(`articles?limit=10`).then(res => {
             setArticles(res.data.articles);
@@ -74,11 +81,11 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
             setArticles(res.data.articles);
           });
         }
-      } else if (props.feedID == 1) {
+      } else if (props.selectedFeedTab == "yourFeed") {
         AXIOS.get(`articles/feed?limit=10`).then(res => {
           setArticles(res.data.articles);
         });
-      } else if (props.feedID == 2) {
+      } else if (props.selectedFeedTab == "tagFeed") {
         if (props.isLoggedIn) {
           AXIOS.get(`articles/?limit=10&tag=${props.tag}`).then(res => {
             setArticles(res.data.articles);
@@ -90,7 +97,7 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
         }
       }
     } else {
-      if (props.feedID == 3) {
+      if (props.selectedFeedTab == "myArticlesFeed") {
         if (props.isLoggedIn) {
           AXIOS.get(`articles?limit=10&author=${props.author}`).then(res => {
             setArticles(res.data.articles);
@@ -102,7 +109,7 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
             }
           );
         }
-      } else if (props.feedID == 4) {
+      } else if (props.selectedFeedTab == "favoritedArticlesFeed") {
         if (props.isLoggedIn) {
           AXIOS.get(`articles?limit=10&favorited=${props.author}`).then(res => {
             setArticles(res.data.articles);
@@ -116,7 +123,7 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
         }
       }
     }
-  }, [props.feedID, props.tag, props.author]);
+  }, [props.selectedFeedTab, props.tag, props.author]);
 
   return props.children({ articles, handleFavoriteToggle });
 };
