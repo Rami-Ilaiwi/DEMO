@@ -51,4 +51,12 @@ storiesOf("Buttons", module)
       <EditButton slug="article-wdx2ja" onEdit={action("onEdit")} />
     </Router>
   ))
-  .add("Feed Tabs", () => <FeedTabs />);
+  .add("Feed Tabs", () => (
+    <FeedTabs
+      isLoggedIn={true}
+      tag="tags"
+      isTagToggeld={true}
+      selectedFeedTab="tagFeed"
+      onChangeSelectedFeedTab={action("onChangeSelectedFeedTab")}
+    />
+  ));

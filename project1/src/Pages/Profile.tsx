@@ -4,14 +4,16 @@ import { RouteComponentProps } from "react-router-dom";
 import AXIOS from "../utils/AXIOS";
 import utl from "../utils/utils";
 import ProfileTabs from "../components/Buttons/ProfileTabs";
-import FeedApiWrapper from "../components/Article/FeedApiWrapper";
+import FeedApiWrapper, { FeedType } from "../components/Article/FeedApiWrapper";
 import Articles from "../components/Article/Articles";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 
 const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
-  const [feedID, setFeedID] = useState(3);
+  const [selectedFeedTab, setSelectedFeedTab] = useState<FeedType>(
+    "myArticlesFeed"
+  );
   const user = utl.getUserDetails();
 
   const [profile, setProfile] = useState({
@@ -33,7 +35,7 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
         setProfile(profile);
       });
     }
-  }, [props.match.params.user, feedID]);
+  }, [props.match.params.user, selectedFeedTab]);
 
   const onFollowClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -51,8 +53,8 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
 
   const handleRedirect = (path: string) => props.history.push(path);
 
-  const handleChangeFeed = (id: number) => {
-    setFeedID(id);
+  const handleChangeSelectedFeedTab = (tab: FeedType) => {
+    setSelectedFeedTab(tab);
   };
 
   return (
@@ -66,9 +68,12 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
         username={profile.username}
         onFollow={onFollowClick}
       />
-      <ProfileTabs feedID={feedID} onChangeFeed={handleChangeFeed} />
+      <ProfileTabs
+        selectedFeedTab={selectedFeedTab}
+        onChangeSelectedFeedTab={handleChangeSelectedFeedTab}
+      />
       <FeedApiWrapper
-        feedID={feedID}
+        selectedFeedTab={selectedFeedTab}
         author={profile.username}
         onRedirect={handleRedirect}
         isLoggedIn={isLoggedIn}

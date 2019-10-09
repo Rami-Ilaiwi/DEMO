@@ -4,14 +4,16 @@ import Grid from "@material-ui/core/Grid";
 import Tags from "../components/Tags/Tags";
 import Articles from "../components/Article/Articles";
 import { withRouter } from "react-router-dom";
-import FeedApiWrapper from "../components/Article/FeedApiWrapper";
+import FeedApiWrapper, { FeedType } from "../components/Article/FeedApiWrapper";
 import { RouteComponentProps } from "react-router-dom";
 import FeedTabs from "../components/Buttons/FeedTabs";
 import Typography from "@material-ui/core/Typography";
 import AXIOS from "../utils/AXIOS";
 
-const GridContainer = ({ history }: RouteComponentProps) => {
-  const [feedID, setFeedID] = useState(0);
+const FeedPage = ({ history }: RouteComponentProps) => {
+  const [selectedFeedTab, setSelectedFeedTab] = useState<FeedType>(
+    "globalFeed"
+  );
   const [tags, setTags] = useState<string[]>([]);
   const [tag, setTag] = useState("");
   const [isTagClicked, setIsTagClicked] = useState(false);
@@ -19,9 +21,9 @@ const GridContainer = ({ history }: RouteComponentProps) => {
   const token = localStorage.getItem("userToken");
   const handleRedirect = (path: string) => history.push(path);
 
-  const handleChangeFeed = (id: number) => {
-    setFeedID(id);
-    if (id != 2) {
+  const handleChangeSelectedFeedTab = (feedType: FeedType) => {
+    setSelectedFeedTab(feedType);
+    if (feedType != "tagFeed") {
       setIsTagClicked(false);
     }
   };
@@ -29,7 +31,7 @@ const GridContainer = ({ history }: RouteComponentProps) => {
   const onClickTag = (tag: string) => {
     setTag(tag);
     setIsTagClicked(true);
-    setFeedID(2);
+    setSelectedFeedTab("tagFeed");
   };
 
   useEffect(() => {
@@ -49,16 +51,16 @@ const GridContainer = ({ history }: RouteComponentProps) => {
           <Grid item xs>
             <Grid item style={{ marginBottom: "2%", marginLeft: "20%" }}>
               <FeedTabs
-                onChangeFeed={handleChangeFeed}
+                onChangeSelectedFeedTab={handleChangeSelectedFeedTab}
                 isLoggedIn={isLoggedIn}
                 tag={tag}
-                feedID={feedID}
+                selectedFeedTab={selectedFeedTab}
                 isTagToggeld={isTagClicked}
               />
             </Grid>
             <Grid item>
               <FeedApiWrapper
-                feedID={feedID}
+                selectedFeedTab={selectedFeedTab}
                 tag={tag}
                 onRedirect={handleRedirect}
                 isLoggedIn={isLoggedIn}
@@ -89,4 +91,4 @@ const GridContainer = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(GridContainer);
+export default withRouter(FeedPage);
