@@ -2,15 +2,12 @@ import { createStyles } from "@material-ui/core/styles";
 
 export const styles = () =>
   createStyles({
-    root: {
-      fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif"
-    },
     articleBody: {
+      fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
       textDecoration: "none",
-      color: "inherit"
+      color: "#bbb"
     },
-    title: {
-      fontSize: "2.5rem",
-      color: "inherit"
+    card: {
+      marginTop: "1%"
     }
   });

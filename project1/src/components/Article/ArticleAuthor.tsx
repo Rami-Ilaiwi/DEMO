@@ -25,7 +25,7 @@ const ArticleInfo: React.FC<
           {props.username}
         </Link>
       }
-      subheader={date}
+      subheader={<span className={props.classes.date}>{date}</span>}
     />
   );
 };

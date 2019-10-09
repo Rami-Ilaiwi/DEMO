@@ -33,7 +33,6 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
     if (!props.isLoggedIn) {
       props.onRedirect("/login");
     }
-    // add a comment
 
     if (article.favorited) {
       AXIOS.DELETE({

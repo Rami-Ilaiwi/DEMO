@@ -6,6 +6,11 @@ import { Link } from "react-router-dom";
 import ArticleAuthor from "./ArticleAuthor";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/ArticleStyle";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
 
 interface ArticleProps {
   image: string;
@@ -31,53 +36,43 @@ const Article: React.FC<ArticleProps & WithStyles<typeof styles>> = props => {
   };
 
   return (
-    <Grid className={props.classes.root} container direction="column">
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-      >
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="center"
-          item
-          xs={6}
-          spacing={2}
-        >
-          <ArticleAuthor
-            image={props.image}
-            createdAt={props.createdAt}
-            username={props.username}
-          />
-        </Grid>
-        <Grid item xs={1}>
+    <>
+      <Card className={props.classes.card}>
+        <ArticleAuthor
+          image={props.image}
+          createdAt={props.createdAt}
+          username={props.username}
+        />
+
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            {props.title}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {props.description}
+          </Typography>
+
+          <TagList tagList={props.tagList} />
+        </CardContent>
+        <CardActions style={{ float: "right" }}>
           <FavoriteButton
             favorited={props.favorited}
             favoritesCount={props.favoritesCount}
             slug={props.slug}
             onFavorite={handleFavorite}
-          />{" "}
-        </Grid>
-      </Grid>
-      <Link className={props.classes.articleBody} to={`/article/${props.slug}`}>
-        <Grid item>
-          <h1 className={props.classes.title}>{props.title}</h1>
-          <p>{props.description}</p>
-        </Grid>
-        <Grid container direction="row" justify="space-between">
-          <Grid item>
-            <span>Read more...</span>
-          </Grid>
-          <Grid item>
-            <TagList tagList={props.tagList} />
-            {/* {console.log(props.tagList)} */}
-          </Grid>
-        </Grid>
-      </Link>
-    </Grid>
+          />
+        </CardActions>
+        <CardActions>
+          <Link
+            color="primary"
+            className={props.classes.articleBody}
+            to={`/article/${props.slug}`}
+          >
+            Read more...
+          </Link>
+        </CardActions>
+      </Card>
+    </>
   );
 };
 

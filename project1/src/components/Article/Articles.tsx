@@ -31,7 +31,6 @@ const Articles: React.FC<ArticlesProps> = props => {
               favorited={article.favorited}
               onFavorite={onFavoriteClick}
             />
-            <hr />
           </Grid>
         </Grid>
       ))}

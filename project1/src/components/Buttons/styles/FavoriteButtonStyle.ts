@@ -11,20 +11,20 @@ export const styles = () =>
       textAlign: "center",
       verticalAlign: "middle",
       cursor: "pointer",
-      border: "1px solid transparent",
+      border: "none",
       color: "#5cb85c",
       backgroundColor: "transparent",
       borderColor: "#5cb85c"
     },
     favorite: {
-      color: "#5cb85c",
-      backgroundColor: "transparent",
+      color: "#818a91",
+      // backgroundColor: "transparent",
       borderColor: "#5cb85c"
     },
 
     unfavorite: {
-      color: "#fff",
-      backgroundColor: "#5cb85c",
+      color: "#5cb85c",
+      // backgroundColor: "#5cb85c",
       borderColor: "#5cb85c"
     },
     icon: {
