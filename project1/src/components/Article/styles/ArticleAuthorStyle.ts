@@ -12,8 +12,6 @@ export const styles = () =>
 
     date: {
       color: "#bbb",
-      fontSize: "0.8rem",
-      display: "block",
       fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif"
     },
 

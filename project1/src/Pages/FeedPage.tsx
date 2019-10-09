@@ -46,9 +46,9 @@ const FeedPage = ({ history }: RouteComponentProps) => {
     <>
       {token ? null : <Banner />}
 
-      <div>
+      <>
         <Grid container style={{ marginTop: "3%" }}>
-          <Grid item xs>
+          <Grid item xs={8}>
             <Grid item style={{ marginBottom: "2%", marginLeft: "20%" }}>
               <FeedTabs
                 onChangeSelectedFeedTab={handleChangeSelectedFeedTab}
@@ -86,7 +86,7 @@ const FeedPage = ({ history }: RouteComponentProps) => {
             <Tags onClickTag={onClickTag} tags={tags} />
           </Grid>
         </Grid>
-      </div>
+      </>
     </>
   );
 };
