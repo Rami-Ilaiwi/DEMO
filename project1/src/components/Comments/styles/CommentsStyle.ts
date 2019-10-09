@@ -13,8 +13,12 @@ export const styles = () =>
 
     commentAuthor: {
       display: "inline-block",
-      color: "inherit",
-      textDecoration: "none"
+      textDecoration: "none",
+      color: "#5CB85C",
+      "&:hover": {
+        textDecoration: "underline",
+        color: "#3d8b3d"
+      }
     },
 
     commentAuthorImage: {

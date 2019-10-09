@@ -18,6 +18,12 @@ export const styles = () =>
     },
 
     author: {
-      fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif"
+      fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+      textDecoration: "none",
+      color: "#5CB85C",
+      "&:hover": {
+        textDecoration: "underline",
+        color: "#3d8b3d"
+      }
     }
   });

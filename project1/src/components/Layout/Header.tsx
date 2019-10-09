@@ -60,7 +60,10 @@ const Header = ({ classes }: WithStyles<typeof styles>) => {
               </Grid>
 
               <Grid item>
-                <Link to="/editor" className={classes.subtitle}>
+                <Link
+                  to={`/@${userDetails.username}`}
+                  className={classes.subtitle}
+                >
                   <Typography>
                     <img
                       src={userDetails.image}

@@ -11,6 +11,7 @@ interface OnChangeProps {
 interface FeedApiWrapperProps {
   feedID: number;
   tag?: string;
+  author?: string;
   isLoggedIn: boolean;
   onRedirect: (path: string) => void;
   children: (onChangeProps: OnChangeProps) => JSX.Element;
@@ -62,26 +63,60 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
   };
 
   useEffect(() => {
-    if (props.feedID == 0) {
-      if (props.isLoggedIn) {
-        AXIOS.get(`articles?limit=10`).then(res => {
+    if (!props.author) {
+      if (props.feedID == 0) {
+        if (props.isLoggedIn) {
+          AXIOS.get(`articles?limit=10`).then(res => {
+            setArticles(res.data.articles);
+          });
+        } else {
+          AXIOS.noauthGet(`articles?limit=10`).then(res => {
+            setArticles(res.data.articles);
+          });
+        }
+      } else if (props.feedID == 1) {
+        AXIOS.get(`articles/feed?limit=10`).then(res => {
           setArticles(res.data.articles);
         });
-      } else {
-        AXIOS.noauthGet(`articles?limit=10`).then(res => {
-          setArticles(res.data.articles);
-        });
+      } else if (props.feedID == 2) {
+        if (props.isLoggedIn) {
+          AXIOS.get(`articles/?limit=10&tag=${props.tag}`).then(res => {
+            setArticles(res.data.articles);
+          });
+        } else {
+          AXIOS.noauthGet(`articles/?limit=10&tag=${props.tag}`).then(res => {
+            setArticles(res.data.articles);
+          });
+        }
       }
-    } else if (props.feedID == 1) {
-      AXIOS.get(`articles/feed?limit=10`).then(res => {
-        setArticles(res.data.articles);
-      });
-    } else if (props.feedID == 2) {
-      AXIOS.get(`articles/?limit=10&tag=${props.tag}`).then(res => {
-        setArticles(res.data.articles);
-      });
+    } else {
+      if (props.feedID == 3) {
+        if (props.isLoggedIn) {
+          AXIOS.get(`articles?limit=10&author=${props.author}`).then(res => {
+            setArticles(res.data.articles);
+          });
+        } else {
+          AXIOS.noauthGet(`articles?limit=10&author=${props.author}`).then(
+            res => {
+              setArticles(res.data.articles);
+            }
+          );
+        }
+      } else if (props.feedID == 4) {
+        if (props.isLoggedIn) {
+          AXIOS.get(`articles?limit=10&favorited=${props.author}`).then(res => {
+            setArticles(res.data.articles);
+          });
+        } else {
+          AXIOS.noauthGet(`articles?limit=10&favorited=${props.author}`).then(
+            res => {
+              setArticles(res.data.articles);
+            }
+          );
+        }
+      }
     }
-  }, [props.feedID, props.tag]);
+  }, [props.feedID, props.tag, props.author]);
 
   return props.children({ articles, handleFavoriteToggle });
 };
