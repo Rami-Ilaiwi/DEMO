@@ -4,17 +4,18 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { styles } from "./styles/FeedTabsStyle";
+import { FeedType } from "../Article/FeedApiWrapper";
 
 interface ProfileTabsProps {
-  feedID: number;
-  onChangeFeed: (id: number) => void;
+  selectedFeedTab: FeedType;
+  onChangeSelectedFeedTab: (tab: FeedType) => void;
 }
 
 const ProfileTabs: React.FC<
   ProfileTabsProps & WithStyles<typeof styles>
 > = props => {
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    props.onChangeFeed(newValue);
+  const handleChange = (event: React.ChangeEvent<{}>, tab: FeedType) => {
+    props.onChangeSelectedFeedTab(tab);
   };
 
   return (
@@ -33,7 +34,7 @@ const ProfileTabs: React.FC<
         style={{ width: "60%", marginTop: "1%" }}
       >
         <Tabs
-          value={props.feedID}
+          value={props.selectedFeedTab}
           onChange={handleChange}
           TabIndicatorProps={{
             className: props.classes.indicator
@@ -41,13 +42,13 @@ const ProfileTabs: React.FC<
         >
           <Tab
             component="button"
-            value={3}
+            value="myArticlesFeed"
             id="myArticlesFeed"
             label="My Articles"
           />
           <Tab
             component="button"
-            value={4}
+            value="favoritedArticlesFeed"
             id="favoritedArticlesFeed"
             label="Favorited Articles"
           />

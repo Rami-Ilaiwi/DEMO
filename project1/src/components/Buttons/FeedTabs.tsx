@@ -3,25 +3,29 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { styles } from "./styles/FeedTabsStyle";
+import { FeedType } from "../Article/FeedApiWrapper";
 
 interface FeedTabsProps {
   isLoggedIn: boolean;
   tag: string;
   isTagToggeld: boolean;
-  feedID: number;
-  onChangeFeed: (id: number) => void;
+  selectedFeedTab: FeedType;
+  onChangeSelectedFeedTab: (tab: FeedType) => void;
 }
 
 const FeedTabs: React.FC<FeedTabsProps & WithStyles<typeof styles>> = props => {
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    props.onChangeFeed(newValue);
+  const handleChangeSelectedFeedTab = (
+    event: React.ChangeEvent<{}>,
+    tab: FeedType
+  ) => {
+    props.onChangeSelectedFeedTab(tab);
   };
 
   return (
     <div className={props.classes.root}>
       <Tabs
-        value={props.feedID}
-        onChange={handleChange}
+        value={props.selectedFeedTab}
+        onChange={handleChangeSelectedFeedTab}
         TabIndicatorProps={{
           style: {
             backgroundColor: "#5cb85c"
@@ -29,13 +33,23 @@ const FeedTabs: React.FC<FeedTabsProps & WithStyles<typeof styles>> = props => {
         }}
       >
         {props.isLoggedIn ? (
-          <Tab component="button" value={1} id="yourFeed" label="Your Feed" />
+          <Tab
+            component="button"
+            value="yourFeed"
+            id="yourFeed"
+            label="Your Feed"
+          />
         ) : null}
-        <Tab component="button" value={0} id="globalFeed" label="Global Feed" />
+        <Tab
+          component="button"
+          value="globalFeed"
+          id="globalFeed"
+          label="Global Feed"
+        />
         {props.isTagToggeld ? (
           <Tab
             component="button"
-            value={2}
+            value="tagFeed"
             id="tagFeed"
             label={`#${props.tag}`}
           />
