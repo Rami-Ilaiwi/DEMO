@@ -37,7 +37,10 @@ const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
         <Card className={props.classes.cardWidth}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              <Link className={props.classes.commentAuthor} to="/@yiwei">
+              <Link
+                className={props.classes.commentAuthor}
+                to={`/@${item.author.username}`}
+              >
                 <img
                   src={item.author.image}
                   className={props.classes.commentAuthorImage}
@@ -46,7 +49,10 @@ const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
               <span>
                 {" "}
                 {/* edit this link */}
-                <Link className={props.classes.commentAuthor} to="/@yiwei">
+                <Link
+                  className={props.classes.commentAuthor}
+                  to={`/@${item.author.username}`}
+                >
                   {item.author.username}
                 </Link>
               </span>

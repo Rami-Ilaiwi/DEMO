@@ -10,6 +10,7 @@ import utl from "../utils/utils";
 import SlugBanner from "../components/Slug/SlugBanner";
 
 const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
+  const isLoggedIn = localStorage.getItem("userToken") ? true : false;
   const [article, setArticle] = useState({
     title: "",
     slug: "",
@@ -53,18 +54,33 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const slug = props.match.params.slug;
 
   useEffect(() => {
-    AXIOS.get(`articles/${slug}`)
-      .then(res => {
-        const article = res.data.article;
-        setArticle(article);
-        return article;
-      })
-      .then(article =>
-        AXIOS.get(`profiles/${article.author.username}`).then(res => {
-          const profile = res.data.profile;
-          setProfile(profile);
+    if (isLoggedIn) {
+      AXIOS.get(`articles/${slug}`)
+        .then(res => {
+          const article = res.data.article;
+          setArticle(article);
+          return article;
         })
-      );
+        .then(article =>
+          AXIOS.get(`profiles/${article.author.username}`).then(res => {
+            const profile = res.data.profile;
+            setProfile(profile);
+          })
+        );
+    } else {
+      AXIOS.noauthGet(`articles/${slug}`)
+        .then(res => {
+          const article = res.data.article;
+          setArticle(article);
+          return article;
+        })
+        .then(article =>
+          AXIOS.noauthGet(`profiles/${article.author.username}`).then(res => {
+            const profile = res.data.profile;
+            setProfile(profile);
+          })
+        );
+    }
     // .then(() => stIsLoadingArticle(false))
     AXIOS.noauthGet(`articles/${slug}/comments`).then(res =>
       setComments(res.data.comments)

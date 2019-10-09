@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/ArticleAuthorStyle";
@@ -28,8 +29,11 @@ const ArticleInfo: React.FC<
           <img src={props.image} className={props.classes.image} />
         </Grid>
         <Grid item>
-          <Grid className={props.classes.author}>{props.username}</Grid>{" "}
-          {/* Make this a Link */}
+          <Grid item>
+            <Link className={props.classes.author} to={`/@${props.username}`}>
+              {props.username}
+            </Link>
+          </Grid>
           <Grid className={props.classes.date}>{date}</Grid>
         </Grid>
       </Grid>

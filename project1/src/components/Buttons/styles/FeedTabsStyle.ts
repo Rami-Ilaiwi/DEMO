@@ -30,5 +30,8 @@ export const styles = () =>
     },
     icon: {
       fontSize: "inherit"
+    },
+    indicator: {
+      backgroundColor: "#5cb85c"
     }
   });

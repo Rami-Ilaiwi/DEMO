@@ -16,9 +16,16 @@ export const styles = () =>
     },
 
     edit: {
-      color: "#ccc",
+      color: "#999",
       backgroundColor: "transparent",
-      borderColor: "#ccc"
+      border: "1px solid #999",
+      "&:hover": {
+        backgroundColor: "#CCC"
+      },
+      "&:active": {
+        backgroundColor: "#999",
+        color: "#CCC"
+      }
     },
 
     icon: {
