@@ -8,12 +8,16 @@ import FeedApiWrapper, { FeedType } from "../components/Article/FeedApiWrapper";
 import Articles from "../components/Article/Articles";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
+import Pagination from "../components/Buttons/Pagination";
 
 const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
   const [selectedFeedTab, setSelectedFeedTab] = useState<FeedType>(
     "myArticlesFeed"
   );
+  const [articlesCount, setArticlesCount] = useState(0);
+  const [page, setPage] = useState(0);
+
   const user = utl.getUserDetails();
 
   const [profile, setProfile] = useState({
@@ -24,6 +28,19 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
   });
 
   useEffect(() => {
+    if (profile.username) {
+      if (selectedFeedTab == "myArticlesFeed") {
+        AXIOS.noauthGet(`articles?author=${profile.username}`).then(res => {
+          const articlesCount: number = res.data.articlesCount;
+          setArticlesCount(articlesCount);
+        });
+      } else if (selectedFeedTab == "favoritedArticlesFeed") {
+        AXIOS.noauthGet(`articles?favorited=${profile.username}`).then(res => {
+          const articlesCount: number = res.data.articlesCount;
+          setArticlesCount(articlesCount);
+        });
+      }
+    }
     if (isLoggedIn) {
       AXIOS.get(`profiles/${props.match.params.user}`).then(res => {
         const profile = res.data.profile;
@@ -35,7 +52,7 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
         setProfile(profile);
       });
     }
-  }, [props.match.params.user, selectedFeedTab]);
+  }, [props.match.params.user, selectedFeedTab, profile.username]);
 
   const onFollowClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -51,10 +68,15 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
     }
   };
 
+  const handleChangePage = (page: number) => {
+    setPage(page);
+  };
+
   const handleRedirect = (path: string) => props.history.push(path);
 
   const handleChangeSelectedFeedTab = (tab: FeedType) => {
     setSelectedFeedTab(tab);
+    setPage(0);
   };
 
   return (
@@ -72,9 +94,11 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
         selectedFeedTab={selectedFeedTab}
         onChangeSelectedFeedTab={handleChangeSelectedFeedTab}
       />
+
       <FeedApiWrapper
         selectedFeedTab={selectedFeedTab}
         author={profile.username}
+        page={page}
         onRedirect={handleRedirect}
         isLoggedIn={isLoggedIn}
       >
@@ -93,6 +117,15 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
           </>
         )}
       </FeedApiWrapper>
+      {articlesCount > 10 ? (
+        <div style={{ marginRight: "20%" }}>
+          <Pagination
+            onChangePage={handleChangePage}
+            articlesCount={articlesCount}
+            page={page}
+          />
+        </div>
+      ) : null}
     </>
   );
 };

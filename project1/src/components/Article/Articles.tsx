@@ -15,7 +15,7 @@ const Articles: React.FC<ArticlesProps> = props => {
   };
 
   return (
-    <div>
+    <>
       {props.articles.map((article, index: number) => (
         <Grid container justify="center" key={index}>
           <Grid item xs={7}>
@@ -34,8 +34,7 @@ const Articles: React.FC<ArticlesProps> = props => {
           </Grid>
         </Grid>
       ))}
-      {/* <Pagination numberOfPages={numberOfPages} /> */}
-    </div>
+    </>
   );
 };
 

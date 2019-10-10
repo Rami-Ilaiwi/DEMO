@@ -9,6 +9,7 @@ import { RouteComponentProps } from "react-router-dom";
 import FeedTabs from "../components/Buttons/FeedTabs";
 import Typography from "@material-ui/core/Typography";
 import AXIOS from "../utils/AXIOS";
+import Pagination from "../components/Buttons/Pagination";
 
 const FeedPage = ({ history }: RouteComponentProps) => {
   const [selectedFeedTab, setSelectedFeedTab] = useState<FeedType>(
@@ -17,12 +18,18 @@ const FeedPage = ({ history }: RouteComponentProps) => {
   const [tags, setTags] = useState<string[]>([]);
   const [tag, setTag] = useState("");
   const [isTagClicked, setIsTagClicked] = useState(false);
-
+  const [articlesCount, setArticlesCount] = useState(0);
+  const [page, setPage] = useState(0);
   const token = localStorage.getItem("userToken");
   const handleRedirect = (path: string) => history.push(path);
 
+  const handleChangePage = (page: number) => {
+    setPage(page);
+  };
+
   const handleChangeSelectedFeedTab = (feedType: FeedType) => {
     setSelectedFeedTab(feedType);
+    setPage(0);
     if (feedType != "tagFeed") {
       setIsTagClicked(false);
     }
@@ -30,16 +37,34 @@ const FeedPage = ({ history }: RouteComponentProps) => {
 
   const onClickTag = (tag: string) => {
     setTag(tag);
+    setPage(0);
     setIsTagClicked(true);
     setSelectedFeedTab("tagFeed");
   };
 
   useEffect(() => {
+    if (selectedFeedTab == "globalFeed") {
+      AXIOS.noauthGet("articles").then(res => {
+        const articlesCount: number = res.data.articlesCount;
+        setArticlesCount(articlesCount);
+      });
+    } else if (selectedFeedTab == "yourFeed") {
+      AXIOS.get(`articles/feed`).then(res => {
+        const articlesCount: number = res.data.articlesCount;
+        setArticlesCount(articlesCount);
+      });
+    } else if (selectedFeedTab == "tagFeed") {
+      AXIOS.noauthGet(`articles?tag=${tag}`).then(res => {
+        const articlesCount: number = res.data.articlesCount;
+        setArticlesCount(articlesCount);
+      });
+    }
+
     AXIOS.noauthGet("tags").then(res => {
       const tags = res.data.tags;
       setTags(tags);
     });
-  }, [tag]);
+  }, [tag, selectedFeedTab]);
 
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
   return (
@@ -62,6 +87,7 @@ const FeedPage = ({ history }: RouteComponentProps) => {
               <FeedApiWrapper
                 selectedFeedTab={selectedFeedTab}
                 tag={tag}
+                page={page}
                 onRedirect={handleRedirect}
                 isLoggedIn={isLoggedIn}
               >
@@ -81,6 +107,13 @@ const FeedPage = ({ history }: RouteComponentProps) => {
                 )}
               </FeedApiWrapper>
             </Grid>
+            {articlesCount > 10 ? (
+              <Pagination
+                onChangePage={handleChangePage}
+                articlesCount={articlesCount}
+                page={page}
+              />
+            ) : null}
           </Grid>
           <Grid item xs={3}>
             <Tags onClickTag={onClickTag} tags={tags} />

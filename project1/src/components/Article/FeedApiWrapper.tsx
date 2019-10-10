@@ -19,12 +19,14 @@ interface FeedApiWrapperProps {
   selectedFeedTab: FeedType;
   tag?: string;
   author?: string;
+  page: number;
   isLoggedIn: boolean;
   onRedirect: (path: string) => void;
   children: (onChangeProps: OnChangeProps) => JSX.Element;
 }
 
 const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
+  const offset = props.page * 10;
   const [articles, setArticles] = useState<Array<Article>>([]);
   const handleFavoriteToggle = (article: {
     favorited: boolean;
@@ -73,25 +75,29 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
     if (!props.author) {
       if (props.selectedFeedTab == "globalFeed") {
         if (props.isLoggedIn) {
-          AXIOS.get(`articles?limit=10`).then(res => {
+          AXIOS.get(`articles?offset=${offset}&limit=10`).then(res => {
             setArticles(res.data.articles);
           });
         } else {
-          AXIOS.noauthGet(`articles?limit=10`).then(res => {
+          AXIOS.noauthGet(`articles?offset=${offset}&limit=10`).then(res => {
             setArticles(res.data.articles);
           });
         }
       } else if (props.selectedFeedTab == "yourFeed") {
-        AXIOS.get(`articles/feed?limit=10`).then(res => {
+        AXIOS.get(`articles/feed?offset=${offset}&limit=10`).then(res => {
           setArticles(res.data.articles);
         });
       } else if (props.selectedFeedTab == "tagFeed") {
         if (props.isLoggedIn) {
-          AXIOS.get(`articles/?limit=10&tag=${props.tag}`).then(res => {
+          AXIOS.get(
+            `articles/?offset=${offset}&limit=10&tag=${props.tag}`
+          ).then(res => {
             setArticles(res.data.articles);
           });
         } else {
-          AXIOS.noauthGet(`articles/?limit=10&tag=${props.tag}`).then(res => {
+          AXIOS.noauthGet(
+            `articles/?offset=${offset}&limit=10&tag=${props.tag}`
+          ).then(res => {
             setArticles(res.data.articles);
           });
         }
@@ -99,31 +105,35 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
     } else {
       if (props.selectedFeedTab == "myArticlesFeed") {
         if (props.isLoggedIn) {
-          AXIOS.get(`articles?limit=10&author=${props.author}`).then(res => {
+          AXIOS.get(
+            `articles?offset=${offset}&limit=10&author=${props.author}`
+          ).then(res => {
             setArticles(res.data.articles);
           });
         } else {
-          AXIOS.noauthGet(`articles?limit=10&author=${props.author}`).then(
-            res => {
-              setArticles(res.data.articles);
-            }
-          );
+          AXIOS.noauthGet(
+            `articles?offset=${offset}&limit=10&author=${props.author}`
+          ).then(res => {
+            setArticles(res.data.articles);
+          });
         }
       } else if (props.selectedFeedTab == "favoritedArticlesFeed") {
         if (props.isLoggedIn) {
-          AXIOS.get(`articles?limit=10&favorited=${props.author}`).then(res => {
+          AXIOS.get(
+            `articles?offset=${offset}&limit=10&favorited=${props.author}`
+          ).then(res => {
             setArticles(res.data.articles);
           });
         } else {
-          AXIOS.noauthGet(`articles?limit=10&favorited=${props.author}`).then(
-            res => {
-              setArticles(res.data.articles);
-            }
-          );
+          AXIOS.noauthGet(
+            `articles?offset=${offset}&limit=10&favorited=${props.author}`
+          ).then(res => {
+            setArticles(res.data.articles);
+          });
         }
       }
     }
-  }, [props.selectedFeedTab, props.tag, props.author]);
+  }, [props.selectedFeedTab, props.tag, props.author, props.page]);
 
   return props.children({ articles, handleFavoriteToggle });
 };
