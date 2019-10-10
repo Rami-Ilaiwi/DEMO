@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Article from "./Article";
+import ArticleCard from "./ArticleCard";
 import { Article as ArticleItem } from "../../dtos/ArticleResponseDto";
 import Pagination from "../Buttons/Pagination";
 
@@ -19,7 +19,7 @@ const Articles: React.FC<ArticlesProps> = props => {
       {props.articles.map((article, index: number) => (
         <Grid container justify="center" key={index}>
           <Grid item xs={7}>
-            <Article
+            <ArticleCard
               username={article.author.username}
               image={article.author.image}
               createdAt={article.createdAt}
