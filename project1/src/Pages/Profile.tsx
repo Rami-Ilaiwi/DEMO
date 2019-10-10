@@ -27,20 +27,25 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
     username: ""
   });
 
+  // This is for take the number of articles in each feed tab
   useEffect(() => {
     if (profile.username) {
-      if (selectedFeedTab == "myArticlesFeed") {
+      if (selectedFeedTab === "myArticlesFeed") {
         AXIOS.noauthGet(`articles?author=${profile.username}`).then(res => {
           const articlesCount: number = res.data.articlesCount;
           setArticlesCount(articlesCount);
         });
-      } else if (selectedFeedTab == "favoritedArticlesFeed") {
+      } else if (selectedFeedTab === "favoritedArticlesFeed") {
         AXIOS.noauthGet(`articles?favorited=${profile.username}`).then(res => {
           const articlesCount: number = res.data.articlesCount;
           setArticlesCount(articlesCount);
         });
       }
     }
+  }, [selectedFeedTab, profile.username]);
+
+  // This for fetching the articles
+  useEffect(() => {
     if (isLoggedIn) {
       AXIOS.get(`profiles/${props.match.params.user}`).then(res => {
         const profile = res.data.profile;
@@ -52,7 +57,7 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
         setProfile(profile);
       });
     }
-  }, [props.match.params.user, selectedFeedTab, profile.username]);
+  }, [props.match.params.user]);
 
   const onFollowClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

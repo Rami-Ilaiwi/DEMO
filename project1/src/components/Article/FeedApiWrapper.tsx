@@ -73,7 +73,8 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
 
   useEffect(() => {
     if (!props.author) {
-      if (props.selectedFeedTab == "globalFeed") {
+      // This one for Home page, it has three feed tabs (global feed, your feed and tag feed)
+      if (props.selectedFeedTab === "globalFeed") {
         if (props.isLoggedIn) {
           AXIOS.get(`articles?offset=${offset}&limit=10`).then(res => {
             setArticles(res.data.articles);
@@ -83,11 +84,11 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
             setArticles(res.data.articles);
           });
         }
-      } else if (props.selectedFeedTab == "yourFeed") {
+      } else if (props.selectedFeedTab === "yourFeed") {
         AXIOS.get(`articles/feed?offset=${offset}&limit=10`).then(res => {
           setArticles(res.data.articles);
         });
-      } else if (props.selectedFeedTab == "tagFeed") {
+      } else if (props.selectedFeedTab === "tagFeed") {
         if (props.isLoggedIn) {
           AXIOS.get(
             `articles/?offset=${offset}&limit=10&tag=${props.tag}`
@@ -103,7 +104,10 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
         }
       }
     } else {
-      if (props.selectedFeedTab == "myArticlesFeed") {
+      // This for Profile page, it has two tab feeds
+      // (My articles which includes articles for the profile owner,
+      // and Favorited articles which has the favorited articles of the owner of the profile)
+      if (props.selectedFeedTab === "myArticlesFeed") {
         if (props.isLoggedIn) {
           AXIOS.get(
             `articles?offset=${offset}&limit=10&author=${props.author}`
@@ -117,7 +121,7 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
             setArticles(res.data.articles);
           });
         }
-      } else if (props.selectedFeedTab == "favoritedArticlesFeed") {
+      } else if (props.selectedFeedTab === "favoritedArticlesFeed") {
         if (props.isLoggedIn) {
           AXIOS.get(
             `articles?offset=${offset}&limit=10&favorited=${props.author}`

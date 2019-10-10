@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 
-interface ArticleProps {
+interface ArticleCardProps {
   image: string;
   username: string;
   createdAt: string;
@@ -25,7 +25,9 @@ interface ArticleProps {
   onFavorite: (article: { favorited: boolean; slug: string }) => void;
 }
 
-const Article: React.FC<ArticleProps & WithStyles<typeof styles>> = props => {
+const ArticleCard: React.FC<
+  ArticleCardProps & WithStyles<typeof styles>
+> = props => {
   const handleFavorite = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -76,4 +78,4 @@ const Article: React.FC<ArticleProps & WithStyles<typeof styles>> = props => {
   );
 };
 
-export default withStyles(styles)(Article);
+export default withStyles(styles)(ArticleCard);

@@ -2,7 +2,7 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { storiesOf } from "@storybook/react";
-import Article from "./Article";
+import ArticleCard from "./ArticleCard";
 import Articles from "./Articles";
 import ArticleAuthor from "./ArticleAuthor";
 import ArticleMeta from "./ArticleMeta";
@@ -13,7 +13,7 @@ import articles from "./articlesFixtures.json";
 storiesOf("Article", module)
   .add("Article", () => (
     <Router>
-      <Article
+      <ArticleCard
         username={"Name"}
         image={"https://avatarfiles.alphacoders.com/165/thumb-165504.png"}
         createdAt={"2019-09-11T11:55:18.705Z"}

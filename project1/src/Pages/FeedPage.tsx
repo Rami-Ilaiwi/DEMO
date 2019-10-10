@@ -30,7 +30,7 @@ const FeedPage = ({ history }: RouteComponentProps) => {
   const handleChangeSelectedFeedTab = (feedType: FeedType) => {
     setSelectedFeedTab(feedType);
     setPage(0);
-    if (feedType != "tagFeed") {
+    if (feedType !== "tagFeed") {
       setIsTagClicked(false);
     }
   };
@@ -42,29 +42,33 @@ const FeedPage = ({ history }: RouteComponentProps) => {
     setSelectedFeedTab("tagFeed");
   };
 
+  // This one for fetching the articles
   useEffect(() => {
-    if (selectedFeedTab == "globalFeed") {
+    if (selectedFeedTab === "globalFeed") {
       AXIOS.noauthGet("articles").then(res => {
         const articlesCount: number = res.data.articlesCount;
         setArticlesCount(articlesCount);
       });
-    } else if (selectedFeedTab == "yourFeed") {
+    } else if (selectedFeedTab === "yourFeed") {
       AXIOS.get(`articles/feed`).then(res => {
         const articlesCount: number = res.data.articlesCount;
         setArticlesCount(articlesCount);
       });
-    } else if (selectedFeedTab == "tagFeed") {
+    } else if (selectedFeedTab === "tagFeed") {
       AXIOS.noauthGet(`articles?tag=${tag}`).then(res => {
         const articlesCount: number = res.data.articlesCount;
         setArticlesCount(articlesCount);
       });
     }
+  }, [tag, selectedFeedTab]);
 
+  // This for fetching tags
+  useEffect(() => {
     AXIOS.noauthGet("tags").then(res => {
       const tags = res.data.tags;
       setTags(tags);
     });
-  }, [tag, selectedFeedTab]);
+  }, []);
 
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
   return (
