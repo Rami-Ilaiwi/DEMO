@@ -9,6 +9,7 @@ import ArticleMeta from "./ArticleMeta";
 import ArticleTagsList from "./ArticleTagsList";
 import TagsInput from "./TagsInput";
 import articles from "./articlesFixtures.json";
+import ArticleBanner from "./ArticleBanner";
 
 storiesOf("Article", module)
   .add("Article", () => (
@@ -59,4 +60,20 @@ storiesOf("Article", module)
       handleDelete={action("handleDelete")}
     />
   ))
-  .add("Tags Input", () => <TagsInput tagsList={[]} articleTag="" />);
+  .add("Tags Input", () => <TagsInput tagsList={[]} articleTag="" />)
+  .add("Article Banner", () => (
+    <Router>
+      <ArticleBanner
+        title={"Title"}
+        image={"https://avatarfiles.alphacoders.com/165/thumb-165504.png"}
+        username={"Name"}
+        createdAt={"2019-09-11T11:55:15.542Z"}
+        following={false}
+        profileName={"Name"}
+        favorited={true}
+        favoritesCount={1}
+        handleFollow={event => event.preventDefault()}
+        handleFavorite={event => event.preventDefault()}
+      />
+    </Router>
+  ));

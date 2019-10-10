@@ -1,8 +1,8 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import ArticleMeta from "../Article/ArticleMeta";
+import ArticleMeta from "./ArticleMeta";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "./styles/SlugBannerStyle";
+import { styles } from "./styles/ArticleBannerStyle";
 
 import Typography from "@material-ui/core/Typography";
 
@@ -23,7 +23,9 @@ interface SlugProps {
   onEdit: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
-const SlugBanner: React.FC<SlugProps & WithStyles<typeof styles>> = props => {
+const ArticleBanner: React.FC<
+  SlugProps & WithStyles<typeof styles>
+> = props => {
   return (
     <Grid container direction="column" justify="center">
       <br />
@@ -55,4 +57,4 @@ const SlugBanner: React.FC<SlugProps & WithStyles<typeof styles>> = props => {
   );
 };
 
-export default withStyles(styles)(SlugBanner);
+export default withStyles(styles)(ArticleBanner);

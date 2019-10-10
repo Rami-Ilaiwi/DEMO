@@ -7,7 +7,7 @@ import Comments from "../components/Comments/Comments";
 import ArticleMeta from "../components/Article/ArticleMeta";
 import UserComment from "../components/Comments/UserComment";
 import utl from "../utils/utils";
-import SlugBanner from "../components/Slug/SlugBanner";
+import ArticleBanner from "../components/Article/ArticleBanner";
 
 const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
@@ -170,7 +170,7 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const token = localStorage.getItem("userToken");
   return (
     <>
-      <SlugBanner
+      <ArticleBanner
         title={article.title}
         image={article.author.image}
         username={article.author.username}
