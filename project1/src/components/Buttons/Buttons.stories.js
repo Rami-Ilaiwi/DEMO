@@ -45,7 +45,13 @@ storiesOf("Buttons", module)
   .add("Delete Button", () => (
     <DeleteButton handleDelete={action("button-click")}></DeleteButton>
   ))
-  .add("Pagination", () => <Pagination />)
+  .add("Pagination", () => (
+    <Pagination
+      articlesCount={500}
+      page={0}
+      onChangePage={action("onChangePage")}
+    />
+  ))
   .add("Edit article button", () => (
     <Router>
       <EditButton slug="article-wdx2ja" onEdit={action("onEdit")} />
