@@ -4,6 +4,7 @@ import { storiesOf } from "@storybook/react";
 import Footer from "./Footer";
 import Banner from "./Banner";
 import Header from "./Header";
+import LoadingComponent from "./LoadingComponent";
 
 storiesOf("Layout", module)
   .add("Header", () => (
@@ -12,4 +13,5 @@ storiesOf("Layout", module)
     </Router>
   ))
   .add("Banner", () => <Banner />)
-  .add("Footer", () => <Footer />);
+  .add("Footer", () => <Footer />)
+  .add("Loading", () => <LoadingComponent />);
