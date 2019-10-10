@@ -9,6 +9,7 @@ import Articles from "../components/Article/Articles";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 import Pagination from "../components/Buttons/Pagination";
+import LoadingComponent from "../components/Layout/LoadingComponent";
 
 const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
@@ -107,30 +108,34 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
         onRedirect={handleRedirect}
         isLoggedIn={isLoggedIn}
       >
-        {({ articles, handleFavoriteToggle }) => (
-          <>
-            {articles.length == 0 ? (
-              <Typography style={{ marginLeft: "20%" }}>
-                No articles are here... yet.
-              </Typography>
-            ) : (
-              <Articles
-                articles={articles}
-                handleFavoriteToggle={handleFavoriteToggle}
-              />
-            )}
-          </>
-        )}
+        {({ articles, handleFavoriteToggle, isLoadingArticles }) =>
+          isLoadingArticles ? (
+            <LoadingComponent />
+          ) : (
+            <>
+              {articles.length == 0 ? (
+                <Typography style={{ marginLeft: "20%" }}>
+                  No articles are here... yet.
+                </Typography>
+              ) : (
+                <Articles
+                  articles={articles}
+                  handleFavoriteToggle={handleFavoriteToggle}
+                />
+              )}
+              {articlesCount > 10 ? (
+                <div style={{ marginRight: "20%" }}>
+                  <Pagination
+                    onChangePage={handleChangePage}
+                    articlesCount={articlesCount}
+                    page={page}
+                  />
+                </div>
+              ) : null}
+            </>
+          )
+        }
       </FeedApiWrapper>
-      {articlesCount > 10 ? (
-        <div style={{ marginRight: "20%" }}>
-          <Pagination
-            onChangePage={handleChangePage}
-            articlesCount={articlesCount}
-            page={page}
-          />
-        </div>
-      ) : null}
     </>
   );
 };

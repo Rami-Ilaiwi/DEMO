@@ -8,9 +8,13 @@ import ArticleMeta from "../components/Article/ArticleMeta";
 import UserComment from "../components/Comments/UserComment";
 import utl from "../utils/utils";
 import ArticleBanner from "../components/Article/ArticleBanner";
+import LoadingComponent from "../components/Layout/LoadingComponent";
 
-const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
+const ArticlePage: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
+  const [isLoadingComments, setIsLoadingComments] = useState(false);
+  const [isLoadingArticleData, setIsLoadingArticleData] = useState(false);
+
   const [article, setArticle] = useState({
     title: "",
     slug: "",
@@ -54,6 +58,7 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const slug = props.match.params.slug;
 
   useEffect(() => {
+    setIsLoadingArticleData(true);
     if (isLoggedIn) {
       AXIOS.get(`articles/${slug}`)
         .then(res => {
@@ -65,6 +70,7 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
           AXIOS.get(`profiles/${article.author.username}`).then(res => {
             const profile = res.data.profile;
             setProfile(profile);
+            setIsLoadingArticleData(false);
           })
         );
     } else {
@@ -78,13 +84,19 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
           AXIOS.noauthGet(`profiles/${article.author.username}`).then(res => {
             const profile = res.data.profile;
             setProfile(profile);
+            setIsLoadingArticleData(false);
           })
         );
     }
     // .then(() => stIsLoadingArticle(false))
-    AXIOS.noauthGet(`articles/${slug}/comments`).then(res =>
-      setComments(res.data.comments)
-    );
+  }, []);
+
+  useEffect(() => {
+    setIsLoadingComments(true);
+    AXIOS.noauthGet(`articles/${slug}/comments`).then(res => {
+      setComments(res.data.comments);
+      setIsLoadingComments(false);
+    });
   }, []);
 
   /* ***** handlers ***** */
@@ -170,76 +182,87 @@ const Slug: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const token = localStorage.getItem("userToken");
   return (
     <>
-      <ArticleBanner
-        title={article.title}
-        image={article.author.image}
-        username={article.author.username}
-        createdAt={article.createdAt}
-        following={profile.following}
-        profileName={profile.username}
-        favorited={article.favorited}
-        favoritesCount={article.favoritesCount}
-        slug={slug}
-        loggedinUser={user.username}
-        onFollow={onFollowClick}
-        onFavorite={onFavoriteClick}
-        onDelete={onDeleteClick}
-        onEdit={onEditClick}
-      />
-
-      <Grid
-        item
-        style={{
-          marginTop: "2%",
-          marginLeft: "16%",
-          width: "69%",
-          textAlign: "justify"
-        }}
-      >
-        <Grid item>{article.body}</Grid>
-        <Grid item>
-          <TagList tagList={article.tagList} />
-        </Grid>
-      </Grid>
-
-      <Grid item style={{ marginLeft: "28%" }}>
-        <ArticleMeta
-          image={article.author.image}
-          username={article.author.username}
-          createdAt={article.createdAt}
-          following={profile.following}
-          profileName={profile.username}
-          favorited={article.favorited}
-          favoritesCount={article.favoritesCount}
-          loggedinUser={user.username}
-          slug={slug}
-          onFollow={onFollowClick}
-          onFavorite={onFavoriteClick}
-          onDelete={onDeleteClick}
-          onEdit={onEditClick}
-        />
-      </Grid>
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid item>
-          <hr style={{ width: "1000px" }} />
-
-          {token ? (
-            <UserComment
-              comment={comment}
-              image={user.image}
-              handleComment={handleComment}
-              handleSubmit={handleFormSubmit}
-            />
-          ) : null}
-
-          <Comments
-            comments={comments}
-            handleDeleteComment={handleDeleteComment}
+      {isLoadingArticleData || isLoadingComments ? (
+        <LoadingComponent />
+      ) : (
+        <>
+          <ArticleBanner
+            title={article.title}
+            image={article.author.image}
+            username={article.author.username}
+            createdAt={article.createdAt}
+            following={profile.following}
+            profileName={profile.username}
+            favorited={article.favorited}
+            favoritesCount={article.favoritesCount}
+            slug={slug}
+            loggedinUser={user.username}
+            onFollow={onFollowClick}
+            onFavorite={onFavoriteClick}
+            onDelete={onDeleteClick}
+            onEdit={onEditClick}
           />
-        </Grid>
-      </Grid>
+
+          <Grid
+            item
+            style={{
+              marginTop: "2%",
+              marginLeft: "16%",
+              width: "69%",
+              textAlign: "justify"
+            }}
+          >
+            <Grid item>{article.body}</Grid>
+            <Grid item>
+              <TagList tagList={article.tagList} />
+            </Grid>
+          </Grid>
+
+          <Grid item style={{ marginLeft: "28%" }}>
+            <ArticleMeta
+              image={article.author.image}
+              username={article.author.username}
+              createdAt={article.createdAt}
+              following={profile.following}
+              profileName={profile.username}
+              favorited={article.favorited}
+              favoritesCount={article.favoritesCount}
+              loggedinUser={user.username}
+              slug={slug}
+              onFollow={onFollowClick}
+              onFavorite={onFavoriteClick}
+              onDelete={onDeleteClick}
+              onEdit={onEditClick}
+            />
+          </Grid>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item>
+              <hr style={{ width: "1000px" }} />
+
+              {token ? (
+                <UserComment
+                  comment={comment}
+                  image={user.image}
+                  handleComment={handleComment}
+                  handleSubmit={handleFormSubmit}
+                />
+              ) : null}
+
+              <Comments
+                comments={comments}
+                handleDeleteComment={handleDeleteComment}
+              />
+            </Grid>
+          </Grid>
+        </>
+      )}
     </>
   );
 };
 
-export default Slug;
+export default ArticlePage;

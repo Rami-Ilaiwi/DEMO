@@ -10,6 +10,7 @@ import FeedTabs from "../components/Buttons/FeedTabs";
 import Typography from "@material-ui/core/Typography";
 import AXIOS from "../utils/AXIOS";
 import Pagination from "../components/Buttons/Pagination";
+import LoadingComponent from "../components/Layout/LoadingComponent";
 
 const FeedPage = ({ history }: RouteComponentProps) => {
   const [selectedFeedTab, setSelectedFeedTab] = useState<FeedType>(
@@ -20,6 +21,7 @@ const FeedPage = ({ history }: RouteComponentProps) => {
   const [isTagClicked, setIsTagClicked] = useState(false);
   const [articlesCount, setArticlesCount] = useState(0);
   const [page, setPage] = useState(0);
+  const [isLoadingTags, setIsLoadingTags] = useState(false);
   const token = localStorage.getItem("userToken");
   const handleRedirect = (path: string) => history.push(path);
 
@@ -64,9 +66,11 @@ const FeedPage = ({ history }: RouteComponentProps) => {
 
   // This for fetching tags
   useEffect(() => {
+    setIsLoadingTags(true);
     AXIOS.noauthGet("tags").then(res => {
       const tags = res.data.tags;
       setTags(tags);
+      setIsLoadingTags(false);
     });
   }, []);
 
@@ -95,32 +99,40 @@ const FeedPage = ({ history }: RouteComponentProps) => {
                 onRedirect={handleRedirect}
                 isLoggedIn={isLoggedIn}
               >
-                {({ articles, handleFavoriteToggle }) => (
-                  <>
-                    {articles.length == 0 ? (
-                      <Typography style={{ marginLeft: "20%" }}>
-                        No articles are here... yet.
-                      </Typography>
-                    ) : (
-                      <Articles
-                        articles={articles}
-                        handleFavoriteToggle={handleFavoriteToggle}
-                      />
-                    )}
-                  </>
-                )}
+                {({ articles, handleFavoriteToggle, isLoadingArticles }) =>
+                  isLoadingArticles ? (
+                    <LoadingComponent />
+                  ) : (
+                    <>
+                      {articles.length == 0 ? (
+                        <Typography style={{ marginLeft: "20%" }}>
+                          No articles are here... yet.
+                        </Typography>
+                      ) : (
+                        <Articles
+                          articles={articles}
+                          handleFavoriteToggle={handleFavoriteToggle}
+                        />
+                      )}
+                      {articlesCount > 10 ? (
+                        <Pagination
+                          onChangePage={handleChangePage}
+                          articlesCount={articlesCount}
+                          page={page}
+                        />
+                      ) : null}
+                    </>
+                  )
+                }
               </FeedApiWrapper>
             </Grid>
-            {articlesCount > 10 ? (
-              <Pagination
-                onChangePage={handleChangePage}
-                articlesCount={articlesCount}
-                page={page}
-              />
-            ) : null}
           </Grid>
           <Grid item xs={3}>
-            <Tags onClickTag={onClickTag} tags={tags} />
+            {isLoadingTags ? (
+              <LoadingComponent />
+            ) : (
+              <Tags onClickTag={onClickTag} tags={tags} />
+            )}
           </Grid>
         </Grid>
       </>

@@ -13,6 +13,7 @@ export type FeedType =
 interface OnChangeProps {
   articles: Array<Article>;
   handleFavoriteToggle: (article: { favorited: boolean; slug: string }) => void;
+  isLoadingArticles: boolean;
 }
 
 interface FeedApiWrapperProps {
@@ -27,6 +28,7 @@ interface FeedApiWrapperProps {
 
 const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
   const offset = props.page * 10;
+  const [isLoadingArticles, setIsLoadingArticles] = useState(false);
   const [articles, setArticles] = useState<Array<Article>>([]);
   const handleFavoriteToggle = (article: {
     favorited: boolean;
@@ -72,21 +74,25 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
   };
 
   useEffect(() => {
+    setIsLoadingArticles(true);
     if (!props.author) {
       // This one for Home page, it has three feed tabs (global feed, your feed and tag feed)
       if (props.selectedFeedTab === "globalFeed") {
         if (props.isLoggedIn) {
           AXIOS.get(`articles?offset=${offset}&limit=10`).then(res => {
             setArticles(res.data.articles);
+            setIsLoadingArticles(false);
           });
         } else {
           AXIOS.noauthGet(`articles?offset=${offset}&limit=10`).then(res => {
             setArticles(res.data.articles);
+            setIsLoadingArticles(false);
           });
         }
       } else if (props.selectedFeedTab === "yourFeed") {
         AXIOS.get(`articles/feed?offset=${offset}&limit=10`).then(res => {
           setArticles(res.data.articles);
+          setIsLoadingArticles(false);
         });
       } else if (props.selectedFeedTab === "tagFeed") {
         if (props.isLoggedIn) {
@@ -94,12 +100,14 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
             `articles/?offset=${offset}&limit=10&tag=${props.tag}`
           ).then(res => {
             setArticles(res.data.articles);
+            setIsLoadingArticles(false);
           });
         } else {
           AXIOS.noauthGet(
             `articles/?offset=${offset}&limit=10&tag=${props.tag}`
           ).then(res => {
             setArticles(res.data.articles);
+            setIsLoadingArticles(false);
           });
         }
       }
@@ -113,12 +121,14 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
             `articles?offset=${offset}&limit=10&author=${props.author}`
           ).then(res => {
             setArticles(res.data.articles);
+            setIsLoadingArticles(false);
           });
         } else {
           AXIOS.noauthGet(
             `articles?offset=${offset}&limit=10&author=${props.author}`
           ).then(res => {
             setArticles(res.data.articles);
+            setIsLoadingArticles(false);
           });
         }
       } else if (props.selectedFeedTab === "favoritedArticlesFeed") {
@@ -127,19 +137,21 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
             `articles?offset=${offset}&limit=10&favorited=${props.author}`
           ).then(res => {
             setArticles(res.data.articles);
+            setIsLoadingArticles(false);
           });
         } else {
           AXIOS.noauthGet(
             `articles?offset=${offset}&limit=10&favorited=${props.author}`
           ).then(res => {
             setArticles(res.data.articles);
+            setIsLoadingArticles(false);
           });
         }
       }
     }
   }, [props.selectedFeedTab, props.tag, props.author, props.page]);
 
-  return props.children({ articles, handleFavoriteToggle });
+  return props.children({ articles, handleFavoriteToggle, isLoadingArticles });
 };
 
 export default FeedApiWrapper;
