@@ -8,6 +8,7 @@ import DeleteComment from "./DeleteComment";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { styles } from "./styles/CommentsStyle";
+import Grid from "@material-ui/core/Grid";
 
 interface CommentItem {
   id: number;
@@ -48,7 +49,6 @@ const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
               </Link>
               <span>
                 {" "}
-                {/* edit this link */}
                 <Link
                   className={props.classes.commentAuthor}
                   to={`/@${item.author.username}`}
@@ -67,13 +67,19 @@ const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
               {item.body}
             </Typography>
           </CardContent>
-
-          <DeleteComment
-            commentID={item.id}
-            user={user.username}
-            author={item.author.username}
-            handleDeleteComment={props.handleDeleteComment}
-          ></DeleteComment>
+          <Grid
+            container
+            direction="row"
+            justify="flex-end"
+            alignItems="center"
+          >
+            <DeleteComment
+              commentID={item.id}
+              user={user.username}
+              author={item.author.username}
+              handleDeleteComment={props.handleDeleteComment}
+            ></DeleteComment>
+          </Grid>
         </Card>
       </div>
     );

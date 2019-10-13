@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import AXIOS from "../utils/AXIOS";
 import { Link, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/RegisterComponentStyle";
@@ -63,35 +64,48 @@ const RegisterComponent = ({ classes }: WithStyles<typeof styles>) => {
           </Link>
         </Grid>
 
-        <Grid item>
+        <Grid item container direction="column" alignItems="center">
           <form onSubmit={handleFormSubmition}>
-            <input
-              className={classes.input}
-              placeholder="Username"
-              value={username}
-              onChange={handleUsername}
-            ></input>
-            <br />
-            <input
-              className={classes.input}
-              placeholder="Email"
-              value={email}
-              onChange={handleEmail}
-            ></input>
-            <br />
-            <input
-              className={classes.input}
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={handlePassword}
-            ></input>
-            <br />
-            <input
-              className={classes.submit}
-              type="submit"
-              value="Sign up"
-            ></input>
+            <Grid item>
+              <TextField
+                label="Username"
+                value={username}
+                onChange={handleUsername}
+                margin="normal"
+                variant="outlined"
+                className={classes.input}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                label="Email"
+                value={email}
+                onChange={handleEmail}
+                margin="normal"
+                variant="outlined"
+                className={classes.input}
+              />
+            </Grid>
+            <Grid>
+              <TextField
+                label="Password"
+                value={password}
+                type="password"
+                onChange={handlePassword}
+                margin="normal"
+                variant="outlined"
+                className={classes.input}
+              />
+            </Grid>
+            <Grid item className={classes.button}>
+              <Button
+                className={classes.submit}
+                type="submit"
+                variant="outlined"
+              >
+                Sign up
+              </Button>
+            </Grid>
           </form>
         </Grid>
       </Grid>

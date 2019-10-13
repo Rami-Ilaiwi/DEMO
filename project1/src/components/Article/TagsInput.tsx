@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ArticleTagsList from "./ArticleTagsList";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/TagsInputStyle";
+import TextField from "@material-ui/core/TextField";
 
 export interface TagsProps {
   tagsList: string[];
@@ -31,12 +32,22 @@ const TagsInput: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
 
   return (
     <>
-      <input
+      {/* <input
         className={props.classes.input}
         placeholder="Article tag"
         value={articleTag}
         onChange={handleChangeTag}
         onKeyPress={handleEnterInput}
+      /> */}
+      <TextField
+        id="outlined-name"
+        label="Article tag"
+        value={articleTag}
+        onChange={handleChangeTag}
+        margin="normal"
+        variant="outlined"
+        onKeyPress={handleEnterInput}
+        className={props.classes.input}
       />
       <ArticleTagsList tagsList={props.tagsList} handleDelete={handleDelete} />
     </>

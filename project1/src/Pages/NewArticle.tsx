@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import AXIOS from "../utils/AXIOS";
 import { RouteComponentProps } from "react-router-dom";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import TagsInput, { TagsProps } from "../components/Article/TagsInput";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import { styles } from "./styles/NewArticleStyle";
 
 const NewArticle: React.FC<
@@ -72,42 +75,77 @@ const NewArticle: React.FC<
   };
 
   return (
-    <Grid container direction="column" justify="center" alignItems="center">
-      <Grid item style={{ width: 1000 }}>
-        <form onKeyPress={handleEnterForm} onSubmit={handleFormSubmition}>
-          <input
-            className={props.classes.input}
-            placeholder="Article title"
-            value={articleTitle}
-            onChange={handleArticleTitle}
-          />
-          <input
-            className={props.classes.input}
-            placeholder="What's this article about?"
-            value={articleDescription}
-            onChange={handleArticleDescription}
-          />
-          <textarea
-            className={`${props.classes.input} ${props.classes.textarea}`}
-            placeholder="Write your article (in markdown)"
-            value={articleBody}
-            onChange={handleArticleBody}
-          />
+    <Grid container justify="center">
+      <Grid container direction="column" alignItems="center">
+        <Grid item>
+          <Typography gutterBottom variant="h4">
+            Add New Article
+          </Typography>
+        </Grid>
 
-          <TagsInput
-            tagsList={tagsList}
-            onAddTag={handleAddTag}
-            onDeleteTag={handleDeleteTag}
-          />
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid item container direction="column" alignItems="center">
+            <form onKeyPress={handleEnterForm} onSubmit={handleFormSubmition}>
+              <Grid item>
+                {/* <input
+              className={props.classes.input}
+              placeholder="Article title"
+              value={articleTitle}
+              onChange={handleArticleTitle}
+            /> */}
+                <TextField
+                  id="outlined-name"
+                  label="Article title"
+                  value={articleTitle}
+                  onChange={handleArticleTitle}
+                  margin="normal"
+                  variant="outlined"
+                  className={props.classes.input}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  id="outlined-name"
+                  label="What's this article about?"
+                  value={articleDescription}
+                  onChange={handleArticleDescription}
+                  margin="normal"
+                  variant="outlined"
+                  className={props.classes.input}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  label="Write your article (in markdown)"
+                  multiline
+                  rows="7"
+                  value={articleBody}
+                  onChange={handleArticleBody}
+                  className={props.classes.input}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Grid>
 
-          <Grid item>
-            <input
-              type="submit"
-              className={props.classes.submit}
-              value="Publish Article"
-            />
+              <Grid item>
+                <TagsInput
+                  tagsList={tagsList}
+                  onAddTag={handleAddTag}
+                  onDeleteTag={handleDeleteTag}
+                />
+              </Grid>
+              <Grid item className={props.classes.button}>
+                <Button
+                  className={props.classes.submit}
+                  type="submit"
+                  variant="outlined"
+                >
+                  Publish Article
+                </Button>
+              </Grid>
+            </form>
           </Grid>
-        </form>
+        </Grid>
       </Grid>
     </Grid>
   );
