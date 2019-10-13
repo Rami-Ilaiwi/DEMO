@@ -46,5 +46,9 @@ export const styles = createStyles({
       outline: "thin dotted",
       outlineDffset: "-2px"
     }
+  },
+  error: {
+    color: "#B85C5C",
+    fontWeight: "bold"
   }
 });

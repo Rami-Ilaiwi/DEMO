@@ -11,15 +11,18 @@
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.4",
     "@types/react-router-dom": "^4.3.5",
+    "@types/yup": "^0.26.24",
     "axios": "^0.19.0",
     "emotion": "^10.0.14",
+    "formik": "^1.5.8",
     "moment": "^2.24.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-emotion": "^10.0.0",
     "react-powerplug": "^1.0.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1"
+    "react-scripts": "3.1.1",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",

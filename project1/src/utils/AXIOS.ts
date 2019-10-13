@@ -2,12 +2,12 @@ import axios from "axios";
 import utl from "./utils";
 
 const BASE_URL = "https://conduit.productionready.io/api";
-interface POST {
+interface params {
   endpoint: String;
   body?: {};
 }
 
-const noauthPost = (params: POST) =>
+const noauthPost = (params: params) =>
   axios.post(`${BASE_URL}/${params.endpoint}`, params.body);
 
 const noauthGet = (endpoint: string) => axios.get(`${BASE_URL}/${endpoint}`);
@@ -16,7 +16,7 @@ const noauthGet = (endpoint: string) => axios.get(`${BASE_URL}/${endpoint}`);
 
 // const authGet = ({ endpoint }) => axios.get(`${BASE_URL}/${endpoint}`,{headers:{Authorization:"Token  "+getToken()});
 
-const post = (params: POST) => {
+const post = (params: params) => {
   return axios
     .post(`${BASE_URL}/${params.endpoint}`, params.body, {
       headers: {
@@ -27,7 +27,7 @@ const post = (params: POST) => {
     .then(resp => resp.data);
 };
 
-const DELETE = (params: POST) => {
+const DELETE = (params: params) => {
   return axios
     .delete(`${BASE_URL}/${params.endpoint}`, {
       headers: {
@@ -46,7 +46,7 @@ const get = (endpoint: string) =>
     }
   });
 
-const put = (params: POST) =>
+const put = (params: params) =>
   axios.put(`${BASE_URL}/${params.endpoint}`, params.body, {
     headers: {
       Authorization: "Token " + utl.getToken(),
