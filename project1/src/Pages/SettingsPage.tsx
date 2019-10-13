@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import AXIOS from "../utils/AXIOS";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import utl from "../utils/utils";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/SettingsStyle";
@@ -67,61 +69,89 @@ const Settings = ({ classes }: WithStyles<typeof styles>) => {
   };
 
   return (
-    <Grid container direction="column" alignItems="center">
-      <Grid item>
-        <Typography gutterBottom variant="h4">
-          Your Settings
-        </Typography>
-      </Grid>
-      <Grid item style={{ width: 700 }}>
-        <form onSubmit={handleFormSubmition}>
-          <input
-            className={classes.input}
-            placeholder="URL of profile picture"
-            value={image}
-            onChange={handlePicture}
-          />
-          <input
-            className={classes.input}
-            placeholder="Username"
-            value={username}
-            onChange={handleUsername}
-          />
-          <textarea
-            className={`${classes.input} ${classes.textarea}`}
-            placeholder="Short bio about you"
-            value={bio}
-            onChange={handleBio}
-          ></textarea>
-          <input
-            className={classes.input}
-            placeholder="Email"
-            value={email}
-            onChange={handleEmail}
-          />
-          <input
-            className={classes.input}
-            placeholder="New Password"
-            value={newPass}
-            onChange={handleNewPass}
-            type="password"
-          />
-          <Grid item>
-            <input
-              type="submit"
-              className={classes.submit}
-              value="Update Settings"
-            />
-          </Grid>
-          <hr />
-        </form>
+    <Grid container justify="center">
+      <Grid container direction="column" alignItems="center">
         <Grid item>
-          <input
-            type="submit"
-            className={classes.logout}
-            value="Or click here to logout."
-            onClick={handleLogout}
-          />
+          <Typography gutterBottom variant="h4">
+            Your Settings
+          </Typography>
+        </Grid>
+        <Grid item>
+          <form onSubmit={handleFormSubmition}>
+            <Grid item>
+              <TextField
+                label="URL of profile picture"
+                value={image}
+                onChange={handlePicture}
+                margin="normal"
+                variant="outlined"
+                className={classes.input}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                label="Username"
+                value={username}
+                onChange={handleUsername}
+                margin="normal"
+                variant="outlined"
+                className={classes.input}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                label="Short bio about you"
+                multiline
+                rows="7"
+                value={bio}
+                onChange={handleBio}
+                className={classes.input}
+                margin="normal"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                label="Email"
+                value={email}
+                onChange={handleEmail}
+                margin="normal"
+                variant="outlined"
+                className={classes.input}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                type="password"
+                label="New Password"
+                value={newPass}
+                onChange={handleNewPass}
+                margin="normal"
+                variant="outlined"
+                className={classes.input}
+              />
+            </Grid>
+            <Grid item className={classes.button}>
+              <Button
+                className={classes.submit}
+                type="submit"
+                variant="outlined"
+              >
+                Update Settings
+              </Button>
+            </Grid>
+          </form>
+          <hr />
+          <Grid item>
+            <Button
+              className={classes.logout}
+              type="submit"
+              variant="outlined"
+              onClick={handleLogout}
+            >
+              Or click here to logout.
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

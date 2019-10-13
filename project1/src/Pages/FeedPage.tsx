@@ -128,11 +128,11 @@ const FeedPage = ({ history }: RouteComponentProps) => {
             </Grid>
           </Grid>
           <Grid item xs={3}>
-            {isLoadingTags ? (
-              <LoadingComponent />
-            ) : (
-              <Tags onClickTag={onClickTag} tags={tags} />
-            )}
+            <Tags
+              isLoadingTags={isLoadingTags}
+              onClickTag={onClickTag}
+              tags={tags}
+            />
           </Grid>
         </Grid>
       </>

@@ -3,6 +3,8 @@ import AXIOS from "../utils/AXIOS";
 import { Link, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/LoginComponentStyle";
 
@@ -54,24 +56,40 @@ const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
             Need an account?
           </Link>
         </Grid>
-        <Grid item>
+
+        <Grid item container direction="column" alignItems="center">
           <form onSubmit={handleFormSubmition}>
-            <input
-              value={email}
-              className={classes.input}
-              placeholder="Email"
-              onChange={handleEmail}
-            />
-            <br />
-            <input
-              value={password}
-              className={classes.input}
-              type="password"
-              placeholder="Password"
-              onChange={handlePassword}
-            />
-            <br />
-            <input className={classes.submit} type="submit" value="Sign in" />
+            <Grid item>
+              <TextField
+                label="Email"
+                value={email}
+                onChange={handleEmail}
+                margin="normal"
+                variant="outlined"
+                className={classes.input}
+              />
+            </Grid>
+
+            <Grid item>
+              <TextField
+                label="Username"
+                type="password"
+                value={password}
+                onChange={handlePassword}
+                margin="normal"
+                variant="outlined"
+                className={classes.input}
+              />
+            </Grid>
+            <Grid item className={classes.button}>
+              <Button
+                className={classes.submit}
+                type="submit"
+                variant="outlined"
+              >
+                Sign in
+              </Button>
+            </Grid>
           </form>
         </Grid>
       </Grid>

@@ -2,7 +2,7 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/UserCommentStyle";
 
@@ -21,17 +21,16 @@ const UserComment: React.FC<
       <Card>
         <form onSubmit={props.handleSubmit}>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              <div>
-                <textarea
-                  className={props.classes.comment}
-                  placeholder="Write a comment..."
-                  rows={3}
-                  value={props.comment}
-                  onChange={props.handleComment}
-                ></textarea>
-              </div>
-            </Typography>
+            <TextField
+              label="Write your article (in markdown)"
+              multiline
+              rows="7"
+              value={props.comment}
+              onChange={props.handleComment}
+              className={props.classes.input}
+              margin="normal"
+              variant="outlined"
+            />
           </CardContent>
 
           <CardActions>
@@ -40,7 +39,7 @@ const UserComment: React.FC<
               className={props.classes.postComment}
               type="submit"
               value="Post Comment"
-            ></input>
+            />
           </CardActions>
         </form>
       </Card>
