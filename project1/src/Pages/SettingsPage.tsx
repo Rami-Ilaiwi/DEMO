@@ -1,66 +1,80 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import AXIOS from "../utils/AXIOS";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import utl from "../utils/utils";
+import { Redirect } from "react-router-dom";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "./styles/SettingsStyle";
+import { styles } from "./styles/SettingsPageStyle";
+import * as yup from "yup";
+import { Formik, Form, FormikActions } from "formik";
+import FormikTextField from "../components/FormikInputs/FormikTextField";
+import { RouteComponentProps } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-const Settings = ({ classes }: WithStyles<typeof styles>) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [image, setImage] = useState("");
-  const [bio, setBio] = useState("");
-  const [newPass, setNewPass] = useState("");
+const Settings: React.FC<RouteComponentProps & WithStyles<typeof styles>> = ({
+  history,
+  classes
+}) => {
+  const isLoggedIn = localStorage.getItem("userToken") ? true : false;
+  const userData = utl.getUserDetails();
 
-  useEffect(() => {
-    const userData = utl.getUserDetails();
-    setUsername(userData.username);
-    setEmail(userData.email);
-    setImage(userData.image);
-    setBio(userData.bio);
-  }, []);
+  if (!isLoggedIn) {
+    return <Redirect to="/" />;
+  }
 
-  const handlePicture = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setImage(event.target.value);
-  };
+  interface Values {
+    image: string;
+    username: string;
+    bio: string;
+    email: string;
+    newPassword: string;
+  }
 
-  const handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
-  };
+  const SettingsSchema = yup.object().shape({
+    username: yup
+      .string()
+      .max(20, "Username is too long (maximum is 20 characters)")
+      .required("Username is required"),
+    email: yup
+      .string()
+      .email("Invalid email")
+      .required("Email is required"),
+    newPassword: yup
+      .string()
+      .min(8, "Password is too short (minimum is 8 characters)")
+  });
 
-  const handleBio = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setBio(event.target.value);
-  };
-
-  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const handleNewPass = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPass(event.target.value);
-  };
-
-  const handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleFormSubmition = (
+    values: Values,
+    formikActions: FormikActions<Values>
+  ) => {
     AXIOS.put({
       endpoint: "user",
       body: {
         user: {
-          image: image || undefined,
-          username: username || undefined,
-          bio: bio || undefined,
-          email: email || undefined,
-          password: newPass || undefined
+          image: values.image,
+          username: values.username,
+          bio: values.bio,
+          email: values.email,
+          password: values.newPassword || undefined
         }
       }
-    }).then(res => {
-      localStorage.setItem("userData", JSON.stringify(res));
-      localStorage.setItem("userToken", res.data.user.token);
-    });
+    })
+      .then(res => {
+        localStorage.setItem("userData", JSON.stringify(res));
+        localStorage.setItem("userToken", res.data.user.token);
+        // window.location.href = `/@${values.username}`;
+        history.push(`/@${values.username}`);
+      })
+      .catch(err =>
+        Object.entries(err.response.data.errors).forEach(([field, errors]) => {
+          if (Array.isArray(errors)) {
+            formikActions.setFieldError(field, errors[0]);
+          }
+        })
+      );
   };
 
   const handleLogout = () => {
@@ -77,70 +91,55 @@ const Settings = ({ classes }: WithStyles<typeof styles>) => {
           </Typography>
         </Grid>
         <Grid item>
-          <form onSubmit={handleFormSubmition}>
-            <Grid item>
-              <TextField
-                label="URL of profile picture"
-                value={image}
-                onChange={handlePicture}
-                margin="normal"
-                variant="outlined"
-                className={classes.input}
-              />
-            </Grid>
-            <Grid item>
-              <TextField
-                label="Username"
-                value={username}
-                onChange={handleUsername}
-                margin="normal"
-                variant="outlined"
-                className={classes.input}
-              />
-            </Grid>
-            <Grid item>
-              <TextField
-                label="Short bio about you"
-                multiline
-                rows="7"
-                value={bio}
-                onChange={handleBio}
-                className={classes.input}
-                margin="normal"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item>
-              <TextField
-                label="Email"
-                value={email}
-                onChange={handleEmail}
-                margin="normal"
-                variant="outlined"
-                className={classes.input}
-              />
-            </Grid>
-            <Grid item>
-              <TextField
-                type="password"
-                label="New Password"
-                value={newPass}
-                onChange={handleNewPass}
-                margin="normal"
-                variant="outlined"
-                className={classes.input}
-              />
-            </Grid>
-            <Grid item className={classes.button}>
-              <Button
-                className={classes.submit}
-                type="submit"
-                variant="outlined"
-              >
-                Update Settings
-              </Button>
-            </Grid>
-          </form>
+          <Formik
+            initialValues={{
+              image: userData.image,
+              username: userData.username,
+              bio: userData.bio,
+              email: userData.email,
+              newPassword: ""
+            }}
+            validationSchema={SettingsSchema}
+            onSubmit={handleFormSubmition}
+            render={() => (
+              <Form>
+                <FormikTextField
+                  name="image"
+                  label="URL of profile picture"
+                  margin="normal"
+                />
+                <FormikTextField
+                  name="username"
+                  label="Username"
+                  margin="normal"
+                />
+                <FormikTextField
+                  name="bio"
+                  label="Short bio about you"
+                  margin="normal"
+                  multiline={true}
+                  rows="7"
+                />
+                <FormikTextField name="email" label="Email" margin="normal" />
+                <FormikTextField
+                  name="newPassword"
+                  label="New Password"
+                  margin="normal"
+                  type="password"
+                />
+                <Grid item className={classes.button}>
+                  <Button
+                    className={classes.submit}
+                    type="submit"
+                    variant="outlined"
+                  >
+                    Update Settings
+                  </Button>
+                </Grid>
+              </Form>
+            )}
+          />
+
           <hr />
           <Grid item>
             <Button
@@ -158,4 +157,6 @@ const Settings = ({ classes }: WithStyles<typeof styles>) => {
   );
 };
 
-export default withStyles(styles)(Settings);
+const RoutedSettings = withRouter(Settings);
+
+export default withStyles(styles)(RoutedSettings);

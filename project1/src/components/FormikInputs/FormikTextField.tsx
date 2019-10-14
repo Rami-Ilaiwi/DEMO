@@ -12,6 +12,8 @@ interface FormikTextFieldProps {
   label: string;
   margin: PropTypes.Margin;
   type?: string;
+  multiline?: boolean;
+  rows?: string;
 }
 
 const FormikTextField: React.FC<
@@ -30,6 +32,8 @@ const FormikTextField: React.FC<
               margin={props.margin}
               variant="outlined"
               className={props.classes.input}
+              multiline={props.multiline ? props.multiline : false}
+              rows={props.rows ? props.rows : "1"}
             />
           );
         }}
