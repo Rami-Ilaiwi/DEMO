@@ -6,13 +6,30 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "./styles/LoginComponentStyle";
+import { styles } from "./styles/LoginPageStyle";
+import * as yup from "yup";
+import { Formik, Form, FormikActions, ErrorMessage } from "formik";
+import FormikTextField from "../components/FormikInputs/FormikTextField";
+
+interface Values {
+  email: string;
+  password: string;
+}
+
+const LoginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Invalid email")
+    .required("Email is required"),
+  password: yup.string().required("Password is required")
+});
 
 const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
   const hasLogginCookie = localStorage.getItem("userToken") ? true : false;
   const [isLoggedIn, setIsLoggedIn] = useState(hasLogginCookie);
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   if (isLoggedIn) {
     return <Redirect to="/" />;
@@ -26,23 +43,29 @@ const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
     setpassword(event.target.value);
   };
 
-  const handleFormSubmition = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleFormSubmition = (
+    values: Values,
+    formikActions: FormikActions<Values>
+  ) => {
     AXIOS.noauthPost({
       endpoint: "users/login",
       body: {
         user: {
-          email: email,
-          password: password
+          email: values.email,
+          password: values.password
         }
       }
-    }).then(res => {
-      localStorage.setItem("userData", JSON.stringify(res));
-      localStorage.setItem("userToken", res.data.user.token);
-      // this.props.history.push("/");
-      window.location.href = "/";
-      // setIsLoggedIn(true);
-    });
+    })
+      .then(res => {
+        localStorage.setItem("userData", JSON.stringify(res));
+        localStorage.setItem("userToken", res.data.user.token);
+        // this.props.history.push("/");
+        window.location.href = "/";
+        // setIsLoggedIn(true);
+      })
+      .catch(() => {
+        setLoginError("email or password is invalid");
+      });
   };
 
   return (
@@ -56,41 +79,40 @@ const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
             Need an account?
           </Link>
         </Grid>
-
+        {loginError.length > 0 ? (
+          <Grid item>
+            <Typography className={classes.error}>{loginError}</Typography>
+          </Grid>
+        ) : null}
         <Grid item container direction="column" alignItems="center">
-          <form onSubmit={handleFormSubmition}>
-            <Grid item>
-              <TextField
-                label="Email"
-                value={email}
-                onChange={handleEmail}
-                margin="normal"
-                variant="outlined"
-                className={classes.input}
-              />
-            </Grid>
-
-            <Grid item>
-              <TextField
-                label="Username"
-                type="password"
-                value={password}
-                onChange={handlePassword}
-                margin="normal"
-                variant="outlined"
-                className={classes.input}
-              />
-            </Grid>
-            <Grid item className={classes.button}>
-              <Button
-                className={classes.submit}
-                type="submit"
-                variant="outlined"
-              >
-                Sign in
-              </Button>
-            </Grid>
-          </form>
+          <Formik
+            initialValues={{
+              email: "",
+              password: ""
+            }}
+            validationSchema={LoginSchema}
+            onSubmit={handleFormSubmition}
+            render={() => (
+              <Form>
+                <FormikTextField name="email" label="Email" margin="normal" />
+                <FormikTextField
+                  name="password"
+                  label="Password"
+                  margin="normal"
+                  type="password"
+                />
+                <Grid item className={classes.button}>
+                  <Button
+                    className={classes.submit}
+                    type="submit"
+                    variant="outlined"
+                  >
+                    Sign in
+                  </Button>
+                </Grid>
+              </Form>
+            )}
+          />
         </Grid>
       </Grid>
     </Grid>
