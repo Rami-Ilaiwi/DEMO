@@ -3,12 +3,11 @@ import AXIOS from "../utils/AXIOS";
 import { Link, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/LoginPageStyle";
 import * as yup from "yup";
-import { Formik, Form, FormikActions, ErrorMessage } from "formik";
+import { Formik, Form, FormikActions } from "formik";
 import FormikTextField from "../components/FormikInputs/FormikTextField";
 
 interface Values {
@@ -27,21 +26,11 @@ const LoginSchema = yup.object().shape({
 const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
   const hasLogginCookie = localStorage.getItem("userToken") ? true : false;
   const [isLoggedIn, setIsLoggedIn] = useState(hasLogginCookie);
-  const [email, setEmail] = useState("");
-  const [password, setpassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
   if (isLoggedIn) {
     return <Redirect to="/" />;
   }
-
-  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setpassword(event.target.value);
-  };
 
   const handleFormSubmition = (
     values: Values,
