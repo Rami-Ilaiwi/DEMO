@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import TagsInput, { TagsProps } from "../components/Article/TagsInput";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { styles } from "./styles/NewArticleStyle";
+import { styles } from "./styles/NewArticlePageStyle";
 
 const NewArticle: React.FC<
   WithStyles<typeof styles> & RouteComponentProps<{ slug?: string }>
