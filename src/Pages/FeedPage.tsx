@@ -11,8 +11,13 @@ import Typography from "@material-ui/core/Typography";
 import AXIOS from "../utils/AXIOS";
 import Pagination from "../components/Buttons/Pagination";
 import LoadingComponent from "../components/Layout/LoadingComponent";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/FeedPageStyle";
 
-const FeedPage = ({ history }: RouteComponentProps) => {
+const FeedPage: React.FC<RouteComponentProps & WithStyles<typeof styles>> = ({
+  history,
+  classes
+}) => {
   const [selectedFeedTab, setSelectedFeedTab] = useState<FeedType>(
     "globalFeed"
   );
@@ -80,9 +85,9 @@ const FeedPage = ({ history }: RouteComponentProps) => {
       {token ? null : <Banner />}
 
       <>
-        <Grid container style={{ marginTop: "3%" }}>
+        <Grid container className={classes.container}>
           <Grid item xs={8}>
-            <Grid item style={{ marginBottom: "2%", marginLeft: "20%" }}>
+            <Grid item className={classes.tabs}>
               <FeedTabs
                 onChangeSelectedFeedTab={handleChangeSelectedFeedTab}
                 isLoggedIn={isLoggedIn}
@@ -105,7 +110,7 @@ const FeedPage = ({ history }: RouteComponentProps) => {
                   ) : (
                     <>
                       {articles.length == 0 ? (
-                        <Typography style={{ marginLeft: "20%" }}>
+                        <Typography className={classes.content}>
                           No articles are here... yet.
                         </Typography>
                       ) : (
@@ -140,4 +145,6 @@ const FeedPage = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(FeedPage);
+const RoutedFeedPage = withRouter(FeedPage);
+
+export default withStyles(styles)(RoutedFeedPage);

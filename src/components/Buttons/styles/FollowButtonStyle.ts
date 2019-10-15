@@ -3,15 +3,13 @@ import { createStyles } from "@material-ui/core/styles";
 export const styles = () =>
   createStyles({
     root: {
-      backgroundColor: "transparent",
-      borderColor: "#5cb85c",
-      whiteSpace: "nowrap",
       opacity: 0.8,
       borderRadius: "0.2rem",
       fontSize: "0.875rem",
-      padding: "0.25rem 0.5rem",
+      padding: "2px 6px 2px 6px",
       border: "1px solid transparent",
-      cursor: "pointer"
+      cursor: "pointer",
+      textTransform: "none"
     },
 
     follow: {
@@ -19,18 +17,18 @@ export const styles = () =>
       backgroundColor: "transparent",
       border: "1px solid #999",
       "&:hover": {
-        backgroundColor: "#CCC"
-      },
-      "&:active": {
-        backgroundColor: "#999",
-        color: "#CCC"
+        backgroundColor: "#f5f5f5",
+        color: "#373a3c"
       }
     },
 
     unfollow: {
       color: "#373a3c",
       backgroundColor: "#fff",
-      borderColor: "#ccc"
+      borderColor: "#ccc",
+      "&:hover": {
+        backgroundColor: "#f5f5f5"
+      }
     },
 
     icon: {

@@ -13,6 +13,6 @@ export const styles = () =>
       fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
       color: "inherit",
       fontSize: "2.5rem",
-      padding: "25px 0px 70px 0px"
+      padding: "25px 0px 45px 0px"
     }
   });

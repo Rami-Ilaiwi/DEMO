@@ -27,5 +27,8 @@ export const styles = () =>
       color: "#aaa",
       fontWeight: "lighter",
       margin: "0 auto 0.5rem auto"
+    },
+    banner: {
+      padding: 10
     }
   });

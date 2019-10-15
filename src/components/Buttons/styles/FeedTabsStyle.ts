@@ -21,5 +21,9 @@ export const styles = () =>
     },
     indicator: {
       backgroundColor: "#5cb85c"
+    },
+    tabs: {
+      width: "60%",
+      marginTop: "1%"
     }
   });

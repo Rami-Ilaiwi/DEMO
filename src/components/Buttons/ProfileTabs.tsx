@@ -31,7 +31,7 @@ const ProfileTabs: React.FC<
         container
         direction="column"
         justify="center"
-        style={{ width: "60%", marginTop: "1%" }}
+        className={props.classes.tabs}
       >
         <Tabs
           value={props.selectedFeedTab}

@@ -9,5 +9,8 @@ export const styles = () =>
     },
     card: {
       marginTop: "1%"
+    },
+    button: {
+      float: "right"
     }
   });
