@@ -19,7 +19,7 @@ const TagsInput: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
 
   const handleEnterInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      if (!articleTag) return;
+      if (!articleTag || props.tagsList.includes(articleTag)) return;
       else {
         props.onAddTag(articleTag);
         setArticleTag("");
@@ -32,13 +32,6 @@ const TagsInput: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
 
   return (
     <>
-      {/* <input
-        className={props.classes.input}
-        placeholder="Article tag"
-        value={articleTag}
-        onChange={handleChangeTag}
-        onKeyPress={handleEnterInput}
-      /> */}
       <TextField
         id="outlined-name"
         label="Article tag"

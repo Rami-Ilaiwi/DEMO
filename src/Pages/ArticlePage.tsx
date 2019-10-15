@@ -88,7 +88,6 @@ const ArticlePage: React.FC<RouteComponentProps<{ slug: string }>> = props => {
           })
         );
     }
-    // .then(() => stIsLoadingArticle(false))
   }, []);
 
   useEffect(() => {
@@ -104,6 +103,10 @@ const ArticlePage: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const onFavoriteClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    if (!isLoggedIn) {
+      return props.history.push("/login");
+    }
+
     if (article.favorited) {
       AXIOS.DELETE({
         endpoint: `articles/${slug}/favorite`
@@ -118,6 +121,10 @@ const ArticlePage: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   const onFollowClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    if (!isLoggedIn) {
+      return props.history.push("/login");
+    }
+
     if (profile.following) {
       AXIOS.DELETE({
         endpoint: `profiles/${profile.username}/follow`

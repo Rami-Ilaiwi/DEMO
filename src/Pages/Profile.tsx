@@ -87,7 +87,6 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
 
   return (
     <>
-      {/* {console.log(props.match.params.user)} */}
       <ProfileBanner
         loggedinUser={user.username}
         bio={profile.bio}

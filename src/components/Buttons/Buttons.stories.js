@@ -7,7 +7,7 @@ import FollowButton from "./FollowButton";
 import DeleteButton from "./DeleteButton";
 import Pagination from "./Pagination";
 import EditButton from "./EditButton";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import FeedTabs from "./FeedTabs";
 
 // import { State } from "react-powerplug";
