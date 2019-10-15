@@ -1,5 +1,5 @@
 import React from "react";
-import NewArticle from "../Pages/NewArticle";
+import NewArticle from "./NewArticlePage";
 import { BrowserRouter as Router } from "react-router-dom";
 import { storiesOf } from "@storybook/react";
 
