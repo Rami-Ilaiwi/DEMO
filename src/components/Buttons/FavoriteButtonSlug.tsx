@@ -20,7 +20,7 @@ const FavoriteButtonSlug: React.FC<
         props.favorited ? props.classes.unfavorite : props.classes.favorite
       }`}
     >
-      <FavoriteIcon className={props.classes.icon}></FavoriteIcon>
+      <FavoriteIcon className={props.classes.icon} />
       <span>
         {props.favorited ? " Unfavorite" : " Favorite"} Article (
         {props.favoritesCount})

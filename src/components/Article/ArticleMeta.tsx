@@ -46,7 +46,7 @@ const ArticleMeta: React.FC<
         {props.loggedinUser == props.username ? (
           <>
             <Grid item>
-              <EditButton slug={props.slug} onEdit={props.onEdit}></EditButton>
+              <EditButton slug={props.slug} onEdit={props.onEdit} />
             </Grid>
             <Grid item>
               <DeleteButton onDelete={props.onDelete} />
