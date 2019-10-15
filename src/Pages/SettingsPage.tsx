@@ -117,7 +117,7 @@ const Settings: React.FC<RouteComponentProps & WithStyles<typeof styles>> = ({
                   name="bio"
                   label="Short bio about you"
                   margin="normal"
-                  multiline={true}
+                  multiline
                   rows="7"
                 />
                 <FormikTextField name="email" label="Email" margin="normal" />

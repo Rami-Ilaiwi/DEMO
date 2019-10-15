@@ -47,12 +47,14 @@ const get = (endpoint: string) =>
   });
 
 const put = (params: params) =>
-  axios.put(`${BASE_URL}/${params.endpoint}`, params.body, {
-    headers: {
-      Authorization: "Token " + utl.getToken(),
-      "Content-Type": "application/json"
-    }
-  });
+  axios
+    .put(`${BASE_URL}/${params.endpoint}`, params.body, {
+      headers: {
+        Authorization: "Token " + utl.getToken(),
+        "Content-Type": "application/json"
+      }
+    })
+    .then(resp => resp.data);
 
 export default {
   // noauth:{get:authGet,post:authPost},
