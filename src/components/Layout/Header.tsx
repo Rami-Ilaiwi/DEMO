@@ -10,6 +10,7 @@ import { styles } from "./styles/HeaderStyle";
 import Typography from "@material-ui/core/Typography";
 
 const Header = ({ classes }: WithStyles<typeof styles>) => {
+  const isLoggedIn = localStorage.getItem("userToken") ? true : false;
   const userDetails = utl.getUserDetails();
   return (
     <Grid
@@ -41,7 +42,7 @@ const Header = ({ classes }: WithStyles<typeof styles>) => {
             </Link>
           </Grid>
 
-          {localStorage.getItem("userToken") ? (
+          {isLoggedIn ? (
             <>
               <Grid item>
                 <Link to="/editor" className={classes.subtitle}>
@@ -68,7 +69,7 @@ const Header = ({ classes }: WithStyles<typeof styles>) => {
                     <img
                       src={userDetails.image}
                       className={classes.userPicture}
-                    ></img>
+                    />
                     {userDetails.username}
                   </Typography>
                 </Link>

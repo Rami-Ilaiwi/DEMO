@@ -20,7 +20,7 @@ const FollowButton: React.FC<
         props.following ? props.classes.unfollow : props.classes.follow
       }`}
     >
-      <AddRoundedIcon className={props.classes.icon}></AddRoundedIcon>
+      <AddRoundedIcon className={props.classes.icon} />
 
       <span>
         {props.following ? " Unfollow" : " Follow"} {props.profileName}

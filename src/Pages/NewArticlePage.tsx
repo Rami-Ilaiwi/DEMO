@@ -32,7 +32,7 @@ const NewArticle: React.FC<
   const [articleTitle, setArticleTitle] = useState("");
   const [articleDescription, setArticleDescription] = useState("");
   const [articleBody, setArticleBody] = useState("");
-  const [tagsList, setTagsList] = useState([] as string[]);
+  const [tagsList, setTagsList] = useState<string[]>([]);
   const slug = props.match.params.slug;
 
   useEffect(() => {

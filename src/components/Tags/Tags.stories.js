@@ -11,4 +11,4 @@ storiesOf("Tags", module)
       onClickTag={action("onClickTag")}
     />
   ))
-  .add("Tag list", () => <TagList tagList={["a", "b", "c", "d"]}></TagList>);
+  .add("Tag list", () => <TagList tagList={["a", "b", "c", "d"]} />);

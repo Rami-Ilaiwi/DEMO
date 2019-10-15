@@ -23,7 +23,7 @@ const FavoriteButton: React.FC<
         props.favorited ? classes.unfavorite : classes.favorite
       }`}
     >
-      <FavoriteIcon className={classes.icon}></FavoriteIcon>
+      <FavoriteIcon className={classes.icon} />
       <span> {props.favoritesCount}</span>
     </button>
   );

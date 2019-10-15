@@ -78,7 +78,7 @@ const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
               user={user.username}
               author={item.author.username}
               handleDeleteComment={props.handleDeleteComment}
-            ></DeleteComment>
+            />
           </Grid>
         </Card>
       </div>

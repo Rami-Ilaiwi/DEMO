@@ -32,18 +32,16 @@ storiesOf("Buttons", module)
     //   )}
     // </State>
   ))
-  .add("Favorite Button", () => (
-    <FavoriteButton favoritesCount={5}></FavoriteButton>
-  ))
+  .add("Favorite Button", () => <FavoriteButton favoritesCount={5} />)
   .add("Follow Button", () => (
     <FollowButton
       following={true}
       handleFollow={action("button-click")}
       profileName={"Name"}
-    ></FollowButton>
+    />
   ))
   .add("Delete Button", () => (
-    <DeleteButton handleDelete={action("button-click")}></DeleteButton>
+    <DeleteButton handleDelete={action("button-click")} />
   ))
   .add("Pagination", () => (
     <Pagination

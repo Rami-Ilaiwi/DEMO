@@ -67,6 +67,10 @@ const Profile: React.FC<
   const onFollowClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    if (!isLoggedIn) {
+      return props.history.push("/login");
+    }
+
     if (profile.following) {
       AXIOS.DELETE({
         endpoint: `profiles/${profile.username}/follow`

@@ -9,7 +9,8 @@ const Footer = ({ classes }: WithStyles<typeof styles>) => {
       target="_blank"
       className={classes.footer}
     >
-      <i className={"ion-social-github"}></i>&nbsp;&nbsp;Fork on GitHub
+      <i className={"ion-social-github"} />
+      <span> Fork on GitHub</span>
     </a>
   );
 };

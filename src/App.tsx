@@ -24,7 +24,7 @@ const App = () => {
     <>
       <CssBaseline />
       <Router>
-        <Header></Header>
+        <Header />
 
         <Route exact path="/" component={FeedPage} />
         <Route path="/login/" component={LoginPage} />
@@ -35,12 +35,8 @@ const App = () => {
         <Route path="/article/:slug/" component={ArticlePage} />
 
         <Route path="/@:user" component={Profile} />
-        {/* <GridContainer path="/"></GridContainer>
-        <LoginComponent path="/login/"></LoginComponent> */}
-        {/* <Tags></Tags> */}
-        {/* <LoginComponent></LoginComponent> */}
         <div style={{ padding: "50px" }} />
-        <Footer></Footer>
+        <Footer />
       </Router>
     </>
   );
