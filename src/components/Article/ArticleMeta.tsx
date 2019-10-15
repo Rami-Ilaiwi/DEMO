@@ -5,6 +5,8 @@ import FavoriteButtonSlug from "../Buttons/FavoriteButtonSlug";
 import ArticleAuthor from "./ArticleAuthor";
 import DeleteButton from "../Buttons/DeleteButton";
 import EditButton from "../Buttons/EditButton";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/ArticleMetaStyle";
 
 interface ArticleMetaProps {
   image: string;
@@ -22,9 +24,16 @@ interface ArticleMetaProps {
   onEdit: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
-const ArticleMeta: React.FC<ArticleMetaProps> = props => {
+const ArticleMeta: React.FC<
+  ArticleMetaProps & WithStyles<typeof styles>
+> = props => {
   return (
-    <Grid container>
+    <Grid
+      container
+      direction="row"
+      alignItems="center"
+      className={props.classes.root}
+    >
       <Grid item xs={4}>
         <ArticleAuthor
           image={props.image}
@@ -36,7 +45,7 @@ const ArticleMeta: React.FC<ArticleMetaProps> = props => {
       <Grid item container xs={4} spacing={1}>
         {props.loggedinUser == props.username ? (
           <>
-            <Grid item style={{ marginTop: "1%" }}>
+            <Grid item>
               <EditButton slug={props.slug} onEdit={props.onEdit}></EditButton>
             </Grid>
             <Grid item>
@@ -67,4 +76,4 @@ const ArticleMeta: React.FC<ArticleMetaProps> = props => {
   );
 };
 
-export default ArticleMeta;
+export default withStyles(styles)(ArticleMeta);

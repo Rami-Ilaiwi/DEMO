@@ -10,8 +10,12 @@ import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 import Pagination from "../components/Buttons/Pagination";
 import LoadingComponent from "../components/Layout/LoadingComponent";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/ProfileStyle";
 
-const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
+const Profile: React.FC<
+  RouteComponentProps<{ user: string }> & WithStyles<typeof styles>
+> = props => {
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
   const [selectedFeedTab, setSelectedFeedTab] = useState<FeedType>(
     "myArticlesFeed"
@@ -113,7 +117,7 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
           ) : (
             <>
               {articles.length == 0 ? (
-                <Typography style={{ marginLeft: "20%" }}>
+                <Typography className={props.classes.content}>
                   No articles are here... yet.
                 </Typography>
               ) : (
@@ -123,7 +127,7 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
                 />
               )}
               {articlesCount > 10 ? (
-                <div style={{ marginRight: "20%" }}>
+                <div className={props.classes.pages}>
                   <Pagination
                     onChangePage={handleChangePage}
                     articlesCount={articlesCount}
@@ -139,4 +143,6 @@ const Profile: React.FC<RouteComponentProps<{ user: string }>> = props => {
   );
 };
 
-export default withRouter(Profile);
+const RoutedProfile = withRouter(Profile);
+
+export default withStyles(styles)(RoutedProfile);

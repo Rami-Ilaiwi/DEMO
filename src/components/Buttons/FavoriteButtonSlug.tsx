@@ -2,6 +2,7 @@ import React from "react";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/FavoriteButtonSlugStyle";
+import Button from "@material-ui/core/Button";
 
 interface FavoriteButtonProps {
   favorited: boolean;
@@ -13,7 +14,7 @@ const FavoriteButtonSlug: React.FC<
   FavoriteButtonProps & WithStyles<typeof styles>
 > = props => {
   return (
-    <button
+    <Button
       onClick={props.onFavorite}
       className={`${props.classes.root} ${
         props.favorited ? props.classes.unfavorite : props.classes.favorite
@@ -24,7 +25,7 @@ const FavoriteButtonSlug: React.FC<
         {props.favorited ? " Unfavorite" : " Favorite"} Article (
         {props.favoritesCount})
       </span>
-    </button>
+    </Button>
   );
 };
 

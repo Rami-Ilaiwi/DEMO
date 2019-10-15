@@ -1,5 +1,4 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 import FavoriteButton from "../Buttons/FavoriteButton";
 import TagList from "../Tags/TagList";
 import { Link } from "react-router-dom";
@@ -55,7 +54,7 @@ const ArticleCard: React.FC<
 
           <TagList tagList={props.tagList} />
         </CardContent>
-        <CardActions style={{ float: "right" }}>
+        <CardActions className={props.classes.button}>
           <FavoriteButton
             favorited={props.favorited}
             favoritesCount={props.favoritesCount}

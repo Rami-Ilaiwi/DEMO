@@ -9,8 +9,12 @@ import UserComment from "../components/Comments/UserComment";
 import utl from "../utils/utils";
 import ArticleBanner from "../components/Article/ArticleBanner";
 import LoadingComponent from "../components/Layout/LoadingComponent";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles/ArticlePageStyle";
 
-const ArticlePage: React.FC<RouteComponentProps<{ slug: string }>> = props => {
+const ArticlePage: React.FC<
+  RouteComponentProps<{ slug: string }> & WithStyles<typeof styles>
+> = props => {
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [isLoadingArticleData, setIsLoadingArticleData] = useState(false);
@@ -210,22 +214,14 @@ const ArticlePage: React.FC<RouteComponentProps<{ slug: string }>> = props => {
             onEdit={onEditClick}
           />
 
-          <Grid
-            item
-            style={{
-              marginTop: "2%",
-              marginLeft: "16%",
-              width: "69%",
-              textAlign: "justify"
-            }}
-          >
+          <Grid item className={props.classes.body}>
             <Grid item>{article.body}</Grid>
             <Grid item>
               <TagList tagList={article.tagList} />
             </Grid>
           </Grid>
 
-          <Grid item style={{ marginLeft: "28%" }}>
+          <Grid item className={props.classes.author}>
             <ArticleMeta
               image={article.author.image}
               username={article.author.username}
@@ -248,8 +244,8 @@ const ArticlePage: React.FC<RouteComponentProps<{ slug: string }>> = props => {
             justify="center"
             alignItems="center"
           >
-            <Grid item>
-              <hr style={{ width: "1000px" }} />
+            <Grid item className={props.classes.comments}>
+              <hr />
 
               {token ? (
                 <UserComment
@@ -272,4 +268,4 @@ const ArticlePage: React.FC<RouteComponentProps<{ slug: string }>> = props => {
   );
 };
 
-export default ArticlePage;
+export default withStyles(styles)(ArticlePage);

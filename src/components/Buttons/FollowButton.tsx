@@ -2,6 +2,7 @@ import React from "react";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/FollowButtonStyle";
+import Button from "@material-ui/core/Button";
 
 interface FollowButtonProps {
   following: boolean;
@@ -13,7 +14,7 @@ const FollowButton: React.FC<
   FollowButtonProps & WithStyles<typeof styles>
 > = props => {
   return (
-    <button
+    <Button
       onClick={props.onFollow}
       className={`${props.classes.root} ${
         props.following ? props.classes.unfollow : props.classes.follow
@@ -24,7 +25,7 @@ const FollowButton: React.FC<
       <span>
         {props.following ? " Unfollow" : " Follow"} {props.profileName}
       </span>
-    </button>
+    </Button>
   );
 };
 

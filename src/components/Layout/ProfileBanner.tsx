@@ -66,7 +66,7 @@ const ProfileBanner: React.FC<
           justify="center"
           alignItems="flex-end"
         >
-          <Grid item style={{ padding: 10 }}>
+          <Grid item className={props.classes.banner}>
             {props.loggedinUser == props.username ? (
               <EditProfileButton />
             ) : (
