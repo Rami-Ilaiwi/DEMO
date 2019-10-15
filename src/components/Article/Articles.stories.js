@@ -1,6 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { storiesOf } from "@storybook/react";
 import ArticleCard from "./ArticleCard";
 import Articles from "./Articles";

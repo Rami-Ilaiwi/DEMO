@@ -23,10 +23,6 @@ interface ArticleMetaProps {
 }
 
 const ArticleMeta: React.FC<ArticleMetaProps> = props => {
-  //   onFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  //     this.props.onFollow(event)
-  //   };
-
   return (
     <Grid container>
       <Grid item xs={4}>

@@ -39,13 +39,3 @@ export const styles = () =>
       display: "block"
     }
   });
-
-// import { makeStyles } from "@material-ui/core/styles";
-
-// const useStyles = makeStyles({
-//   cardWidth: {
-//     maxWidth: 600
-//   }
-// });
-
-// const classes = useStyles();

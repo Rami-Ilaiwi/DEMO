@@ -1,6 +1,5 @@
 import React from "react";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-//import { Article } from "../../dtos/ArticleResponseDto";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
 import { styles } from "./styles/FavoriteButtonStyle";
@@ -12,7 +11,6 @@ interface FavoriteButtonProps {
   onFavorite: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-// interface FavoriteButtonProps extends Pick<Article, "favoritesCount"> {}
 const FavoriteButton: React.FC<
   FavoriteButtonProps & WithStyles<typeof styles>
 > = props => {

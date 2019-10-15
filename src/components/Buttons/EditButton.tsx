@@ -1,6 +1,5 @@
 import React from "react";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
-import Typography from "@material-ui/core/Typography";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/EditButtonStyle";
 import { Link } from "react-router-dom";

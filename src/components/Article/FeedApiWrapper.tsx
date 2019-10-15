@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Article } from "../../dtos/ArticleResponseDto";
 import AXIOS from "../../utils/AXIOS";
-import { RouteComponentProps } from "react-router-dom";
 
 export type FeedType =
   | "yourFeed"

@@ -8,6 +8,7 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { styles } from "./styles/NewArticlePageStyle";
 import { Formik, Form, FormikActions } from "formik";
+import { Redirect } from "react-router-dom";
 import * as yup from "yup";
 import FormikTextField from "../components/FormikInputs/FormikTextField";
 
@@ -26,6 +27,8 @@ const NewArticleSchema = yup.object().shape({
 const NewArticle: React.FC<
   WithStyles<typeof styles> & RouteComponentProps<{ slug?: string }>
 > = props => {
+  const isLoggedIn = localStorage.getItem("userToken") ? true : false;
+
   const [articleTitle, setArticleTitle] = useState("");
   const [articleDescription, setArticleDescription] = useState("");
   const [articleBody, setArticleBody] = useState("");
@@ -42,6 +45,10 @@ const NewArticle: React.FC<
       });
     }
   }, [slug]);
+
+  if (!isLoggedIn) {
+    return <Redirect to="/" />;
+  }
 
   const handleEnterForm = (event: React.KeyboardEvent<HTMLFormElement>) => {
     if (event.key === "Enter") event.preventDefault();

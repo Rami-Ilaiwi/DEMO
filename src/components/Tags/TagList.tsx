@@ -19,7 +19,5 @@ const TagList: React.FC<TagListProps & WithStyles<typeof styles>> = props => {
     </ul>
   );
 };
-// TagList.defaultProps = {
-//     tagList:[]
-// }
+
 export default withStyles(styles)(TagList);

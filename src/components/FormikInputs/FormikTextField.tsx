@@ -12,7 +12,7 @@ interface FormikTextFieldProps extends Omit<OutlinedTextFieldProps, "variant"> {
 
 const FormikTextField: React.FC<
   FormikTextFieldProps & WithStyles<typeof styles>
-> = props => {
+> = ({ classes, ...props }) => {
   return (
     <Grid item>
       <Field name={props.name}>
@@ -21,13 +21,13 @@ const FormikTextField: React.FC<
             <TextField
               {...props}
               {...field}
-              className={props.classes.input}
+              className={classes.input}
               variant="outlined"
             />
           );
         }}
       </Field>
-      <Typography className={props.classes.error}>
+      <Typography className={classes.error}>
         <ErrorMessage name={props.name} />
       </Typography>
     </Grid>

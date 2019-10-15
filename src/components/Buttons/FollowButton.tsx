@@ -18,7 +18,6 @@ const FollowButton: React.FC<
       className={`${props.classes.root} ${
         props.following ? props.classes.unfollow : props.classes.follow
       }`}
-      // className={`btn ${props.following ? "unfollow" : "follow"}`}
     >
       <AddRoundedIcon className={props.classes.icon}></AddRoundedIcon>
 
