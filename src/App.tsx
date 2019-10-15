@@ -6,7 +6,7 @@ import FeedPage from "./Pages/FeedPage";
 import LoginPage from "./Pages/LoginPage";
 import RegisterComponent from "./Pages/RegisterPage";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import NewArticle from "./Pages/NewArticle";
+import NewArticle from "./Pages/NewArticlePage";
 import Settings from "./Pages/SettingsPage";
 import ArticlePage from "./Pages/ArticlePage";
 import Profile from "./Pages/Profile";
