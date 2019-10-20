@@ -43,7 +43,7 @@ const ArticleMeta: React.FC<
       </Grid>
 
       <Grid item container xs={4} spacing={1}>
-        {props.loggedinUser == props.username ? (
+        {props.loggedinUser === props.username ? (
           <>
             <Grid item>
               <EditButton slug={props.slug} onEdit={props.onEdit} />

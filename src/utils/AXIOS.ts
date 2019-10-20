@@ -7,8 +7,8 @@ interface params {
   body?: {};
 }
 
-const noauthPost = (params: params) =>
-  axios.post(`${BASE_URL}/${params.endpoint}`, params.body);
+const noauthPost = <T extends any>(params: params) =>
+  axios.post<T>(`${BASE_URL}/${params.endpoint}`, params.body);
 
 const noauthGet = (endpoint: string) => axios.get(`${BASE_URL}/${endpoint}`);
 // const authPost = ({ endpoint, body }) =>
@@ -46,9 +46,9 @@ const get = (endpoint: string) =>
     }
   });
 
-const put = (params: params) =>
+const put = <T extends any>(params: params) =>
   axios
-    .put(`${BASE_URL}/${params.endpoint}`, params.body, {
+    .put<T>(`${BASE_URL}/${params.endpoint}`, params.body, {
       headers: {
         Authorization: "Token " + utl.getToken(),
         "Content-Type": "application/json"

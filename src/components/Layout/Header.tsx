@@ -1,29 +1,35 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import utl from "../../utils/utils";
 import { Link } from "react-router-dom";
 import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
 import BorderColorRoundedIcon from "@material-ui/icons/BorderColorRounded";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/HeaderStyle";
-
+import { connect } from "react-redux";
 import Typography from "@material-ui/core/Typography";
+import { User } from "../../dtos/ArticleResponseDto";
+import { selectUserInfo, selectIsLoggedIn } from "../../store/selectors/user";
+import { IState } from "../../store/reducers";
 
-const Header = ({ classes }: WithStyles<typeof styles>) => {
-  const isLoggedIn = localStorage.getItem("userToken") ? true : false;
-  const userDetails = utl.getUserDetails();
+interface IHeaderProps extends WithStyles<typeof styles> {
+  user: User;
+  isLoggedIn: boolean;
+}
+
+const Header: React.FC<IHeaderProps> = props => {
   return (
     <Grid
       container
       direction="row"
       justify="space-around"
       alignItems="baseline"
-      className={classes.root}
+      className={props.classes.root}
     >
       <Grid item xs={3}>
+        {/* {console.log(props.user)} */}
         <span>
-          <Link to="/" className={classes.title}>
-            <Typography className={classes.logoText}>conduit</Typography>
+          <Link to="/" className={props.classes.title}>
+            <Typography className={props.classes.logoText}>conduit</Typography>
           </Link>
         </span>
       </Grid>
@@ -37,40 +43,41 @@ const Header = ({ classes }: WithStyles<typeof styles>) => {
           spacing={3}
         >
           <Grid item>
-            <Link to="/" className={classes.subtitle}>
+            <Link to="/" className={props.classes.subtitle}>
               <Typography>Home</Typography>
             </Link>
           </Grid>
 
-          {isLoggedIn ? (
+          {props.isLoggedIn ? (
             <>
               <Grid item>
-                <Link to="/editor" className={classes.subtitle}>
+                <Link to="/editor" className={props.classes.subtitle}>
                   <Typography>
-                    <BorderColorRoundedIcon className={classes.icon} /> New
-                    Article
+                    <BorderColorRoundedIcon className={props.classes.icon} />{" "}
+                    New Article
                   </Typography>
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/settings" className={classes.subtitle}>
+                <Link to="/settings" className={props.classes.subtitle}>
                   <Typography>
-                    <SettingsRoundedIcon className={classes.icon} /> Settings
+                    <SettingsRoundedIcon className={props.classes.icon} />{" "}
+                    Settings
                   </Typography>
                 </Link>
               </Grid>
 
               <Grid item>
                 <Link
-                  to={`/@${userDetails.username}`}
-                  className={classes.subtitle}
+                  to={`/@${props.user.username}`}
+                  className={props.classes.subtitle}
                 >
                   <Typography>
                     <img
-                      src={userDetails.image}
-                      className={classes.userPicture}
+                      src={props.user.image}
+                      className={props.classes.userPicture}
                     />
-                    {userDetails.username}
+                    {props.user.username}
                   </Typography>
                 </Link>
               </Grid>
@@ -78,13 +85,13 @@ const Header = ({ classes }: WithStyles<typeof styles>) => {
           ) : (
             <>
               <Grid item>
-                <Link to="/login" className={classes.subtitle}>
+                <Link to="/login" className={props.classes.subtitle}>
                   <Typography>Sign in</Typography>
                 </Link>
               </Grid>
 
               <Grid item>
-                <Link to="/register" className={classes.subtitle}>
+                <Link to="/register" className={props.classes.subtitle}>
                   <Typography>Sign up</Typography>
                 </Link>
               </Grid>
@@ -96,4 +103,13 @@ const Header = ({ classes }: WithStyles<typeof styles>) => {
   );
 };
 
-export default withStyles(styles)(Header);
+const mapStateToProps = (user: IState) => {
+  return {
+    user: selectUserInfo(user),
+    isLoggedIn: selectIsLoggedIn(user)
+  };
+};
+
+const StyledHeader = withStyles(styles)(Header);
+
+export default connect(mapStateToProps)(StyledHeader);

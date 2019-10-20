@@ -9,6 +9,10 @@ import { styles } from "./styles/LoginPageStyle";
 import * as yup from "yup";
 import { Formik, Form, FormikActions } from "formik";
 import FormikTextField from "../components/FormikInputs/FormikTextField";
+import { connect } from "react-redux";
+import { onLogin } from "../store/actionCreators/loginAction";
+import { selectIsLoggedIn } from "../store/selectors/user";
+import { User } from "../dtos/ArticleResponseDto";
 
 interface Values {
   email: string;
@@ -22,13 +26,22 @@ const LoginSchema = yup.object().shape({
     .required("Email is required"),
   password: yup.string().required("Password is required")
 });
+interface ILoginProps {
+  onLogin: (user: User) => void;
+  isLoggedIn: boolean;
+}
 
-const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
-  const hasLogginCookie = localStorage.getItem("userToken") ? true : false;
-  const [isLoggedIn, setIsLoggedIn] = useState(hasLogginCookie);
+interface LoginResponse {
+  user: User;
+}
+
+const LoginPage: React.FC<ILoginProps & WithStyles<typeof styles>> = ({
+  onLogin,
+  ...props
+}) => {
   const [loginError, setLoginError] = useState("");
 
-  if (isLoggedIn) {
+  if (props.isLoggedIn) {
     return <Redirect to="/" />;
   }
 
@@ -36,7 +49,7 @@ const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
     values: Values,
     formikActions: FormikActions<Values>
   ) => {
-    AXIOS.noauthPost({
+    AXIOS.noauthPost<LoginResponse>({
       endpoint: "users/login",
       body: {
         user: {
@@ -46,11 +59,9 @@ const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
       }
     })
       .then(res => {
-        localStorage.setItem("userData", JSON.stringify(res));
+        localStorage.setItem("userData", JSON.stringify(res.data));
         localStorage.setItem("userToken", res.data.user.token);
-        // this.props.history.push("/");
-        window.location.href = "/";
-        // setIsLoggedIn(true);
+        onLogin(res.data.user);
       })
       .catch(() => {
         setLoginError("email or password is invalid");
@@ -64,13 +75,15 @@ const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
           <Typography gutterBottom variant="h4">
             Sign in
           </Typography>
-          <Link className={classes.link} to="/register">
+          <Link className={props.classes.link} to="/register">
             Need an account?
           </Link>
         </Grid>
         {loginError.length > 0 ? (
           <Grid item>
-            <Typography className={classes.error}>{loginError}</Typography>
+            <Typography className={props.classes.error}>
+              {loginError}
+            </Typography>
           </Grid>
         ) : null}
         <Grid item container direction="column" alignItems="center">
@@ -90,9 +103,9 @@ const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
                   margin="normal"
                   type="password"
                 />
-                <Grid item className={classes.button}>
+                <Grid item className={props.classes.button}>
                   <Button
-                    className={classes.submit}
+                    className={props.classes.submit}
                     type="submit"
                     variant="outlined"
                   >
@@ -108,4 +121,19 @@ const LoginComponent = ({ classes }: WithStyles<typeof styles>) => {
   );
 };
 
-export default withStyles(styles)(LoginComponent);
+const mapStateToProps = (state: any) => {
+  return {
+    isLoggedIn: selectIsLoggedIn(state)
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => ({
+  onLogin: (user: User) => dispatch(onLogin(user))
+});
+
+const StyledLogin = withStyles(styles)(LoginPage);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StyledLogin);

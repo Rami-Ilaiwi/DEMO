@@ -67,7 +67,7 @@ const ProfileBanner: React.FC<
           alignItems="flex-end"
         >
           <Grid item className={props.classes.banner}>
-            {props.loggedinUser == props.username ? (
+            {props.loggedinUser === props.username ? (
               <EditProfileButton />
             ) : (
               <FollowButton

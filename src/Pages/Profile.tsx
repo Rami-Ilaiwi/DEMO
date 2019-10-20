@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ProfileBanner from "../components/Layout/ProfileBanner";
 import { RouteComponentProps } from "react-router-dom";
 import AXIOS from "../utils/AXIOS";
-import utl from "../utils/utils";
 import ProfileTabs from "../components/Buttons/ProfileTabs";
 import FeedApiWrapper, { FeedType } from "../components/Article/FeedApiWrapper";
 import Articles from "../components/Article/Articles";
@@ -12,19 +11,24 @@ import Pagination from "../components/Buttons/Pagination";
 import LoadingComponent from "../components/Layout/LoadingComponent";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/ProfileStyle";
+import { connect } from "react-redux";
+import { User } from "../dtos/ArticleResponseDto";
+import { selectUserInfo, selectIsLoggedIn } from "../store/selectors/user";
+import { IState } from "../store/reducers";
+
+interface IProfile extends WithStyles<typeof styles> {
+  user: User;
+  isLoggedIn: boolean;
+}
 
 const Profile: React.FC<
-  RouteComponentProps<{ user: string }> & WithStyles<typeof styles>
+  IProfile & RouteComponentProps<{ user: string }>
 > = props => {
-  const isLoggedIn = localStorage.getItem("userToken") ? true : false;
   const [selectedFeedTab, setSelectedFeedTab] = useState<FeedType>(
     "myArticlesFeed"
   );
   const [articlesCount, setArticlesCount] = useState(0);
   const [page, setPage] = useState(0);
-
-  const user = utl.getUserDetails();
-
   const [profile, setProfile] = useState({
     bio: "",
     following: false,
@@ -51,7 +55,7 @@ const Profile: React.FC<
 
   // This for fetching the articles
   useEffect(() => {
-    if (isLoggedIn) {
+    if (props.isLoggedIn) {
       AXIOS.get(`profiles/${props.match.params.user}`).then(res => {
         const profile = res.data.profile;
         setProfile(profile);
@@ -67,7 +71,7 @@ const Profile: React.FC<
   const onFollowClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    if (!isLoggedIn) {
+    if (!props.isLoggedIn) {
       return props.history.push("/login");
     }
 
@@ -96,7 +100,7 @@ const Profile: React.FC<
   return (
     <>
       <ProfileBanner
-        loggedinUser={user.username}
+        loggedinUser={props.user.username}
         bio={profile.bio}
         following={profile.following}
         image={profile.image}
@@ -113,14 +117,14 @@ const Profile: React.FC<
         author={profile.username}
         page={page}
         onRedirect={handleRedirect}
-        isLoggedIn={isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
       >
         {({ articles, handleFavoriteToggle, isLoadingArticles }) =>
           isLoadingArticles ? (
             <LoadingComponent />
           ) : (
             <>
-              {articles.length == 0 ? (
+              {articles.length === 0 ? (
                 <Typography className={props.classes.content}>
                   No articles are here... yet.
                 </Typography>
@@ -147,6 +151,14 @@ const Profile: React.FC<
   );
 };
 
-const RoutedProfile = withRouter(Profile);
+const mapStateToProps = (user: IState) => {
+  return {
+    user: selectUserInfo(user),
+    isLoggedIn: selectIsLoggedIn(user)
+  };
+};
 
-export default withStyles(styles)(RoutedProfile);
+const RoutedProfile = withRouter(Profile);
+const StyledProfile = withStyles(styles)(RoutedProfile);
+
+export default connect(mapStateToProps)(StyledProfile);

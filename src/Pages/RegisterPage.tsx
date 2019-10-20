@@ -9,11 +9,24 @@ import { styles } from "./styles/RegisterPageStyle";
 import { Formik, Form, FormikActions } from "formik";
 import * as yup from "yup";
 import FormikTextField from "../components/FormikInputs/FormikTextField";
+import { User } from "../dtos/ArticleResponseDto";
+import { connect } from "react-redux";
+import { selectIsLoggedIn } from "../store/selectors/user";
+import { onLogin } from "../store/actionCreators/loginAction";
 
 interface Values {
   username: string;
   password: string;
   email: string;
+}
+
+interface RegisterResponse {
+  user: User;
+}
+
+interface IRegisterProps {
+  isLoggedIn: boolean;
+  onLogin: (user: User) => void;
 }
 
 const RegisterSchema = yup.object().shape({
@@ -31,10 +44,11 @@ const RegisterSchema = yup.object().shape({
     .required("Email is required")
 });
 
-const RegisterComponent = ({ classes }: WithStyles<typeof styles>) => {
-  const hasLogginCookie = localStorage.getItem("userToken") ? true : false;
-  const [isLoggedIn, setIsLoggedIn] = useState(hasLogginCookie);
-
+const RegisterPage: React.FC<IRegisterProps & WithStyles<typeof styles>> = ({
+  classes,
+  isLoggedIn,
+  onLogin
+}) => {
   if (isLoggedIn) {
     return <Redirect to="/" />;
   }
@@ -43,7 +57,7 @@ const RegisterComponent = ({ classes }: WithStyles<typeof styles>) => {
     values: Values,
     formikActions: FormikActions<Values>
   ) => {
-    AXIOS.noauthPost({
+    AXIOS.noauthPost<RegisterResponse>({
       endpoint: "users",
       body: {
         user: {
@@ -54,9 +68,10 @@ const RegisterComponent = ({ classes }: WithStyles<typeof styles>) => {
       }
     })
       .then(res => {
-        localStorage.setItem("userData", JSON.stringify(res));
+        localStorage.setItem("userData", JSON.stringify(res.data));
         localStorage.setItem("userToken", res.data.user.token);
-        window.location.href = "/";
+        // window.location.href = "/";
+        onLogin(res.data.user);
 
         // setIsLoggedIn(true);
       })
@@ -121,5 +136,20 @@ const RegisterComponent = ({ classes }: WithStyles<typeof styles>) => {
     </Grid>
   );
 };
+const mapStateToProps = (state: any) => {
+  // console.log(state);
+  return {
+    isLoggedIn: selectIsLoggedIn(state)
+  };
+};
 
-export default withStyles(styles)(RegisterComponent);
+const mapDispatchToProps = (dispatch: any) => ({
+  onLogin: (user: User) => dispatch(onLogin(user))
+});
+
+const StyledRegisterPage = withStyles(styles)(RegisterPage);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StyledRegisterPage);
