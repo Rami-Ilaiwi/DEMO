@@ -19,7 +19,7 @@ const DeleteComment: React.FC<
 > = props => {
   return (
     <Grid item>
-      {props.user == props.author ? (
+      {props.user === props.author ? (
         <CardActions>
           <span
             className={props.classes.deleteIcon}

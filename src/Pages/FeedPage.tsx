@@ -109,7 +109,7 @@ const FeedPage: React.FC<RouteComponentProps & WithStyles<typeof styles>> = ({
                     <LoadingComponent />
                   ) : (
                     <>
-                      {articles.length == 0 ? (
+                      {articles.length === 0 ? (
                         <Typography className={classes.content}>
                           No articles are here... yet.
                         </Typography>

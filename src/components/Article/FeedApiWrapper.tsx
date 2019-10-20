@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Article } from "../../dtos/ArticleResponseDto";
 import AXIOS from "../../utils/AXIOS";
+import { connect } from "react-redux";
+// import { AppStore } from "../../store/reducers";
 
 export type FeedType =
   | "yourFeed"
@@ -43,7 +45,7 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
       }).then(() => {
         setArticles(
           articles.map(a => {
-            return a.slug == article.slug
+            return a.slug === article.slug
               ? {
                   ...a,
                   favorited: !article.favorited,
@@ -54,12 +56,15 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
         );
       });
     } else {
+      // props.setIsLoadingPosts(true);//{type:"setLoadPosts".payload:true}
       AXIOS.post({
         endpoint: `articles/${article.slug}/favorite`
       }).then(() => {
+        // props.setIsLoadingArticles(false);//{type:"setLoadPosts".payload:false}
+        // props.onLoadPostsSuccess(posts);//{type:"onLoadPostsSuccess".payload:posts}
         setArticles(
           articles.map(a => {
-            return a.slug == article.slug
+            return a.slug === article.slug
               ? {
                   ...a,
                   favorited: !article.favorited,
@@ -152,5 +157,15 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = props => {
 
   return props.children({ articles, handleFavoriteToggle, isLoadingArticles });
 };
+// interface MapStateToProps {
+//   articles: Array<Article>;
+// }
+// const mapStateToProps = ({ articles }: AppStore) => ({
+//   articles: articles.data
+// });
+
+// const mapDispatchToProps = (dispatch) => ({
+//   onLoadArticles()
+// })
 
 export default FeedApiWrapper;

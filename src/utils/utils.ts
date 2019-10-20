@@ -1,8 +1,6 @@
 const getUserDetails = () => {
   try {
-    return (
-      JSON.parse(localStorage.getItem("userData") as string).data.user || {}
-    );
+    return JSON.parse(localStorage.getItem("userData") as string).user || {};
   } catch (w) {
     return {};
   }

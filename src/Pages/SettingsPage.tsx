@@ -3,7 +3,6 @@ import AXIOS from "../utils/AXIOS";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import utl from "../utils/utils";
 import { Redirect } from "react-router-dom";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/SettingsPageStyle";
@@ -12,14 +11,25 @@ import { Formik, Form, FormikActions } from "formik";
 import FormikTextField from "../components/FormikInputs/FormikTextField";
 import { RouteComponentProps } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { selectUserInfo, selectIsLoggedIn } from "../store/selectors/user";
+import { User } from "../dtos/ArticleResponseDto";
+import { changeSettings } from "../store/actionCreators/settingsAction";
+import { IState } from "../store/reducers";
 
-const Settings: React.FC<RouteComponentProps & WithStyles<typeof styles>> = ({
-  history,
-  classes
-}) => {
-  const isLoggedIn = localStorage.getItem("userToken") ? true : false;
-  const userData = utl.getUserDetails();
+interface ISettings {
+  changeSettings: (user: User) => void;
+  user: User;
+  isLoggedIn: boolean;
+}
 
+interface SaveSettingsResponse {
+  user: User;
+}
+
+const Settings: React.FC<
+  RouteComponentProps & ISettings & WithStyles<typeof styles>
+> = ({ changeSettings, user, isLoggedIn, history, classes }) => {
   if (!isLoggedIn) {
     return <Redirect to="/" />;
   }
@@ -50,7 +60,7 @@ const Settings: React.FC<RouteComponentProps & WithStyles<typeof styles>> = ({
     values: Values,
     formikActions: FormikActions<Values>
   ) => {
-    AXIOS.put({
+    AXIOS.put<SaveSettingsResponse>({
       endpoint: "user",
       body: {
         user: {
@@ -64,8 +74,8 @@ const Settings: React.FC<RouteComponentProps & WithStyles<typeof styles>> = ({
     })
       .then(res => {
         localStorage.setItem("userData", JSON.stringify(res));
-        localStorage.setItem("userToken", res.data.user.token);
-        // window.location.href = `/@${values.username}`;
+        localStorage.setItem("userToken", res.user.token);
+        changeSettings(res.user);
         history.push(`/@${values.username}`);
       })
       .catch(err =>
@@ -93,10 +103,10 @@ const Settings: React.FC<RouteComponentProps & WithStyles<typeof styles>> = ({
         <Grid item>
           <Formik
             initialValues={{
-              image: userData.image,
-              username: userData.username,
-              bio: userData.bio,
-              email: userData.email,
+              image: user.image,
+              username: user.username,
+              bio: user.bio,
+              email: user.email,
               newPassword: ""
             }}
             validationSchema={SettingsSchema}
@@ -157,6 +167,22 @@ const Settings: React.FC<RouteComponentProps & WithStyles<typeof styles>> = ({
   );
 };
 
+const mapStateToProps = (state: IState) => {
+  return {
+    user: selectUserInfo(state),
+    isLoggedIn: selectIsLoggedIn(state)
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => ({
+  changeSettings: (user: User) => dispatch(changeSettings(user))
+});
+
 const RoutedSettings = withRouter(Settings);
 
-export default withStyles(styles)(RoutedSettings);
+const StyledSettings = withStyles(styles)(RoutedSettings);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StyledSettings);
