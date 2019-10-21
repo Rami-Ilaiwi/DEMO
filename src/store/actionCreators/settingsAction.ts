@@ -4,3 +4,8 @@ export function changeSettings(user: User) {
   //   console.log(user);
   return { type: "SET_USER", payload: user };
 }
+
+export function onLogout(user: User) {
+  //   console.log(user);
+  return { type: "SET_USER", payload: user };
+}
