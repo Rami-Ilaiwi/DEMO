@@ -6,15 +6,26 @@ import { changeSettings, onLogout } from "../actionCreators/settingsAction";
 
 const userData = utl.getUserDetails();
 
+const initialState = {
+  id: 0,
+  email: "",
+  createdAt: "",
+  updatedAt: "",
+  username: "",
+  bio: "",
+  image: "",
+  token: ""
+};
+
 const storeState = {
-  id: userData.id || 0,
-  email: userData.email || "",
-  createdAt: userData.createdAt || "",
-  updatedAt: userData.updatedAt || "",
-  username: userData.username || "",
-  bio: userData.bio || "",
-  image: userData.image || "",
-  token: userData.token || ""
+  id: userData.id || initialState.id,
+  email: userData.email || initialState.email,
+  createdAt: userData.createdAt || initialState.createdAt,
+  updatedAt: userData.updatedAt || initialState.updatedAt,
+  username: userData.username || initialState.username,
+  bio: userData.bio || initialState.bio,
+  image: userData.image || initialState.image,
+  token: userData.token || initialState.token
 };
 
 const userReducer = createReducer<User>({}, storeState);
@@ -25,10 +36,9 @@ userReducer
       ...payload
     };
   })
-  .on(onLogout, (state, payload) => {
+  .on(onLogout, () => {
     return {
-      ...state,
-      ...payload
+      ...initialState
     };
   })
   .on(changeSettings, (state, payload) => {

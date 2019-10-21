@@ -22,7 +22,7 @@ import { IState } from "../store/reducers";
 
 interface ISettings {
   changeSettings: (user: User) => void;
-  onLogout: (user: User) => void;
+  onLogout: () => void;
   user: User;
   isLoggedIn: boolean;
 }
@@ -93,17 +93,7 @@ const Settings: React.FC<
 
   const handleLogout = () => {
     localStorage.clear();
-    const logout: User = {
-      id: 0,
-      email: "",
-      createdAt: "",
-      updatedAt: "",
-      username: "",
-      bio: "",
-      image: "",
-      token: ""
-    };
-    onLogout(logout);
+    onLogout();
   };
 
   return (
@@ -190,7 +180,7 @@ const mapStateToProps = (state: IState) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   changeSettings: (user: User) => dispatch(changeSettings(user)),
-  onLogout: (user: User) => dispatch(onLogout(user))
+  onLogout: () => dispatch(onLogout())
 });
 
 const RoutedSettings = withRouter(Settings);
