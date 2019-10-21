@@ -35,24 +35,28 @@ storiesOf("Article", module)
     </Router>
   ))
   .add("Article Author", () => (
-    <ArticleAuthor
-      username={"Name"}
-      image={"https://avatarfiles.alphacoders.com/165/thumb-165504.png"}
-      createdAt={"2019-09-11T11:55:18.705Z"}
-    />
+    <Router>
+      <ArticleAuthor
+        username={"Name"}
+        image={"https://avatarfiles.alphacoders.com/165/thumb-165504.png"}
+        createdAt={"2019-09-11T11:55:18.705Z"}
+      />
+    </Router>
   ))
   .add("Article Meta", () => (
-    <ArticleMeta
-      image={"https://avatarfiles.alphacoders.com/165/thumb-165504.png"}
-      username={"Name"}
-      createdAt={"2019-09-11T11:55:18.705Z"}
-      following={true}
-      profileName={"Name"}
-      favorited={false}
-      favoritesCount={5}
-      handleFollow={action("button-click")}
-      handleFavorite={action("button-click")}
-    />
+    <Router>
+      <ArticleMeta
+        image={"https://avatarfiles.alphacoders.com/165/thumb-165504.png"}
+        username={"Name"}
+        createdAt={"2019-09-11T11:55:18.705Z"}
+        following={true}
+        profileName={"Name"}
+        favorited={false}
+        favoritesCount={5}
+        handleFollow={action("button-click")}
+        handleFavorite={action("button-click")}
+      />
+    </Router>
   ))
   .add("Article Tags List", () => (
     <ArticleTagsList

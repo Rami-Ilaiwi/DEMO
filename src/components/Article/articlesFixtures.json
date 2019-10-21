@@ -1,39 +1,36 @@
-{
-  "articles": [
-    {
-      "slug": "how-to-train-your-dragon",
-      "title": "How to train your dragon",
-      "description": "Ever wonder how?",
-      "body": "It takes a Jacobian",
-      "tagList": ["dragons", "training"],
-      "createdAt": "2016-02-18T03:22:56.637Z",
-      "updatedAt": "2016-02-18T03:48:35.824Z",
-      "favorited": false,
-      "favoritesCount": 0,
-      "author": {
-        "username": "jake",
-        "bio": "I work at statefarm",
-        "image": "https://i.stack.imgur.com/xHWG8.jpg",
-        "following": false
-      }
-    },
-    {
-      "slug": "how-to-train-your-dragon-2",
-      "title": "How to train your dragon 2",
-      "description": "So toothless",
-      "body": "It a dragon",
-      "tagList": ["dragons", "training"],
-      "createdAt": "2016-02-18T03:22:56.637Z",
-      "updatedAt": "2016-02-18T03:48:35.824Z",
-      "favorited": false,
-      "favoritesCount": 0,
-      "author": {
-        "username": "jake",
-        "bio": "I work at statefarm",
-        "image": "https://i.stack.imgur.com/xHWG8.jpg",
-        "following": false
-      }
+[
+  {
+    "slug": "slug",
+    "title": "Title",
+    "description": "Description",
+    "body": "Body",
+    "tagList": ["tag1", "tag2"],
+    "createdAt": "2016-02-18T03:22:56.637Z",
+    "updatedAt": "2016-02-18T03:48:35.824Z",
+    "favorited": false,
+    "favoritesCount": 0,
+    "author": {
+      "username": "razz",
+      "bio": "razzx",
+      "image": "https://avatarfiles.alphacoders.com/165/thumb-165504.png",
+      "following": false
     }
-  ],
-  "articlesCount": 2
-}
+  },
+  {
+    "slug": "how-to-train-your-dragon-2",
+    "title": "How to train your dragon 2",
+    "description": "So toothless",
+    "body": "It a dragon",
+    "tagList": ["dragons", "training"],
+    "createdAt": "2016-02-18T03:22:56.637Z",
+    "updatedAt": "2016-02-18T03:48:35.824Z",
+    "favorited": false,
+    "favoritesCount": 0,
+    "author": {
+      "username": "jake",
+      "bio": "I work at statefarm",
+      "image": "https://i.stack.imgur.com/xHWG8.jpg",
+      "following": false
+    }
+  }
+]
