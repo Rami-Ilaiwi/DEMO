@@ -1,8 +1,6 @@
 import { User } from "../../dtos/ArticleResponseDto";
+import { createAction } from "redux-act";
 
 export const SET_USER = "SET_USER";
 
-export function onLogin(user: User) {
-  //   console.log(user);
-  return { type: SET_USER, payload: user };
-}
+export const onLogin = createAction<User>("User login");

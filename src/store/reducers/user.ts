@@ -1,7 +1,8 @@
 import utl from "../../utils/utils";
 import { User } from "../../dtos/ArticleResponseDto";
-import { SET_USER } from "../actionCreators/loginAction";
-// import { createReducer, createAction } from "redux-act";
+import { onLogin } from "../actionCreators/loginAction";
+import { createReducer } from "redux-act";
+import { changeSettings, onLogout } from "../actionCreators/settingsAction";
 
 const userData = utl.getUserDetails();
 
@@ -16,27 +17,25 @@ const storeState = {
   token: userData.token || ""
 };
 
-export default function userReducer(
-  state = storeState,
-  action: { type: string; payload: User }
-): User {
-  if (action.type === SET_USER) {
-    return { ...state, ...action.payload };
-  } else {
-    return state;
-  }
-}
+const userReducer = createReducer<User>({}, storeState);
+userReducer
+  .on(onLogin, (state, payload) => {
+    return {
+      ...state,
+      ...payload
+    };
+  })
+  .on(onLogout, (state, payload) => {
+    return {
+      ...state,
+      ...payload
+    };
+  })
+  .on(changeSettings, (state, payload) => {
+    return {
+      ...state,
+      ...payload
+    };
+  });
 
-// interface s {
-//   type: string;
-//   payload: User;
-// }
-
-// const add = createAction<s>("Increase count");
-// const reducer = createReducer<User>({}, storeState);
-// reducer.on(add, (state, payload) => ({
-//   ...state
-// }));
-// reducers
-//   .on(setUser, (state, payload) => ({...state, ...payload}))
-//   .on(logout, (state, payload) => ({}));
+export default userReducer;
