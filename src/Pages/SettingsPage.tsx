@@ -14,11 +14,15 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { selectUserInfo, selectIsLoggedIn } from "../store/selectors/user";
 import { User } from "../dtos/ArticleResponseDto";
-import { changeSettings } from "../store/actionCreators/settingsAction";
+import {
+  changeSettings,
+  onLogout
+} from "../store/actionCreators/settingsAction";
 import { IState } from "../store/reducers";
 
 interface ISettings {
   changeSettings: (user: User) => void;
+  onLogout: (user: User) => void;
   user: User;
   isLoggedIn: boolean;
 }
@@ -29,7 +33,7 @@ interface SaveSettingsResponse {
 
 const Settings: React.FC<
   RouteComponentProps & ISettings & WithStyles<typeof styles>
-> = ({ changeSettings, user, isLoggedIn, history, classes }) => {
+> = ({ changeSettings, user, isLoggedIn, history, classes, onLogout }) => {
   if (!isLoggedIn) {
     return <Redirect to="/" />;
   }
@@ -89,7 +93,17 @@ const Settings: React.FC<
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.href = "/";
+    const logout: User = {
+      id: 0,
+      email: "",
+      createdAt: "",
+      updatedAt: "",
+      username: "",
+      bio: "",
+      image: "",
+      token: ""
+    };
+    onLogout(logout);
   };
 
   return (
@@ -175,7 +189,8 @@ const mapStateToProps = (state: IState) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  changeSettings: (user: User) => dispatch(changeSettings(user))
+  changeSettings: (user: User) => dispatch(changeSettings(user)),
+  onLogout: (user: User) => dispatch(onLogout(user))
 });
 
 const RoutedSettings = withRouter(Settings);
