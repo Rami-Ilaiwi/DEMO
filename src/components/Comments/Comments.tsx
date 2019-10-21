@@ -45,6 +45,7 @@ const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
                 <img
                   src={item.author.image}
                   className={props.classes.commentAuthorImage}
+                  alt={item.author.username}
                 />
               </Link>
               <span>

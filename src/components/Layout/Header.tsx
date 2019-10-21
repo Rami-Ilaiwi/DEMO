@@ -76,6 +76,7 @@ const Header: React.FC<IHeaderProps> = props => {
                     <img
                       src={props.user.image}
                       className={props.classes.userPicture}
+                      alt={props.user.username}
                     />
                     {props.user.username}
                   </Typography>

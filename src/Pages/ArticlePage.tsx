@@ -92,7 +92,7 @@ const ArticlePage: React.FC<
           })
         );
     }
-  }, []);
+  }, [isLoggedIn, slug]);
 
   useEffect(() => {
     setIsLoadingComments(true);
@@ -100,7 +100,7 @@ const ArticlePage: React.FC<
       setComments(res.data.comments);
       setIsLoadingComments(false);
     });
-  }, []);
+  }, [slug]);
 
   /* ***** handlers ***** */
 
