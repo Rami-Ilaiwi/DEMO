@@ -1,11 +1,5 @@
 import { User } from "../../dtos/ArticleResponseDto";
+import { createAction } from "redux-act";
 
-export function changeSettings(user: User) {
-  //   console.log(user);
-  return { type: "SET_USER", payload: user };
-}
-
-export function onLogout(user: User) {
-  //   console.log(user);
-  return { type: "SET_USER", payload: user };
-}
+export const changeSettings = createAction<User>("Change settings");
+export const onLogout = createAction<User>("User logout");
