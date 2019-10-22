@@ -39,12 +39,17 @@ const DELETE = (params: params) => {
 };
 
 const get = (endpoint: string) =>
-  axios.get(`${BASE_URL}/${endpoint}`, {
-    headers: {
-      Authorization: "Token " + utl.getToken(),
-      "Content-Type": "application/json"
-    }
-  });
+  axios.get(
+    `${BASE_URL}/${endpoint}`,
+    utl.getToken()
+      ? {
+          headers: {
+            Authorization: "Token " + utl.getToken(),
+            "Content-Type": "application/json"
+          }
+        }
+      : undefined
+  );
 
 const put = <T extends any>(params: params) =>
   axios

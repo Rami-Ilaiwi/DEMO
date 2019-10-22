@@ -99,54 +99,60 @@ const Profile: React.FC<
 
   return (
     <>
-      <ProfileBanner
-        loggedinUser={props.user.username}
-        bio={profile.bio}
-        following={profile.following}
-        image={profile.image}
-        username={profile.username}
-        onFollow={onFollowClick}
-      />
-      <ProfileTabs
-        selectedFeedTab={selectedFeedTab}
-        onChangeSelectedFeedTab={handleChangeSelectedFeedTab}
-      />
+      {!profile.username ? (
+        <LoadingComponent />
+      ) : (
+        <>
+          <ProfileBanner
+            loggedinUser={props.user.username}
+            bio={profile.bio}
+            following={profile.following}
+            image={profile.image}
+            username={profile.username}
+            onFollow={onFollowClick}
+          />
+          <ProfileTabs
+            selectedFeedTab={selectedFeedTab}
+            onChangeSelectedFeedTab={handleChangeSelectedFeedTab}
+          />
 
-      <FeedApiWrapper
-        selectedFeedTab={selectedFeedTab}
-        author={profile.username}
-        page={page}
-        onRedirect={handleRedirect}
-        isLoggedIn={props.isLoggedIn}
-      >
-        {({ articles, handleFavoriteToggle, isLoadingArticles }) =>
-          isLoadingArticles ? (
-            <LoadingComponent />
-          ) : (
-            <>
-              {articles.length === 0 ? (
-                <Typography className={props.classes.content}>
-                  No articles are here... yet.
-                </Typography>
+          <FeedApiWrapper
+            selectedFeedTab={selectedFeedTab}
+            author={profile.username}
+            page={page}
+            onRedirect={handleRedirect}
+            isLoggedIn={props.isLoggedIn}
+          >
+            {({ articles, handleFavoriteToggle, isLoadingArticles }) =>
+              isLoadingArticles ? (
+                <LoadingComponent />
               ) : (
-                <Articles
-                  articles={articles}
-                  handleFavoriteToggle={handleFavoriteToggle}
-                />
-              )}
-              {articlesCount > 10 ? (
-                <div className={props.classes.pages}>
-                  <Pagination
-                    onChangePage={handleChangePage}
-                    articlesCount={articlesCount}
-                    page={page}
-                  />
-                </div>
-              ) : null}
-            </>
-          )
-        }
-      </FeedApiWrapper>
+                <>
+                  {articles.length === 0 ? (
+                    <Typography className={props.classes.content}>
+                      No articles are here... yet.
+                    </Typography>
+                  ) : (
+                    <Articles
+                      articles={articles}
+                      handleFavoriteToggle={handleFavoriteToggle}
+                    />
+                  )}
+                  {articlesCount > 10 ? (
+                    <div className={props.classes.pages}>
+                      <Pagination
+                        onChangePage={handleChangePage}
+                        articlesCount={articlesCount}
+                        page={page}
+                      />
+                    </div>
+                  ) : null}
+                </>
+              )
+            }
+          </FeedApiWrapper>
+        </>
+      )}
     </>
   );
 };

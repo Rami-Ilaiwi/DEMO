@@ -70,10 +70,7 @@ const RegisterPage: React.FC<IRegisterProps & WithStyles<typeof styles>> = ({
       .then(res => {
         localStorage.setItem("userData", JSON.stringify(res.data));
         localStorage.setItem("userToken", res.data.user.token);
-        // window.location.href = "/";
         onLogin(res.data.user);
-
-        // setIsLoggedIn(true);
       })
       .catch(err => {
         Object.entries(err.response.data.errors).forEach(([field, errors]) => {
@@ -137,7 +134,6 @@ const RegisterPage: React.FC<IRegisterProps & WithStyles<typeof styles>> = ({
   );
 };
 const mapStateToProps = (state: any) => {
-  // console.log(state);
   return {
     isLoggedIn: selectIsLoggedIn(state)
   };
