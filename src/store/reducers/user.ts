@@ -1,8 +1,8 @@
 import utl from "../../utils/utils";
 import { createReducer } from "redux-act";
 import { User } from "../../dtos/ArticleResponseDto";
-import { onLogin } from "../actionCreators/loginAction";
-import { changeSettings, onLogout } from "../actionCreators/settingsAction";
+import { loginUser } from "../actionCreators/loginAction";
+import { changeSettings, logoutUser } from "../actionCreators/settingsAction";
 
 const userData = utl.getUserDetails();
 
@@ -30,13 +30,8 @@ const storeState = {
 
 const userReducer = createReducer<User>({}, storeState);
 userReducer
-  .on(onLogin, (state, payload) => {
-    return {
-      ...state,
-      ...payload
-    };
-  })
-  .on(onLogout, () => {
+  .on(loginUser, (state, payload) => payload)
+  .on(logoutUser, () => {
     return {
       ...initialState
     };

@@ -10,7 +10,12 @@ export interface TagsProps {
   onDeleteTag: (tag: string) => void;
 }
 
-const TagsInput: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
+const TagsInput: React.FC<TagsProps & WithStyles<typeof styles>> = ({
+  tagsList,
+  onAddTag,
+  onDeleteTag,
+  classes
+}) => {
   const [articleTag, setArticleTag] = useState("");
 
   const handleChangeTag = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,15 +24,15 @@ const TagsInput: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
 
   const handleEnterInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      if (!articleTag || props.tagsList.includes(articleTag)) return;
+      if (!articleTag || tagsList.includes(articleTag)) return;
       else {
-        props.onAddTag(articleTag);
+        onAddTag(articleTag);
         setArticleTag("");
       }
     }
   };
   const handleDelete = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    props.onDeleteTag(event.currentTarget.id);
+    onDeleteTag(event.currentTarget.id);
   };
 
   return (
@@ -40,9 +45,9 @@ const TagsInput: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
         margin="normal"
         variant="outlined"
         onKeyPress={handleEnterInput}
-        className={props.classes.input}
+        className={classes.input}
       />
-      <ArticleTagsList tagsList={props.tagsList} handleDelete={handleDelete} />
+      <ArticleTagsList tagsList={tagsList} handleDelete={handleDelete} />
     </>
   );
 };

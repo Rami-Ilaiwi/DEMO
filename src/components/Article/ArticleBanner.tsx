@@ -23,33 +23,47 @@ interface SlugProps {
   onEdit: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
-const ArticleBanner: React.FC<
-  SlugProps & WithStyles<typeof styles>
-> = props => {
+const ArticleBanner: React.FC<SlugProps & WithStyles<typeof styles>> = ({
+  title,
+  image,
+  username,
+  createdAt,
+  following,
+  profileName,
+  favorited,
+  favoritesCount,
+  loggedinUser,
+  slug,
+  onFollow,
+  onFavorite,
+  onDelete,
+  onEdit,
+  classes
+}) => {
   return (
     <Grid container direction="column" justify="center">
       <br />
-      <Grid item className={props.classes.root}>
+      <Grid item className={classes.root}>
         <Grid item>
-          <Typography className={props.classes.title} variant="h4">
-            {props.title}
+          <Typography className={classes.title} variant="h4">
+            {title}
           </Typography>
         </Grid>
         <Grid item>
           <ArticleMeta
-            image={props.image}
-            username={props.username}
-            createdAt={props.createdAt}
-            following={props.following}
-            profileName={props.username}
-            favorited={props.favorited}
-            favoritesCount={props.favoritesCount}
-            loggedinUser={props.loggedinUser}
-            slug={props.slug}
-            onFollow={props.onFollow}
-            onFavorite={props.onFavorite}
-            onDelete={props.onDelete}
-            onEdit={props.onEdit}
+            image={image}
+            username={username}
+            createdAt={createdAt}
+            following={following}
+            profileName={username}
+            favorited={favorited}
+            favoritesCount={favoritesCount}
+            loggedinUser={loggedinUser}
+            slug={slug}
+            onFollow={onFollow}
+            onFavorite={onFavorite}
+            onDelete={onDelete}
+            onEdit={onEdit}
           />
         </Grid>
       </Grid>

@@ -13,18 +13,25 @@ interface FeedTabsProps {
   onChangeSelectedFeedTab: (tab: FeedType) => void;
 }
 
-const FeedTabs: React.FC<FeedTabsProps & WithStyles<typeof styles>> = props => {
+const FeedTabs: React.FC<FeedTabsProps & WithStyles<typeof styles>> = ({
+  isLoggedIn,
+  tag,
+  isTagToggeld,
+  selectedFeedTab,
+  onChangeSelectedFeedTab,
+  classes
+}) => {
   const handleChangeSelectedFeedTab = (
     event: React.ChangeEvent<{}>,
     tab: FeedType
   ) => {
-    props.onChangeSelectedFeedTab(tab);
+    onChangeSelectedFeedTab(tab);
   };
 
   return (
-    <div className={props.classes.root}>
+    <div className={classes.root}>
       <Tabs
-        value={props.selectedFeedTab}
+        value={selectedFeedTab}
         onChange={handleChangeSelectedFeedTab}
         TabIndicatorProps={{
           style: {
@@ -32,7 +39,7 @@ const FeedTabs: React.FC<FeedTabsProps & WithStyles<typeof styles>> = props => {
           }
         }}
       >
-        {props.isLoggedIn ? (
+        {isLoggedIn ? (
           <Tab
             component="button"
             value="yourFeed"
@@ -46,12 +53,12 @@ const FeedTabs: React.FC<FeedTabsProps & WithStyles<typeof styles>> = props => {
           id="globalFeed"
           label="Global Feed"
         />
-        {props.isTagToggeld ? (
+        {isTagToggeld ? (
           <Tab
             component="button"
             value="tagFeed"
             id="tagFeed"
-            label={`#${props.tag}`}
+            label={`#${tag}`}
           />
         ) : null}
       </Tabs>

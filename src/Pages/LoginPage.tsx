@@ -10,7 +10,7 @@ import * as yup from "yup";
 import { Formik, Form, FormikActions } from "formik";
 import FormikTextField from "../components/FormikInputs/FormikTextField";
 import { connect } from "react-redux";
-import { onLogin } from "../store/actionCreators/loginAction";
+import { loginUser } from "../store/actionCreators/loginAction";
 import { selectIsLoggedIn } from "../store/selectors/user";
 import { User } from "../dtos/ArticleResponseDto";
 
@@ -37,11 +37,12 @@ interface LoginResponse {
 
 const LoginPage: React.FC<ILoginProps & WithStyles<typeof styles>> = ({
   onLogin,
-  ...props
+  isLoggedIn,
+  classes
 }) => {
   const [loginError, setLoginError] = useState("");
 
-  if (props.isLoggedIn) {
+  if (isLoggedIn) {
     return <Redirect to="/" />;
   }
 
@@ -75,15 +76,13 @@ const LoginPage: React.FC<ILoginProps & WithStyles<typeof styles>> = ({
           <Typography gutterBottom variant="h4">
             Sign in
           </Typography>
-          <Link className={props.classes.link} to="/register">
+          <Link className={classes.link} to="/register">
             Need an account?
           </Link>
         </Grid>
         {loginError.length > 0 ? (
           <Grid item>
-            <Typography className={props.classes.error}>
-              {loginError}
-            </Typography>
+            <Typography className={classes.error}>{loginError}</Typography>
           </Grid>
         ) : null}
         <Grid item container direction="column" alignItems="center">
@@ -103,9 +102,9 @@ const LoginPage: React.FC<ILoginProps & WithStyles<typeof styles>> = ({
                   margin="normal"
                   type="password"
                 />
-                <Grid item className={props.classes.button}>
+                <Grid item className={classes.button}>
                   <Button
-                    className={props.classes.submit}
+                    className={classes.submit}
                     type="submit"
                     variant="outlined"
                   >
@@ -128,7 +127,7 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  onLogin: (user: User) => dispatch(onLogin(user))
+  onLogin: (user: User) => dispatch(loginUser(user))
 });
 
 const StyledLogin = withStyles(styles)(LoginPage);

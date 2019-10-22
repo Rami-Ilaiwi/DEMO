@@ -23,50 +23,60 @@ interface ArticleCardProps {
   onFavorite: (article: { favorited: boolean; slug: string }) => void;
 }
 
-const ArticleCard: React.FC<
-  ArticleCardProps & WithStyles<typeof styles>
-> = props => {
+const ArticleCard: React.FC<ArticleCardProps & WithStyles<typeof styles>> = ({
+  image,
+  username,
+  createdAt,
+  favoritesCount,
+  title,
+  description,
+  tagList,
+  slug,
+  favorited,
+  onFavorite,
+  classes
+}) => {
   const handleFavorite = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    props.onFavorite({
+    onFavorite({
       slug: event.currentTarget.id,
-      favorited: props.favorited
+      favorited: favorited
     });
   };
 
   return (
     <>
-      <Card className={props.classes.card}>
+      <Card className={classes.card}>
         <ArticleAuthor
-          image={props.image}
-          createdAt={props.createdAt}
-          username={props.username}
+          image={image}
+          createdAt={createdAt}
+          username={username}
         />
 
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.title}
+            {title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {props.description}
+            {description}
           </Typography>
 
-          <TagList tagList={props.tagList} />
+          <TagList tagList={tagList} />
         </CardContent>
-        <CardActions className={props.classes.button}>
+        <CardActions className={classes.button}>
           <FavoriteButton
-            favorited={props.favorited}
-            favoritesCount={props.favoritesCount}
-            slug={props.slug}
+            favorited={favorited}
+            favoritesCount={favoritesCount}
+            slug={slug}
             onFavorite={handleFavorite}
           />
         </CardActions>
         <CardActions>
           <Link
             color="primary"
-            className={props.classes.articleBody}
-            to={`/article/${props.slug}`}
+            className={classes.articleBody}
+            to={`/article/${slug}`}
           >
             Read more...
           </Link>

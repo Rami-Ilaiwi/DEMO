@@ -16,19 +16,19 @@ interface DeleteCommentProps {
 
 const DeleteComment: React.FC<
   DeleteCommentProps & WithStyles<typeof styles>
-> = props => {
+> = ({ user, author, commentID, handleDeleteComment, classes }) => {
   return (
     <Grid item>
-      {props.user === props.author ? (
+      {user === author ? (
         <CardActions>
           <span
-            className={props.classes.deleteIcon}
-            onClick={props.handleDeleteComment}
-            id={`${props.commentID}`}
+            className={classes.deleteIcon}
+            onClick={handleDeleteComment}
+            id={`${commentID}`}
           >
             <DeleteForeverRoundedIcon
-              className={props.classes.deleteIcon}
-              id={`${props.commentID}`}
+              className={classes.deleteIcon}
+              id={`${commentID}`}
             />
           </span>
         </CardActions>

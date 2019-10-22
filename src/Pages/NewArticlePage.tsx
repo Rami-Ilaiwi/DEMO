@@ -26,14 +26,14 @@ const NewArticleSchema = yup.object().shape({
 
 const NewArticle: React.FC<
   WithStyles<typeof styles> & RouteComponentProps<{ slug?: string }>
-> = props => {
+> = ({ match, history, classes }) => {
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
 
   const [articleTitle, setArticleTitle] = useState("");
   const [articleDescription, setArticleDescription] = useState("");
   const [articleBody, setArticleBody] = useState("");
   const [tagsList, setTagsList] = useState<string[]>([]);
-  const slug = props.match.params.slug;
+  const slug = match.params.slug;
 
   useEffect(() => {
     if (!!slug) {
@@ -78,7 +78,7 @@ const NewArticle: React.FC<
             tagList: tagsList
           }
         }
-      }).then(data => props.history.push(`/article/${data.article.slug}`));
+      }).then(data => history.push(`/article/${data.article.slug}`));
     } else {
       AXIOS.post({
         endpoint: "articles",
@@ -90,7 +90,7 @@ const NewArticle: React.FC<
             tagList: tagsList
           }
         }
-      }).then(data => props.history.push(`/article/${data.article.slug}`));
+      }).then(data => history.push(`/article/${data.article.slug}`));
     }
   };
 
@@ -146,9 +146,9 @@ const NewArticle: React.FC<
                       onDeleteTag={handleDeleteTag}
                     />
                   </Grid>
-                  <Grid item className={props.classes.button}>
+                  <Grid item className={classes.button}>
                     <Button
-                      className={props.classes.submit}
+                      className={classes.submit}
                       type="submit"
                       variant="outlined"
                     >

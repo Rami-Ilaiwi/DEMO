@@ -12,27 +12,32 @@ interface TagsProps {
   onClickTag: (tag: string) => void;
 }
 
-const Tags: React.FC<TagsProps & WithStyles<typeof styles>> = props => {
+const Tags: React.FC<TagsProps & WithStyles<typeof styles>> = ({
+  tags,
+  isLoadingTags,
+  onClickTag,
+  classes
+}) => {
   const handleTagClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    props.onClickTag(event.currentTarget.id);
+    onClickTag(event.currentTarget.id);
   };
 
   return (
-    <Paper className={props.classes.root}>
+    <Paper className={classes.root}>
       <Typography variant="h6">Popular Tags</Typography>
-      {props.isLoadingTags ? (
+      {isLoadingTags ? (
         <LoadingComponent />
       ) : (
-        props.tags.map(tag => (
+        tags.map(tag => (
           <Button
             onClick={handleTagClick}
             id={tag}
             key={tag}
             size="small"
             variant="contained"
-            className={props.classes.button}
+            className={classes.button}
           >
             {tag}
           </Button>

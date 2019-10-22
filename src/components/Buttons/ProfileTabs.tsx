@@ -11,11 +11,13 @@ interface ProfileTabsProps {
   onChangeSelectedFeedTab: (tab: FeedType) => void;
 }
 
-const ProfileTabs: React.FC<
-  ProfileTabsProps & WithStyles<typeof styles>
-> = props => {
+const ProfileTabs: React.FC<ProfileTabsProps & WithStyles<typeof styles>> = ({
+  selectedFeedTab,
+  onChangeSelectedFeedTab,
+  classes
+}) => {
   const handleChange = (event: React.ChangeEvent<{}>, tab: FeedType) => {
-    props.onChangeSelectedFeedTab(tab);
+    onChangeSelectedFeedTab(tab);
   };
 
   return (
@@ -24,20 +26,20 @@ const ProfileTabs: React.FC<
       direction="column"
       justify="center"
       alignItems="center"
-      className={props.classes.root}
+      className={classes.root}
     >
       <Grid
         item
         container
         direction="column"
         justify="center"
-        className={props.classes.tabs}
+        className={classes.tabs}
       >
         <Tabs
-          value={props.selectedFeedTab}
+          value={selectedFeedTab}
           onChange={handleChange}
           TabIndicatorProps={{
-            className: props.classes.indicator
+            className: classes.indicator
           }}
         >
           <Tab

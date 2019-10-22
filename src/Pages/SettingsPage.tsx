@@ -16,11 +16,11 @@ import { selectUserInfo, selectIsLoggedIn } from "../store/selectors/user";
 import { User } from "../dtos/ArticleResponseDto";
 import {
   changeSettings,
-  onLogout
+  logoutUser
 } from "../store/actionCreators/settingsAction";
 import { IState } from "../store/reducers";
 
-interface ISettings {
+interface SettingsProps {
   changeSettings: (user: User) => void;
   onLogout: () => void;
   user: User;
@@ -32,7 +32,7 @@ interface SaveSettingsResponse {
 }
 
 const Settings: React.FC<
-  RouteComponentProps & ISettings & WithStyles<typeof styles>
+  RouteComponentProps & SettingsProps & WithStyles<typeof styles>
 > = ({ changeSettings, user, isLoggedIn, history, classes, onLogout }) => {
   if (!isLoggedIn) {
     return <Redirect to="/" />;
@@ -180,7 +180,7 @@ const mapStateToProps = (state: IState) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   changeSettings: (user: User) => dispatch(changeSettings(user)),
-  onLogout: () => dispatch(onLogout())
+  onLogout: () => dispatch(logoutUser())
 });
 
 const RoutedSettings = withRouter(Settings);

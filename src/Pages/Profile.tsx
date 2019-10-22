@@ -16,14 +16,16 @@ import { User } from "../dtos/ArticleResponseDto";
 import { selectUserInfo, selectIsLoggedIn } from "../store/selectors/user";
 import { IState } from "../store/reducers";
 
-interface IProfile extends WithStyles<typeof styles> {
+interface ProfileProps {
   user: User;
   isLoggedIn: boolean;
 }
 
 const Profile: React.FC<
-  IProfile & RouteComponentProps<{ user: string }>
-> = props => {
+  ProfileProps &
+    RouteComponentProps<{ user: string }> &
+    WithStyles<typeof styles>
+> = ({ user, isLoggedIn, match, history, classes }) => {
   const [selectedFeedTab, setSelectedFeedTab] = useState<FeedType>(
     "myArticlesFeed"
   );
@@ -54,17 +56,17 @@ const Profile: React.FC<
 
   // This for fetching the articles
   useEffect(() => {
-    AXIOS.get(`profiles/${props.match.params.user}`).then(res => {
+    AXIOS.get(`profiles/${match.params.user}`).then(res => {
       const profile = res.data.profile;
       setProfile(profile);
     });
-  }, [props.match.params.user]);
+  }, [match.params.user]);
 
   const onFollowClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    if (!props.isLoggedIn) {
-      return props.history.push("/login");
+    if (!isLoggedIn) {
+      return history.push("/login");
     }
 
     if (profile.following) {
@@ -82,7 +84,7 @@ const Profile: React.FC<
     setPage(page);
   };
 
-  const handleRedirect = (path: string) => props.history.push(path);
+  const handleRedirect = (path: string) => history.push(path);
 
   const handleChangeSelectedFeedTab = (tab: FeedType) => {
     setSelectedFeedTab(tab);
@@ -96,7 +98,7 @@ const Profile: React.FC<
       ) : (
         <>
           <ProfileBanner
-            loggedinUser={props.user.username}
+            loggedinUser={user.username}
             bio={profile.bio}
             following={profile.following}
             image={profile.image}
@@ -113,7 +115,7 @@ const Profile: React.FC<
             author={profile.username}
             page={page}
             onRedirect={handleRedirect}
-            isLoggedIn={props.isLoggedIn}
+            isLoggedIn={isLoggedIn}
           >
             {({ articles, handleFavoriteToggle, isLoadingArticles }) =>
               isLoadingArticles ? (
@@ -121,7 +123,7 @@ const Profile: React.FC<
               ) : (
                 <>
                   {articles.length === 0 ? (
-                    <Typography className={props.classes.content}>
+                    <Typography className={classes.content}>
                       No articles are here... yet.
                     </Typography>
                   ) : (
@@ -131,7 +133,7 @@ const Profile: React.FC<
                     />
                   )}
                   {articlesCount > 10 ? (
-                    <div className={props.classes.pages}>
+                    <div className={classes.pages}>
                       <Pagination
                         onChangePage={handleChangePage}
                         articlesCount={articlesCount}

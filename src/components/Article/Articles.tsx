@@ -8,14 +8,17 @@ interface ArticlesProps {
   handleFavoriteToggle: (article: { favorited: boolean; slug: string }) => void;
 }
 
-const Articles: React.FC<ArticlesProps> = props => {
+const Articles: React.FC<ArticlesProps> = ({
+  articles,
+  handleFavoriteToggle
+}) => {
   const onFavoriteClick = (article: { favorited: boolean; slug: string }) => {
-    props.handleFavoriteToggle(article);
+    handleFavoriteToggle(article);
   };
 
   return (
     <>
-      {props.articles.map((article, index: number) => (
+      {articles.map((article, index: number) => (
         <Grid container justify="center" key={index}>
           <Grid item xs={7}>
             <ArticleCard

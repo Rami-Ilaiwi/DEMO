@@ -62,12 +62,9 @@ const FeedApiWrapper: React.FC<FeedApiWrapperProps> = ({
         );
       });
     } else {
-      // setIsLoadingPosts(true);//{type:"setLoadPosts".payload:true}
       AXIOS.post({
         endpoint: `articles/${article.slug}/favorite`
       }).then(() => {
-        // setIsLoadingArticles(false);//{type:"setLoadPosts".payload:false}
-        // onLoadPostsSuccess(posts);//{type:"onLoadPostsSuccess".payload:posts}
         setArticles(
           articles.map(a => {
             return a.slug === article.slug

@@ -6,12 +6,15 @@ interface TagListProps {
   tagList: Array<string>;
 }
 
-const TagList: React.FC<TagListProps & WithStyles<typeof styles>> = props => {
+const TagList: React.FC<TagListProps & WithStyles<typeof styles>> = ({
+  tagList,
+  classes
+}) => {
   return (
     <ul>
-      {props.tagList.map((item: string) => {
+      {tagList.map((item: string) => {
         return (
-          <li key={item} className={props.classes.tagList}>
+          <li key={item} className={classes.tagList}>
             {item}
           </li>
         );

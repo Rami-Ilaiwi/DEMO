@@ -8,15 +8,13 @@ interface DeleteButtonProps {
   onDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const DeleteButton: React.FC<
-  DeleteButtonProps & WithStyles<typeof styles>
-> = props => {
+const DeleteButton: React.FC<DeleteButtonProps & WithStyles<typeof styles>> = ({
+  onDelete,
+  classes
+}) => {
   return (
-    <Button
-      onClick={props.onDelete}
-      className={`${props.classes.root} ${props.classes.delete}`}
-    >
-      <DeleteForeverRoundedIcon className={props.classes.icon} />
+    <Button onClick={onDelete} className={`${classes.root} ${classes.delete}`}>
+      <DeleteForeverRoundedIcon className={classes.icon} />
       <span> Delete Article</span>
     </Button>
   );

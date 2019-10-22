@@ -14,7 +14,7 @@ import { styles } from "./styles/ArticlePageStyle";
 
 const ArticlePage: React.FC<
   RouteComponentProps<{ slug: string }> & WithStyles<typeof styles>
-> = props => {
+> = ({ match, history, classes }) => {
   const isLoggedIn = localStorage.getItem("userToken") ? true : false;
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [isLoadingArticleData, setIsLoadingArticleData] = useState(false);
@@ -59,7 +59,7 @@ const ArticlePage: React.FC<
   ]);
   const [comment, setComment] = useState("");
 
-  const slug = props.match.params.slug;
+  const slug = match.params.slug;
 
   useEffect(() => {
     setIsLoadingArticleData(true);
@@ -69,13 +69,14 @@ const ArticlePage: React.FC<
         setArticle(article);
         return article;
       })
-      .then(article =>
-        AXIOS.get(`profiles/${article.author.username}`).then(res => {
-          const profile = res.data.profile;
-          setProfile(profile);
-          setIsLoadingArticleData(false);
-        })
-      );
+      .then(article => {
+        return AXIOS.get(`profiles/${article.author.username}`);
+      })
+      .then(res => {
+        const profile = res.data.profile;
+        setProfile(profile);
+        setIsLoadingArticleData(false);
+      });
   }, [slug]);
 
   useEffect(() => {
@@ -92,7 +93,7 @@ const ArticlePage: React.FC<
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (!isLoggedIn) {
-      return props.history.push("/login");
+      return history.push("/login");
     }
 
     if (article.favorited) {
@@ -110,7 +111,7 @@ const ArticlePage: React.FC<
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (!isLoggedIn) {
-      return props.history.push("/login");
+      return history.push("/login");
     }
 
     if (profile.following) {
@@ -128,7 +129,7 @@ const ArticlePage: React.FC<
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     AXIOS.DELETE({ endpoint: `articles/${slug}` }).then(() =>
-      props.history.push("/")
+      history.push("/")
     );
   };
 
@@ -198,14 +199,14 @@ const ArticlePage: React.FC<
             onEdit={onEditClick}
           />
 
-          <Grid item className={props.classes.body}>
+          <Grid item className={classes.body}>
             <Grid item>{article.body}</Grid>
             <Grid item>
               <TagList tagList={article.tagList} />
             </Grid>
           </Grid>
 
-          <Grid item className={props.classes.author}>
+          <Grid item className={classes.author}>
             <ArticleMeta
               image={article.author.image}
               username={article.author.username}
@@ -228,7 +229,7 @@ const ArticlePage: React.FC<
             justify="center"
             alignItems="center"
           >
-            <Grid item className={props.classes.comments}>
+            <Grid item className={classes.comments}>
               <hr />
 
               {token ? (

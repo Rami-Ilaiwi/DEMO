@@ -10,20 +10,23 @@ interface FollowButtonProps {
   onFollow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const FollowButton: React.FC<
-  FollowButtonProps & WithStyles<typeof styles>
-> = props => {
+const FollowButton: React.FC<FollowButtonProps & WithStyles<typeof styles>> = ({
+  following,
+  profileName,
+  onFollow,
+  classes
+}) => {
   return (
     <Button
-      onClick={props.onFollow}
-      className={`${props.classes.root} ${
-        props.following ? props.classes.unfollow : props.classes.follow
+      onClick={onFollow}
+      className={`${classes.root} ${
+        following ? classes.unfollow : classes.follow
       }`}
     >
-      <AddRoundedIcon className={props.classes.icon} />
+      <AddRoundedIcon className={classes.icon} />
 
       <span>
-        {props.following ? " Unfollow" : " Follow"} {props.profileName}
+        {following ? " Unfollow" : " Follow"} {profileName}
       </span>
     </Button>
   );
