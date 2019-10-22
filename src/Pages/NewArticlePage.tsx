@@ -37,7 +37,7 @@ const NewArticle: React.FC<
 
   useEffect(() => {
     if (!!slug) {
-      AXIOS.noauthGet(`articles/${slug}`).then(res => {
+      AXIOS.get(`articles/${slug}`).then(res => {
         setArticleTitle(res.data.article.title);
         setArticleDescription(res.data.article.description);
         setArticleBody(res.data.article.body);

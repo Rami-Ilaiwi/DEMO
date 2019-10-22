@@ -10,7 +10,6 @@ interface params {
 const noauthPost = <T extends any>(params: params) =>
   axios.post<T>(`${BASE_URL}/${params.endpoint}`, params.body);
 
-const noauthGet = (endpoint: string) => axios.get(`${BASE_URL}/${endpoint}`);
 // const authPost = ({ endpoint, body }) =>
 //   axios.post(`${BASE_URL}/${endpoint}`, body, {headers:{Authorization:"Token  "+getToken()}});
 
@@ -67,6 +66,5 @@ export default {
   get,
   put,
   noauthPost,
-  noauthGet,
   DELETE
 };

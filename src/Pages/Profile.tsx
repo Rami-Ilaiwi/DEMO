@@ -38,34 +38,26 @@ const Profile: React.FC<
 
   // This is for take the number of articles in each feed tab
   useEffect(() => {
-    if (profile.username) {
-      if (selectedFeedTab === "myArticlesFeed") {
-        AXIOS.noauthGet(`articles?author=${profile.username}`).then(res => {
-          const articlesCount: number = res.data.articlesCount;
-          setArticlesCount(articlesCount);
-        });
-      } else if (selectedFeedTab === "favoritedArticlesFeed") {
-        AXIOS.noauthGet(`articles?favorited=${profile.username}`).then(res => {
-          const articlesCount: number = res.data.articlesCount;
-          setArticlesCount(articlesCount);
-        });
-      }
-    }
+    let url = "articles";
+    url +=
+      selectedFeedTab === "myArticlesFeed" ? `?author=${profile.username}` : "";
+    url +=
+      selectedFeedTab === "favoritedArticlesFeed"
+        ? `?favorited=${profile.username}`
+        : "";
+
+    AXIOS.get(url).then(res => {
+      const articlesCount: number = res.data.articlesCount;
+      setArticlesCount(articlesCount);
+    });
   }, [selectedFeedTab, profile.username]);
 
   // This for fetching the articles
   useEffect(() => {
-    if (props.isLoggedIn) {
-      AXIOS.get(`profiles/${props.match.params.user}`).then(res => {
-        const profile = res.data.profile;
-        setProfile(profile);
-      });
-    } else {
-      AXIOS.noauthGet(`profiles/${props.match.params.user}`).then(res => {
-        const profile = res.data.profile;
-        setProfile(profile);
-      });
-    }
+    AXIOS.get(`profiles/${props.match.params.user}`).then(res => {
+      const profile = res.data.profile;
+      setProfile(profile);
+    });
   }, [props.match.params.user]);
 
   const onFollowClick = (
