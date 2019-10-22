@@ -1,7 +1,7 @@
 import utl from "../../utils/utils";
+import { createReducer } from "redux-act";
 import { User } from "../../dtos/ArticleResponseDto";
 import { onLogin } from "../actionCreators/loginAction";
-import { createReducer } from "redux-act";
 import { changeSettings, onLogout } from "../actionCreators/settingsAction";
 
 const userData = utl.getUserDetails();

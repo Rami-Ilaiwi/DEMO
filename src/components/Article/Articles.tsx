@@ -15,7 +15,6 @@ const Articles: React.FC<ArticlesProps> = props => {
 
   return (
     <>
-      {console.log(props.articles)}
       {props.articles.map((article, index: number) => (
         <Grid container justify="center" key={index}>
           <Grid item xs={7}>
