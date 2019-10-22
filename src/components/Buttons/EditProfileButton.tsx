@@ -4,13 +4,12 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles/EditProfileButtonStyle";
 import { Link } from "react-router-dom";
 
-const EditProfileButton: React.FC<WithStyles<typeof styles>> = props => {
+const EditProfileButton: React.FC<WithStyles<typeof styles>> = ({
+  classes
+}) => {
   return (
-    <Link
-      to={`/settings`}
-      className={`${props.classes.root} ${props.classes.edit}`}
-    >
-      <SettingsRoundedIcon className={props.classes.icon} />
+    <Link to={`/settings`} className={`${classes.root} ${classes.edit}`}>
+      <SettingsRoundedIcon className={classes.icon} />
       <span> Edit Profile Settings</span>
     </Link>
   );

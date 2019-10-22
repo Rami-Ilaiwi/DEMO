@@ -13,30 +13,34 @@ interface UserCommentProps {
   handleComment: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const UserComment: React.FC<
-  UserCommentProps & WithStyles<typeof styles>
-> = props => {
+const UserComment: React.FC<UserCommentProps & WithStyles<typeof styles>> = ({
+  comment,
+  image,
+  handleSubmit,
+  handleComment,
+  classes
+}) => {
   return (
-    <div className={props.classes.root}>
+    <div className={classes.root}>
       <Card>
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <CardContent>
             <TextField
               label="Write your article (in markdown)"
               multiline
               rows="7"
-              value={props.comment}
-              onChange={props.handleComment}
-              className={props.classes.input}
+              value={comment}
+              onChange={handleComment}
+              className={classes.input}
               margin="normal"
               variant="outlined"
             />
           </CardContent>
 
           <CardActions>
-            <img className={props.classes.userImage} src={props.image} />
+            <img className={classes.userImage} src={image} />
             <input
-              className={props.classes.postComment}
+              className={classes.postComment}
               type="submit"
               value="Post Comment"
             />

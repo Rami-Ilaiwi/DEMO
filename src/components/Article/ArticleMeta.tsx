@@ -24,49 +24,62 @@ interface ArticleMetaProps {
   onEdit: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
-const ArticleMeta: React.FC<
-  ArticleMetaProps & WithStyles<typeof styles>
-> = props => {
+const ArticleMeta: React.FC<ArticleMetaProps & WithStyles<typeof styles>> = ({
+  image,
+  username,
+  createdAt,
+  following,
+  profileName,
+  favorited,
+  favoritesCount,
+  loggedinUser,
+  slug,
+  onFollow,
+  onFavorite,
+  onDelete,
+  onEdit,
+  classes
+}) => {
   return (
     <Grid
       container
       direction="row"
       alignItems="center"
-      className={props.classes.root}
+      className={classes.root}
     >
       <Grid item xs={4}>
         <ArticleAuthor
-          image={props.image}
-          username={props.username}
-          createdAt={props.createdAt}
+          image={image}
+          username={username}
+          createdAt={createdAt}
         />
       </Grid>
 
       <Grid item container xs={4} spacing={1}>
-        {props.loggedinUser === props.username ? (
+        {loggedinUser === username ? (
           <>
             <Grid item>
-              <EditButton slug={props.slug} onEdit={props.onEdit} />
+              <EditButton slug={slug} onEdit={onEdit} />
             </Grid>
             <Grid item>
-              <DeleteButton onDelete={props.onDelete} />
+              <DeleteButton onDelete={onDelete} />
             </Grid>
           </>
         ) : (
           <>
             <Grid item>
               <FollowButton
-                following={props.following}
-                onFollow={props.onFollow}
-                profileName={props.profileName}
+                following={following}
+                onFollow={onFollow}
+                profileName={profileName}
               />
             </Grid>
 
             <Grid item>
               <FavoriteButtonSlug
-                onFavorite={props.onFavorite}
-                favorited={props.favorited}
-                favoritesCount={props.favoritesCount}
+                onFavorite={onFavorite}
+                favorited={favorited}
+                favoritesCount={favoritesCount}
               />
             </Grid>
           </>

@@ -8,20 +8,22 @@ interface TagsProps {
   handleDelete: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
 }
 
-const ArticleTagsList: React.FC<
-  TagsProps & WithStyles<typeof styles>
-> = props => {
+const ArticleTagsList: React.FC<TagsProps & WithStyles<typeof styles>> = ({
+  tagsList,
+  handleDelete,
+  classes
+}) => {
   return (
-    <ul className={props.classes.root}>
-      {props.tagsList.map(tag => (
-        <li className={props.classes.list} key={tag}>
+    <ul className={classes.root}>
+      {tagsList.map(tag => (
+        <li className={classes.list} key={tag}>
           <CancelOutlinedIcon
-            className={props.classes.icon}
-            onClick={props.handleDelete}
+            className={classes.icon}
+            onClick={handleDelete}
             id={tag}
           />
 
-          <span className={props.classes.tag}> {tag}</span>
+          <span className={classes.tag}> {tag}</span>
         </li>
       ))}
     </ul>

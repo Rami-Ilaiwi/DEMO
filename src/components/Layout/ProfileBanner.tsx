@@ -18,21 +18,21 @@ interface ProfileBannerProps {
 
 const ProfileBanner: React.FC<
   ProfileBannerProps & WithStyles<typeof styles>
-> = props => {
+> = ({ bio, following, image, username, loggedinUser, onFollow, classes }) => {
   return (
     <Grid
       container
       direction="column"
       justify="center"
       alignItems="center"
-      className={props.classes.root}
+      className={classes.root}
     >
       <Grid
         item
         container
         direction="column"
         justify="center"
-        className={props.classes.container}
+        className={classes.container}
       >
         <Grid
           item
@@ -42,20 +42,16 @@ const ProfileBanner: React.FC<
           alignItems="center"
         >
           <Grid item>
-            <Avatar
-              alt={props.username}
-              src={props.image}
-              className={props.classes.avatar}
-            />
+            <Avatar alt={username} src={image} className={classes.avatar} />
           </Grid>
           <Grid item>
-            <Typography className={props.classes.title} variant="h4">
-              {props.username}
+            <Typography className={classes.title} variant="h4">
+              {username}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography className={props.classes.bio} variant="body1">
-              {props.bio}
+            <Typography className={classes.bio} variant="body1">
+              {bio}
             </Typography>
           </Grid>
         </Grid>
@@ -66,14 +62,14 @@ const ProfileBanner: React.FC<
           justify="center"
           alignItems="flex-end"
         >
-          <Grid item className={props.classes.banner}>
-            {props.loggedinUser === props.username ? (
+          <Grid item className={classes.banner}>
+            {loggedinUser === username ? (
               <EditProfileButton />
             ) : (
               <FollowButton
-                following={props.following}
-                profileName={props.username}
-                onFollow={props.onFollow}
+                following={following}
+                profileName={username}
+                onFollow={onFollow}
               />
             )}
           </Grid>

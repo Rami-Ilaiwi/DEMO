@@ -13,18 +13,17 @@ interface FavoriteButtonProps {
 
 const FavoriteButton: React.FC<
   FavoriteButtonProps & WithStyles<typeof styles>
-> = props => {
-  const classes = props.classes;
+> = ({ favoritesCount, favorited, slug, onFavorite, classes }) => {
   return (
     <button
-      id={props.slug}
-      onClick={props.onFavorite}
+      id={slug}
+      onClick={onFavorite}
       className={`${classes.root} ${
-        props.favorited ? classes.unfavorite : classes.favorite
+        favorited ? classes.unfavorite : classes.favorite
       }`}
     >
       <FavoriteIcon className={classes.icon} />
-      <span> {props.favoritesCount}</span>
+      <span> {favoritesCount}</span>
     </button>
   );
 };

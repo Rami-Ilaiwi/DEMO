@@ -7,21 +7,25 @@ interface PaginationProps {
   onChangePage: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = props => {
+const Pagination: React.FC<PaginationProps> = ({
+  articlesCount,
+  page,
+  onChangePage
+}) => {
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
     page: number
   ) => {
-    props.onChangePage(page);
+    onChangePage(page);
   };
 
   return (
     <>
       <TablePagination
-        page={props.page}
+        page={page}
         component="nav"
         rowsPerPage={10}
-        count={props.articlesCount}
+        count={articlesCount}
         onChangePage={handleChangePage}
         rowsPerPageOptions={[10]}
       />

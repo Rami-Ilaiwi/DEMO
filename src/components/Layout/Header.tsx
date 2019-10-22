@@ -11,25 +11,29 @@ import { User } from "../../dtos/ArticleResponseDto";
 import { selectUserInfo, selectIsLoggedIn } from "../../store/selectors/user";
 import { IState } from "../../store/reducers";
 
-interface IHeaderProps extends WithStyles<typeof styles> {
+interface HeaderProps {
   user: User;
   isLoggedIn: boolean;
 }
 
-const Header: React.FC<IHeaderProps> = props => {
+const Header: React.FC<HeaderProps & WithStyles<typeof styles>> = ({
+  user,
+  isLoggedIn,
+  classes
+}) => {
   return (
     <Grid
       container
       direction="row"
       justify="space-around"
       alignItems="baseline"
-      className={props.classes.root}
+      className={classes.root}
     >
       <Grid item xs={3}>
-        {/* {console.log(props.user)} */}
+        {/* {console.log(user)} */}
         <span>
-          <Link to="/" className={props.classes.title}>
-            <Typography className={props.classes.logoText}>conduit</Typography>
+          <Link to="/" className={classes.title}>
+            <Typography className={classes.logoText}>conduit</Typography>
           </Link>
         </span>
       </Grid>
@@ -43,42 +47,38 @@ const Header: React.FC<IHeaderProps> = props => {
           spacing={3}
         >
           <Grid item>
-            <Link to="/" className={props.classes.subtitle}>
+            <Link to="/" className={classes.subtitle}>
               <Typography>Home</Typography>
             </Link>
           </Grid>
 
-          {props.isLoggedIn ? (
+          {isLoggedIn ? (
             <>
               <Grid item>
-                <Link to="/editor" className={props.classes.subtitle}>
+                <Link to="/editor" className={classes.subtitle}>
                   <Typography>
-                    <BorderColorRoundedIcon className={props.classes.icon} />{" "}
-                    New Article
+                    <BorderColorRoundedIcon className={classes.icon} /> New
+                    Article
                   </Typography>
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/settings" className={props.classes.subtitle}>
+                <Link to="/settings" className={classes.subtitle}>
                   <Typography>
-                    <SettingsRoundedIcon className={props.classes.icon} />{" "}
-                    Settings
+                    <SettingsRoundedIcon className={classes.icon} /> Settings
                   </Typography>
                 </Link>
               </Grid>
 
               <Grid item>
-                <Link
-                  to={`/@${props.user.username}`}
-                  className={props.classes.subtitle}
-                >
+                <Link to={`/@${user.username}`} className={classes.subtitle}>
                   <Typography>
                     <img
-                      src={props.user.image}
-                      className={props.classes.userPicture}
-                      alt={props.user.username}
+                      src={user.image}
+                      className={classes.userPicture}
+                      alt={user.username}
                     />
-                    {props.user.username}
+                    {user.username}
                   </Typography>
                 </Link>
               </Grid>
@@ -86,13 +86,13 @@ const Header: React.FC<IHeaderProps> = props => {
           ) : (
             <>
               <Grid item>
-                <Link to="/login" className={props.classes.subtitle}>
+                <Link to="/login" className={classes.subtitle}>
                   <Typography>Sign in</Typography>
                 </Link>
               </Grid>
 
               <Grid item>
-                <Link to="/register" className={props.classes.subtitle}>
+                <Link to="/register" className={classes.subtitle}>
                   <Typography>Sign up</Typography>
                 </Link>
               </Grid>

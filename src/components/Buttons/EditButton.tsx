@@ -10,17 +10,19 @@ interface EditButtonProps {
   slug: string;
 }
 
-const EditButton: React.FC<
-  EditButtonProps & WithStyles<typeof styles>
-> = props => {
+const EditButton: React.FC<EditButtonProps & WithStyles<typeof styles>> = ({
+  onEdit,
+  slug,
+  classes
+}) => {
   return (
     <>
-      <Button className={props.classes.button}>
+      <Button className={classes.button}>
         <Link
-          to={`/editor/${props.slug}`}
-          className={`${props.classes.root} ${props.classes.edit}`}
+          to={`/editor/${slug}`}
+          className={`${classes.root} ${classes.edit}`}
         >
-          <EditRoundedIcon className={props.classes.icon} />
+          <EditRoundedIcon className={classes.icon} />
           <span> Edit Article</span>
         </Link>
       </Button>

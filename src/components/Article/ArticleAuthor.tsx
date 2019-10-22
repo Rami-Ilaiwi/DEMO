@@ -12,19 +12,22 @@ interface ArticleInfoProps {
   createdAt: string;
 }
 
-const ArticleInfo: React.FC<
-  ArticleInfoProps & WithStyles<typeof styles>
-> = props => {
-  const date = moment(Date.parse(props.createdAt)).format("MMMM D, YYYY");
+const ArticleInfo: React.FC<ArticleInfoProps & WithStyles<typeof styles>> = ({
+  image,
+  username,
+  createdAt,
+  classes
+}) => {
+  const date = moment(Date.parse(createdAt)).format("MMMM D, YYYY");
   return (
     <CardHeader
-      avatar={<Avatar src={props.image} aria-label="recipe" />}
+      avatar={<Avatar src={image} aria-label="recipe" />}
       title={
-        <Link className={props.classes.author} to={`/@${props.username}`}>
-          {props.username}
+        <Link className={classes.author} to={`/@${username}`}>
+          {username}
         </Link>
       }
-      subheader={<span className={props.classes.date}>{date}</span>}
+      subheader={<span className={classes.date}>{date}</span>}
     />
   );
 };

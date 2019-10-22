@@ -30,35 +30,39 @@ interface CommentsProps {
   ) => void;
 }
 
-const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
+const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = ({
+  comments,
+  handleDeleteComment,
+  classes
+}) => {
   const user = utl.getUserDetails();
-  const content = props.comments.map(item => {
+  const content = comments.map(item => {
     return (
-      <div key={item.id} className={props.classes.root}>
-        <Card className={props.classes.cardWidth}>
+      <div key={item.id} className={classes.root}>
+        <Card className={classes.cardWidth}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
               <Link
-                className={props.classes.commentAuthor}
+                className={classes.commentAuthor}
                 to={`/@${item.author.username}`}
               >
                 <img
                   src={item.author.image}
-                  className={props.classes.commentAuthorImage}
+                  className={classes.commentAuthorImage}
                   alt={item.author.username}
                 />
               </Link>
               <span>
                 {" "}
                 <Link
-                  className={props.classes.commentAuthor}
+                  className={classes.commentAuthor}
                   to={`/@${item.author.username}`}
                 >
                   {item.author.username}
                 </Link>
               </span>
               <br />
-              <span className={props.classes.date}>
+              <span className={classes.date}>
                 {moment(new Date(Date.parse(item.createdAt))).format(
                   "MMMM D, YYYY"
                 )}
@@ -78,7 +82,7 @@ const Comments: React.FC<CommentsProps & WithStyles<typeof styles>> = props => {
               commentID={item.id}
               user={user.username}
               author={item.author.username}
-              handleDeleteComment={props.handleDeleteComment}
+              handleDeleteComment={handleDeleteComment}
             />
           </Grid>
         </Card>
