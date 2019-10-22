@@ -63,40 +63,24 @@ const ArticlePage: React.FC<
 
   useEffect(() => {
     setIsLoadingArticleData(true);
-    if (isLoggedIn) {
-      AXIOS.get(`articles/${slug}`)
-        .then(res => {
-          const article = res.data.article;
-          setArticle(article);
-          return article;
+    AXIOS.get(`articles/${slug}`)
+      .then(res => {
+        const article = res.data.article;
+        setArticle(article);
+        return article;
+      })
+      .then(article =>
+        AXIOS.get(`profiles/${article.author.username}`).then(res => {
+          const profile = res.data.profile;
+          setProfile(profile);
+          setIsLoadingArticleData(false);
         })
-        .then(article =>
-          AXIOS.get(`profiles/${article.author.username}`).then(res => {
-            const profile = res.data.profile;
-            setProfile(profile);
-            setIsLoadingArticleData(false);
-          })
-        );
-    } else {
-      AXIOS.noauthGet(`articles/${slug}`)
-        .then(res => {
-          const article = res.data.article;
-          setArticle(article);
-          return article;
-        })
-        .then(article =>
-          AXIOS.noauthGet(`profiles/${article.author.username}`).then(res => {
-            const profile = res.data.profile;
-            setProfile(profile);
-            setIsLoadingArticleData(false);
-          })
-        );
-    }
-  }, [isLoggedIn, slug]);
+      );
+  }, [slug]);
 
   useEffect(() => {
     setIsLoadingComments(true);
-    AXIOS.noauthGet(`articles/${slug}/comments`).then(res => {
+    AXIOS.get(`articles/${slug}/comments`).then(res => {
       setComments(res.data.comments);
       setIsLoadingComments(false);
     });
@@ -169,7 +153,7 @@ const ArticlePage: React.FC<
     }).then(
       () => (
         setComment(""),
-        AXIOS.noauthGet(`articles/${slug}/comments`).then(res =>
+        AXIOS.get(`articles/${slug}/comments`).then(res =>
           setComments(res.data.comments)
         )
       )
@@ -182,7 +166,7 @@ const ArticlePage: React.FC<
     AXIOS.DELETE({
       endpoint: `articles/${slug}/comments/${event.currentTarget.id}`
     }).then(() =>
-      AXIOS.noauthGet(`articles/${slug}/comments`).then(res =>
+      AXIOS.get(`articles/${slug}/comments`).then(res =>
         setComments(res.data.comments)
       )
     );
