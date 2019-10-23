@@ -1,4 +1,4 @@
-import { select, put, call, takeLatest } from "redux-saga/effects";
+import { put, call, takeLatest } from "redux-saga/effects";
 import fetchLoginUser from "../api";
 import {
   setUserData,

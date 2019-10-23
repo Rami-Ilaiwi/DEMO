@@ -92,7 +92,6 @@ const Settings: React.FC<
   };
 
   const handleLogout = () => {
-    localStorage.clear();
     onLogout();
   };
 

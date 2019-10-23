@@ -1,7 +1,7 @@
 import { createStore, compose, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import reducer from "./reducers";
-import { onUserLoginSaga } from "./sagas/sagas";
+import { onUserLoginSaga } from "./sagas/loginSaga";
 import { loginUser } from "./actionCreators/loginAction";
 import { rootSaga } from "./sagas/rootSaga";
 
