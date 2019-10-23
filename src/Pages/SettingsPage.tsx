@@ -1,5 +1,4 @@
 import React from "react";
-import AXIOS from "../utils/AXIOS";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -9,11 +8,9 @@ import { styles } from "./styles/SettingsPageStyle";
 import * as yup from "yup";
 import { Formik, Form, FormikActions } from "formik";
 import FormikTextField from "../components/FormikInputs/FormikTextField";
-import { RouteComponentProps } from "react-router-dom";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { selectUserInfo, selectIsLoggedIn } from "../store/selectors/user";
-import { User } from "../dtos/ArticleResponseDto";
+import { User, UserSettings, SettingsValues } from "../dtos/ArticleResponseDto";
 import {
   changeSettings,
   logoutUser
@@ -21,29 +18,21 @@ import {
 import { IState } from "../store/reducers";
 
 interface SettingsProps {
-  changeSettings: (user: User) => void;
+  changeSettings: (user: UserSettings) => void;
   onLogout: () => void;
   user: User;
   isLoggedIn: boolean;
 }
 
-interface SaveSettingsResponse {
-  user: User;
-}
-
-const Settings: React.FC<
-  RouteComponentProps & SettingsProps & WithStyles<typeof styles>
-> = ({ changeSettings, user, isLoggedIn, history, classes, onLogout }) => {
+const Settings: React.FC<SettingsProps & WithStyles<typeof styles>> = ({
+  changeSettings,
+  user,
+  isLoggedIn,
+  classes,
+  onLogout
+}) => {
   if (!isLoggedIn) {
     return <Redirect to="/" />;
-  }
-
-  interface Values {
-    image: string;
-    username: string;
-    bio: string;
-    email: string;
-    newPassword: string;
   }
 
   const SettingsSchema = yup.object().shape({
@@ -61,34 +50,17 @@ const Settings: React.FC<
   });
 
   const handleFormSubmition = (
-    values: Values,
-    formikActions: FormikActions<Values>
+    values: SettingsValues,
+    formikActions: FormikActions<SettingsValues>
   ) => {
-    AXIOS.put<SaveSettingsResponse>({
-      endpoint: "user",
-      body: {
-        user: {
-          image: values.image,
-          username: values.username,
-          bio: values.bio,
-          email: values.email,
-          password: values.newPassword || undefined
-        }
-      }
-    })
-      .then(res => {
-        localStorage.setItem("userData", JSON.stringify(res));
-        localStorage.setItem("userToken", res.user.token);
-        changeSettings(res.user);
-        history.push(`/@${values.username}`);
-      })
-      .catch(err =>
-        Object.entries(err.response.data.errors).forEach(([field, errors]) => {
-          if (Array.isArray(errors)) {
-            formikActions.setFieldError(field, errors[0]);
-          }
-        })
-      );
+    changeSettings({
+      image: values.image,
+      username: values.username,
+      bio: values.bio,
+      email: values.email,
+      password: values.newPassword,
+      handleFieldError: formikActions
+    });
   };
 
   const handleLogout = () => {
@@ -178,13 +150,11 @@ const mapStateToProps = (state: IState) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  changeSettings: (user: User) => dispatch(changeSettings(user)),
+  changeSettings: (user: UserSettings) => dispatch(changeSettings(user)),
   onLogout: () => dispatch(logoutUser())
 });
 
-const RoutedSettings = withRouter(Settings);
-
-const StyledSettings = withStyles(styles)(RoutedSettings);
+const StyledSettings = withStyles(styles)(Settings);
 
 export default connect(
   mapStateToProps,
