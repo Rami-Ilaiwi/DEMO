@@ -42,3 +42,17 @@ export interface User {
   image: string;
   token: string;
 }
+
+export interface LoginResponse {
+  user: User;
+}
+
+export interface LoginValues {
+  email: string;
+  password: string;
+}
+
+export interface LoginUserPayload {
+  email: string;
+  password: string;
+}
