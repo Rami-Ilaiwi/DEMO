@@ -12,10 +12,16 @@ import Profile from "./Pages/Profile";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import { ConnectedRouter } from "connected-react-router";
+import { History } from "history";
 
 // import { Router } from "@reach/router";
 
-const App = () => {
+interface AppProps {
+  history: History;
+}
+
+const App = ({ history }: AppProps) => {
   // const [isLoggedIn, setLoggedIn] = React.useState(false);
   // const login = () => setLoggedIn(true);
   // const logout = () => setLoggedIn(false);
@@ -25,7 +31,7 @@ const App = () => {
     <>
       <CssBaseline />
       <Provider store={store}>
-        <Router>
+        <ConnectedRouter history={history}>
           <Header />
 
           <Route exact path="/" component={FeedPage} />
@@ -39,7 +45,7 @@ const App = () => {
           <Route path="/@:user" component={Profile} />
           <div style={{ padding: "50px" }} />
           <Footer />
-        </Router>
+        </ConnectedRouter>
       </Provider>
     </>
   );

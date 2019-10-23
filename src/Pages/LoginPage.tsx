@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import AXIOS from "../utils/AXIOS";
+import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";

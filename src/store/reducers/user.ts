@@ -2,7 +2,7 @@ import utl from "../../utils/utils";
 import { createReducer } from "redux-act";
 import { User } from "../../dtos/ArticleResponseDto";
 import { setUserData } from "../actionCreators/loginAction";
-import { changeSettings, logoutUser } from "../actionCreators/settingsAction";
+import { logoutUser } from "../actionCreators/settingsAction";
 
 const user = utl.getUserDetails();
 
@@ -35,12 +35,5 @@ userReducer
     return {
       ...initialState
     };
-  })
-  .on(changeSettings, (state, payload) => {
-    return {
-      ...state,
-      ...payload
-    };
   });
-
 export default userReducer;

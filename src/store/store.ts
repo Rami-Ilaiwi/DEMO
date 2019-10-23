@@ -1,19 +1,17 @@
 import { createStore, compose, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import reducer from "./reducers";
-import { onUserLoginSaga } from "./sagas/loginSaga";
-import { loginUser } from "./actionCreators/loginAction";
 import { rootSaga } from "./sagas/rootSaga";
+import { routerMiddleware } from "connected-react-router";
+import { createBrowserHistory } from "history";
 
 const sagaMiddleware = createSagaMiddleware();
+export const history = createBrowserHistory();
 
-export interface Window {
-  __REDUX_DEVTOOLS_EXTENSION__: any;
-}
 const store = createStore(
-  reducer,
+  reducer(history),
   compose(
-    applyMiddleware(sagaMiddleware),
+    applyMiddleware(routerMiddleware(history), sagaMiddleware),
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
       (window as any).__REDUX_DEVTOOLS_EXTENSION__()
   )

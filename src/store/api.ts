@@ -1,7 +1,12 @@
 import AXIOS from "../utils/AXIOS";
-import { LoginResponse, LoginValues } from "../dtos/ArticleResponseDto";
+import {
+  LoginResponse,
+  LoginValues,
+  UserSettings,
+  SaveSettingsResponse
+} from "../dtos/ArticleResponseDto";
 
-const fetchLoginUser = (values: LoginValues) => {
+export const fetchLoginUser = (values: LoginValues) => {
   return AXIOS.noauthPost<LoginResponse>({
     endpoint: "users/login",
     body: {
@@ -13,4 +18,17 @@ const fetchLoginUser = (values: LoginValues) => {
   });
 };
 
-export default fetchLoginUser;
+export const fetchUserSettings = (values: UserSettings) => {
+  return AXIOS.put<SaveSettingsResponse>({
+    endpoint: "user",
+    body: {
+      user: {
+        image: values.image,
+        username: values.username,
+        bio: values.bio,
+        email: values.email,
+        password: values.password || undefined
+      }
+    }
+  });
+};

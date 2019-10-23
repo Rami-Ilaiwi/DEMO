@@ -1,5 +1,5 @@
 import { put, call, takeLatest } from "redux-saga/effects";
-import fetchLoginUser from "../api";
+import { fetchLoginUser } from "../api";
 import {
   setUserData,
   loginUser,
@@ -7,7 +7,6 @@ import {
 } from "../actionCreators/loginAction";
 
 export function* onUserLoginSaga(action: ReturnType<typeof loginUser>) {
-  // userData(response);
   try {
     const response = yield call(fetchLoginUser, action.payload);
     yield put(setUserData(response.data.user));
@@ -15,7 +14,6 @@ export function* onUserLoginSaga(action: ReturnType<typeof loginUser>) {
     localStorage.setItem("userToken", response.data.user.token);
   } catch {
     yield put(setLoginError("email or password is invalid"));
-    // console.log("email or password is invalid");
   }
 }
 
