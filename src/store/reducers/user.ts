@@ -1,10 +1,10 @@
 import utl from "../../utils/utils";
 import { createReducer } from "redux-act";
 import { User } from "../../dtos/ArticleResponseDto";
-import { loginUser } from "../actionCreators/loginAction";
+import { setUserData } from "../actionCreators/loginAction";
 import { changeSettings, logoutUser } from "../actionCreators/settingsAction";
 
-const userData = utl.getUserDetails();
+const user = utl.getUserDetails();
 
 const initialState = {
   id: 0,
@@ -18,19 +18,19 @@ const initialState = {
 };
 
 const storeState = {
-  id: userData.id || initialState.id,
-  email: userData.email || initialState.email,
-  createdAt: userData.createdAt || initialState.createdAt,
-  updatedAt: userData.updatedAt || initialState.updatedAt,
-  username: userData.username || initialState.username,
-  bio: userData.bio || initialState.bio,
-  image: userData.image || initialState.image,
-  token: userData.token || initialState.token
+  id: user.id || initialState.id,
+  email: user.email || initialState.email,
+  createdAt: user.createdAt || initialState.createdAt,
+  updatedAt: user.updatedAt || initialState.updatedAt,
+  username: user.username || initialState.username,
+  bio: user.bio || initialState.bio,
+  image: user.image || initialState.image,
+  token: user.token || initialState.token
 };
 
 const userReducer = createReducer<User>({}, storeState);
 userReducer
-  .on(loginUser, (state, payload) => payload)
+  .on(setUserData, (state, payload) => payload)
   .on(logoutUser, () => {
     return {
       ...initialState

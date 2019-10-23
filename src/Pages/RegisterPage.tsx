@@ -12,7 +12,7 @@ import FormikTextField from "../components/FormikInputs/FormikTextField";
 import { User } from "../dtos/ArticleResponseDto";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../store/selectors/user";
-import { loginUser } from "../store/actionCreators/loginAction";
+import { setUserData } from "../store/actionCreators/loginAction";
 
 interface Values {
   username: string;
@@ -140,7 +140,7 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  onLogin: (user: User) => dispatch(loginUser(user))
+  onLogin: (user: User) => dispatch(setUserData(user))
 });
 
 const StyledRegisterPage = withStyles(styles)(RegisterPage);
