@@ -4,3 +4,5 @@ import { createAction } from "redux-act";
 export const loginUser = createAction<LoginUserPayload>("Login user");
 
 export const setUserData = createAction<User>("User data");
+
+export const setLoginError = createAction<string>("Login error");

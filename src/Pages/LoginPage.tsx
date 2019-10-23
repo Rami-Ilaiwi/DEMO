@@ -10,13 +10,9 @@ import * as yup from "yup";
 import { Formik, Form, FormikActions } from "formik";
 import FormikTextField from "../components/FormikInputs/FormikTextField";
 import { connect } from "react-redux";
-import { setUserData, loginUser } from "../store/actionCreators/loginAction";
-import { selectIsLoggedIn } from "../store/selectors/user";
-import {
-  User,
-  LoginResponse,
-  LoginUserPayload
-} from "../dtos/ArticleResponseDto";
+import { loginUser } from "../store/actionCreators/loginAction";
+import { selectIsLoggedIn, selectLoginError } from "../store/selectors/user";
+import { LoginUserPayload } from "../dtos/ArticleResponseDto";
 
 interface Values {
   email: string;
@@ -33,15 +29,15 @@ const LoginSchema = yup.object().shape({
 interface ILoginProps {
   onLogin: (user: LoginUserPayload) => void;
   isLoggedIn: boolean;
+  loginError: string;
 }
 
 const LoginPage: React.FC<ILoginProps & WithStyles<typeof styles>> = ({
   onLogin,
   isLoggedIn,
-  classes
+  classes,
+  loginError
 }) => {
-  const [loginError, setLoginError] = useState("");
-
   if (isLoggedIn) {
     return <Redirect to="/" />;
   }
@@ -51,23 +47,6 @@ const LoginPage: React.FC<ILoginProps & WithStyles<typeof styles>> = ({
     formikActions: FormikActions<Values>
   ) => {
     onLogin({ email: values.email, password: values.password });
-    // AXIOS.noauthPost<LoginResponse>({
-    //   endpoint: "users/login",
-    //   body: {
-    //     user: {
-    //       email: values.email,
-    //       password: values.password
-    //     }
-    //   }
-    // })
-    //   .then(res => {
-    //     localStorage.setItem("userData", JSON.stringify(res.data));
-    //     localStorage.setItem("userToken", res.data.user.token);
-    //     onLogin(res.data.user);
-    //   })
-    //   .catch(() => {
-    //     setLoginError("email or password is invalid");
-    //   });
   };
 
   return (
@@ -121,11 +100,10 @@ const LoginPage: React.FC<ILoginProps & WithStyles<typeof styles>> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    isLoggedIn: selectIsLoggedIn(state)
-  };
-};
+const mapStateToProps = (state: any) => ({
+  isLoggedIn: selectIsLoggedIn(state),
+  loginError: selectLoginError(state)
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
   onLogin: (userPayload: LoginUserPayload) => dispatch(loginUser(userPayload))
